@@ -1,0 +1,9 @@
+{	
+	"Github":{ 
+		"tokenUrl":"https://github.com/login/oauth/access_token",
+		"clientId":"",
+		"clientSecret":"" ,
+		"authorizationFormUrl":"https://github.com/login/oauth/authorize",
+		"scopes":[]
+	}
+}	

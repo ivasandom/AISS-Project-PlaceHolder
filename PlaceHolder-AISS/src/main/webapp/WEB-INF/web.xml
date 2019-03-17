@@ -11,4 +11,38 @@
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
-</web-app>
+
+
+<servlet>
+    <description></description>
+    <display-name>GithubAuthController</display-name>
+    <servlet-name>GithubAuthController</servlet-name>
+    <servlet-class>aiss.controller.oauth.GenericAuthController</servlet-class>
+    <init-param>
+    	<param-name>provider</param-name>
+    	<param-value>Github</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GithubAuthController</servlet-name>
+    <url-pattern>/AuthController/Github</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GithubOAuth2Callback</display-name>
+    <servlet-name>GithubOAuth2Callback</servlet-name>
+    <servlet-class>aiss.controller.oauth.OAuth2Callback</servlet-class>
+    <init-param>
+    	<param-name>provider</param-name>
+    	<param-value>Github</param-value>
+    </init-param>
+    <init-param>
+    	<param-name>onSuccess</param-name>
+    	<param-value>close</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GithubOAuth2Callback</servlet-name>
+    <url-pattern>/oauth2callback/Github</url-pattern>
+  </servlet-mapping>    
+  </web-app>

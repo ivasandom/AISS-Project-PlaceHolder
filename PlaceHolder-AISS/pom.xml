@@ -141,6 +141,9 @@
 		    <artifactId>apache-jsp</artifactId>
 		    <version>9.4.15.v20190215</version>
 		</dependency>
+		
+		<!-- node-java-maven -->
+	
 
 	</dependencies>
 
