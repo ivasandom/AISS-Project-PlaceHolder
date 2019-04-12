@@ -11,7 +11,10 @@
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
-
+  <error-page>
+  	<exception-type>java.lang.ArrayIndexOutOfBoundsException</exception-type>
+  	<location>/error.html</location>
+  </error-page>
 
 <servlet>
     <description></description>
