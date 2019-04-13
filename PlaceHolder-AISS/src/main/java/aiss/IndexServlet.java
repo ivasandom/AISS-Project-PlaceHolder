@@ -29,7 +29,7 @@ public class IndexServlet extends HttpServlet {
 		String clave = req.getParameter("clave");
 		String sesion = req.getParameter("sesion");
 		
-		if (usuario != null || clave != null) {
+	/*	if (usuario != null || clave != null) {
 			log.log(Level.INFO, "Verificando credenciales.");
 			GitHubResource autentificacionGitHub = new GitHubResource(usuario, clave);
 			boolean verificacionResult = autentificacionGitHub.verificarCredenciales(usuario);
@@ -46,7 +46,7 @@ public class IndexServlet extends HttpServlet {
 			claveCodificada = new String(Base64.encodeBase64(claveCodificada.getBytes()));
 		}
 		
-		
+		*/
 		
 		
 		
@@ -61,3 +61,4 @@ public class IndexServlet extends HttpServlet {
 		}
 	}
 }
+
