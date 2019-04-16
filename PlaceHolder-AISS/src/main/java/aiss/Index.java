@@ -14,10 +14,10 @@ import org.apache.commons.codec.binary.Base64;
 
 import aiss.resources.GitHubResource;
 
-public class IndexServlet extends HttpServlet {
+public class Index extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(IndexServlet.class.getName());
+	private static final Logger log = Logger.getLogger(Index.class.getName());
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		RequestDispatcher rd = null;
