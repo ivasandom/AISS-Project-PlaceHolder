@@ -33,6 +33,7 @@ public class AddBoardController extends HttpServlet {
 
 		// Obtenemos el usuario y la clave decodificados
 		String usuario = new String(Base64.decodeBase64(request.getParameter("usuario").getBytes()));
+		
 		String clave = new String(Base64.decodeBase64(request.getParameter("clave").getBytes()));
 
 		// Obtenemos los parámetros necesarios

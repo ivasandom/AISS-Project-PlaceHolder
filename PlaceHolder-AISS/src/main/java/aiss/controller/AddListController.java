@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.binary.Base64;
 
 import aiss.resources.TrelloResource;
+import aiss.trello.Board;
 import aiss.trello.List;
 
 
@@ -51,7 +52,7 @@ public class AddListController extends HttpServlet {
 		try {
 			log.log(Level.INFO, "Añadiendo tablero.");
 			boolean added = autentificacionTrello.addList(name, idBoard);
-			Collection<Board> trelloResults = autentificacionTrello.getListSearch(query);
+			Collection<List> trelloResults = autentificacionTrello.getListSearch(query);
 			request.setAttribute("informacion", trelloResults);
 			if(added == true) {
 				request.setAttribute("added", trelloResults);
