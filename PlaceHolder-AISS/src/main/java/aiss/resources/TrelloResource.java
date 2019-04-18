@@ -174,10 +174,9 @@ public class TrelloResource {
 		
 		return success;
 	}
-////Está mal supongo
-	public Collection<Board> getBoardSearch(String query) {
-		
-	}
+//	public Collection<Board> getBoardSearch(String query) {
+//		
+//	}
 
 	
 	
