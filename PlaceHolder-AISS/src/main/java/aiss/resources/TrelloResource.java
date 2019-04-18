@@ -1,11 +1,12 @@
 package aiss.resources;
 
-import java.util.ArrayList;
+
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.logging.Logger;
 
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
+
 
 import aiss.trello.Board;
 import aiss.trello.Card;
@@ -13,39 +14,137 @@ import aiss.trello.List;
 
 public class TrelloResource {
 
-	private static final Logger log = Logger.getLogger(TrelloResource.class.getName());
-	
-	private final String usuario;
-	private final String clave;
-	private final String base_url = "https://developers.trello.com/";
+	public Collection<Board> getAllBoards() {
 
-	public TrelloResource(String usuario, String clave) {
-		this.usuario = usuario;
-		this.clave = clave;
+		ClientResource cr = null;
+		Board[] boards = null;
+		try {
+			cr = new ClientResource("https://api.trello.com/1/boards/id");
+			boards = cr.get(Board[].class);
+
+		} catch (ResourceException re) {
+			System.err.println("Error when retrieving the collections of boards: " + cr.getResponse().getStatus());
+		}
+
+		return Arrays.asList(boards);
 	}
 
-	public boolean addBoard(String name, Board datos) {
+	public Board getBoard(String id) {
+
 		ClientResource cr = null;
-		boolean success = true;
+		Board board = null;
 		try {
-			cr = new ClientResource(base_url +"/" +name);
+			cr = new ClientResource("https://api.trello.com/1/boards/id" + "/" + id);
+			board = cr.get(Board.class);
+
+		} catch (ResourceException re) {
+			System.err.println("Error when retrieving the board: " + cr.getResponse().getStatus());
+		}
+
+		return board;
+
+	}
+	
+	public Board getBoardCards(String id) {
+
+		ClientResource cr = null;
+		Board board = null;
+		try {
+			cr = new ClientResource("https://api.trello.com/1/boards/id" +"/" +id+"/cards");
+			board = cr.get(Board.class);
+
+		} catch (ResourceException re) {
+			System.err.println("Error when retrieving the board: " + cr.getResponse().getStatus());
+		}
+
+		return board;
+
+	}
+	
+	public Board getBoardLists(String id) {
+
+		ClientResource cr = null;
+		Board board = null;
+		try {
+			cr = new ClientResource("https://api.trello.com/1/boards/id" +"/" +id+"/lists");
+			board = cr.get(Board.class);
+
+		} catch (ResourceException re) {
+			System.err.println("Error when retrieving the board: " + cr.getResponse().getStatus());
+		}
+
+		return board;
+
+	}
+	
+	public List getList(String id) {
+
+		ClientResource cr = null;
+		List list = null;
+		try {
+			cr = new ClientResource("https://api.trello.com/1/lists/id" + "/" + id);
+			list = cr.get(List.class);
+
+		} catch (ResourceException re) {
+			System.err.println("Error when retrieving the board: " + cr.getResponse().getStatus());
+		}
+
+		return list;
+
+	}
+	
+	public List getListCards(String id) {
+
+		ClientResource cr = null;
+		List list = null;
+		try {
+			cr = new ClientResource("https://api.trello.com/1/lists/id" + "/" +id+"/cards");
+			list = cr.get(List.class);
+
+		} catch (ResourceException re) {
+			System.err.println("Error when retrieving the board: " + cr.getResponse().getStatus());
+		}
+
+		return list;
+
+	}
+	public Card getCard(String id) {
+
+		ClientResource cr = null;
+		Card card = null;
+		try {
+			cr = new ClientResource("https://api.trello.com/1/cards/id" + "/" + id);
+			card = cr.get(Card.class);
+
+		} catch (ResourceException re) {
+			System.err.println("Error when retrieving the board: " + cr.getResponse().getStatus());
+		}
+
+		return card;
+
+	}
+	
+	public Board addBoard(String name) {
+		ClientResource cr = null;
+		Board resultBoard = null;
+		try {
+			cr = new ClientResource("https://api.trello.com/1/boards");
 			cr.setEntityBuffering(true);
-			cr.post(name, Board.class);
+			resultBoard = cr.post(name, Board.class);
 		} catch (ResourceException re) {
 			System.err.println("Error when adding the board: " + name +" " + cr.getResponse().getStatus());
-			success = false;
 		}
-		return success;
+		return resultBoard;
 	}
 
-	
+
 	public boolean addList(String name, String idBoard) {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource(base_url +"/" +name);
+			cr = new ClientResource("https://api.trello.com/1/lists" +"/" +idBoard +"/"+name);
 			cr.setEntityBuffering(true);
-			cr.post(name, List.class);
+			cr.post(" ");
 		} catch (ResourceException re) {
 			System.err.println("Error when adding the list: " + name +" " + cr.getResponse().getStatus());
 			success = false;
@@ -53,28 +152,13 @@ public class TrelloResource {
 		return success;
 	}
 
-	public Collection<List> getListSearch(String query) {
-		Collection<List> col = new ArrayList<List>();
-		List res = null;
-		ClientResource cr = null;
-		try {
-			cr = new ClientResource(base_url);
-			if(List.class.getName().contains(query)) {
-			res = cr.get(List.class);
-			col.add(res);
-			}}catch (ResourceException re) {
-		System.err.println("Error when searching the query: " + query +" " + cr.getResponse().getStatus());
-
-	}return col;
-	}
-
 	public boolean addCard(String name, String idList) {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource(base_url +"/" +name);
+			cr = new ClientResource("https://api.trello.com/1/cards" +"/" +idList+"/"+name);
 			cr.setEntityBuffering(true);
-			cr.post(name, Card.class);
+			cr.post(" ");
 		} catch (ResourceException re) {
 			System.err.println("Error when adding the card: " + name +" " + cr.getResponse().getStatus());
 			success = false;
@@ -82,125 +166,95 @@ public class TrelloResource {
 		return success;
 	}
 
-	public Collection<Card> getCardSearch(String query) {
-		Collection<Card> col = new ArrayList<Card>();
-		Card res = null;
-		ClientResource cr = null;
-		try {
-			cr = new ClientResource(base_url);
-			if(Card.class.getName().contains(query)) {
-			res = cr.get(Card.class);
-			col.add(res);
-				}}catch (ResourceException re) {
-		System.err.println("Error when searching the query: " + query +" " + cr.getResponse().getStatus());
-
-	}return col;
-	}
-
-	public boolean deleteBoard(String id, String usuario) {
+	public boolean deleteBoard(String id) {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource(base_url +"/" +id);
+			cr = new ClientResource("https://api.trello.com/1/boards/id" +"/" +id);
 			cr.setEntityBuffering(true);
 			cr.delete();
 		}catch (ResourceException re) {
-				System.err.println("Error when deleting the board: " + cr.getResponse().getStatus());
-				success = false;
-				throw re;
-			}return success;
+			System.err.println("Error when deleting the board: " + cr.getResponse().getStatus());
+			success = false;
+			throw re;
 		}
+		return success;
+	}
 
-	public boolean deleteCard(String id, String usuario) {
+	public boolean deleteCard(String id) {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource(base_url +"/" +id);
+			cr = new ClientResource("https://api.trello.com/1/cards/id" +"/" +id);
 			cr.setEntityBuffering(true);
 			cr.delete();
 		}catch (ResourceException re) {
-				System.err.println("Error when deleting the card: " + cr.getResponse().getStatus());
-				success = false;
-				throw re;
-			}return success;
+			System.err.println("Error when deleting the card: " + cr.getResponse().getStatus());
+			success = false;
+			throw re;
+		}
+		return success;
 	}
 
-	public boolean closeList(String id, String usuario) {
+	public boolean closeList(String id) {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource(base_url +"/" +id);
+			cr = new ClientResource("https://api.trello.com/1/lists/id/closed");
 			cr.setEntityBuffering(true);
-			cr.delete();
+			cr.put(" ");
 		}catch (ResourceException re) {
-				System.err.println("Error when deleting the list: " + cr.getResponse().getStatus());
-				success = false;
-				throw re;
-			}return success;
-	}
-
-	public boolean updateBoard(String id, String name) {
-		ClientResource cr = null;
-		boolean success = true;
-		try {
-			cr = new ClientResource(base_url +"/" +id);
-			cr.setEntityBuffering(true);
-			cr.put(name);
-		} catch (ResourceException re) {
-			System.err.println("Error when updating the playlist: " +name +" " + cr.getResponse().getStatus());
+			System.err.println("Error when deleting the list: " + cr.getResponse().getStatus());
 			success = false;
+			throw re;
 		}
-		
 		return success;
 	}
 
-	public boolean updateCard(String id, String name) {
+	public boolean updateBoard(String id) {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource(base_url +"/" +id);
+			cr = new ClientResource("https://api.trello.com/1/boards/id");
 			cr.setEntityBuffering(true);
-			cr.put(name);
+			cr.put(id);
 		} catch (ResourceException re) {
-			System.err.println("Error when updating the card: " +name +" " + cr.getResponse().getStatus());
+			System.err.println("Error when updating the playlist: " +id +" " + cr.getResponse().getStatus());
 			success = false;
 		}
-		
+
 		return success;
 	}
 
-	public boolean updateList(String id, String name) {
+	public boolean updateCard(String id) {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource(base_url +"/" +id);
+			cr = new ClientResource("https://api.trello.com/1/cards/id");
 			cr.setEntityBuffering(true);
-			cr.put(name);
+			cr.put(id);
 		} catch (ResourceException re) {
-			System.err.println("Error when updating the list: " +name +" " + cr.getResponse().getStatus());
+			System.err.println("Error when updating the card: " +id +" " + cr.getResponse().getStatus());
 			success = false;
 		}
-		
+
 		return success;
 	}
-////Está mal supongo
-	public Collection<Board> getBoardSearch(String query) {
-		Collection<Board> col = new ArrayList<Board>();
-		Board res = null;
+
+	public boolean updateList(String id) {
 		ClientResource cr = null;
+		boolean success = true;
 		try {
-			cr = new ClientResource(base_url);
-			if(Board.class.getName().contains(query)) {
-			res = cr.get(Board.class);
-			col.add(res);
-			}}catch (ResourceException re) {
-		System.err.println("Error when searching the query: " + query +" " + cr.getResponse().getStatus());
+			cr = new ClientResource("https://api.trello.com/1/lists/id");
+			cr.setEntityBuffering(true);
+			cr.put(id);
+		} catch (ResourceException re) {
+			System.err.println("Error when updating the list: " +id +" " + cr.getResponse().getStatus());
+			success = false;
+		}
 
-	}return col;
+		return success;
 	}
-	
 
-	
-	
 
 }
