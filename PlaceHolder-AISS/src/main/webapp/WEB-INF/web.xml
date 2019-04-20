@@ -5,237 +5,35 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 
-	<!-- Fichero de bienvenida -->
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
 
-	<!-- Fichero de error -->
-	<error-page>
-		<exception-type>java.lang.Throwable</exception-type>
-		<location>/error.jsp</location>
-	</error-page>
 
-	<!-- WEBAPP SERVLETS -->
-	<!-- GitHub repositories - retrieve -->
 	<servlet>
-		<servlet-name>GetGitHubRepositoryController</servlet-name>
-		<servlet-class>aiss.controller.GetGitHubRepositoryController</servlet-class>
+		<servlet-name>Home</servlet-name>
+		<servlet-class>aiss.controller.HomeController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>GetGitHubRepositoryController</servlet-name>
-		<url-pattern>/getGitHubRepository</url-pattern>
+		<servlet-name>Home</servlet-name>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-	<!-- GitLab repositories - retrieve -->
+	
 	<servlet>
-		<servlet-name>GetGitLabRepositoryController</servlet-name>
-		<servlet-class>aiss.controller.GetGitLabRepositoryController</servlet-class>
+		<servlet-name>LoginWith</servlet-name>
+		<servlet-class>aiss.controller.LoginController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>GetGitLabRepositoryController</servlet-name>
-		<url-pattern>/getGitLabRepository</url-pattern>
+		<servlet-name>LoginWith</servlet-name>
+		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
-
-	<!-- Bitbucket repositories - retrieve -->
+	
 	<servlet>
-		<servlet-name>GetBitbucketRepositoryController</servlet-name>
-		<servlet-class>aiss.controller.GetBitbucketRepositoryController</servlet-class>
+		<servlet-name>EditorRepositorio</servlet-name>
+		<servlet-class>aiss.controller.EditorController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>GetBitbucketRepositoryController</servlet-name>
-		<url-pattern>/getBitbucketRepository</url-pattern>
+		<servlet-name>EditorRepositorio</servlet-name>
+		<url-pattern>/editor</url-pattern>
 	</servlet-mapping>
-
-	<!-- Trello boards - retrieve -->
-	<servlet>
-		<servlet-name>GetBoardController</servlet-name>
-		<servlet-class>aiss.controller.GetBoardController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GetBoardController</servlet-name>
-		<url-pattern>/getBoard</url-pattern>
-	</servlet-mapping>
-
-	<!-- Trello boards - create -->
-	<servlet>
-		<servlet-name>AddBoardController</servlet-name>
-		<servlet-class>aiss.controller.AddBoardController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AddBoardController</servlet-name>
-		<url-pattern>/AddBoard</url-pattern>
-	</servlet-mapping>
-
-	<!-- Trello boards - update -->
-	<servlet>
-		<servlet-name>UpdateBoardController</servlet-name>
-		<servlet-class>aiss.controller.UpdateBoardController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>UpdateBoardController</servlet-name>
-		<url-pattern>/UpdateBoard</url-pattern>
-	</servlet-mapping>
-
-	<!-- Trello boards - delete -->
-	<servlet>
-		<servlet-name>DeleteBoardController</servlet-name>
-		<servlet-class>aiss.controller.DeleteBoardController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DeleteBoardController</servlet-name>
-		<url-pattern>/DeleteBoard</url-pattern>
-	</servlet-mapping>
-
-	<!-- Trello lists - retrieve -->
-	<servlet>
-		<servlet-name>GetListController</servlet-name>
-		<servlet-class>aiss.controller.GetListController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GetListController</servlet-name>
-		<url-pattern>/getList</url-pattern>
-	</servlet-mapping>
-
-	<!-- Trello lists - create -->
-	<servlet>
-		<servlet-name>AddListController</servlet-name>
-		<servlet-class>aiss.controller.AddListController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AddListController</servlet-name>
-		<url-pattern>/AddList</url-pattern>
-	</servlet-mapping>
-
-	<!-- Trello lists - update -->
-	<servlet>
-		<servlet-name>UpdateListController</servlet-name>
-		<servlet-class>aiss.controller.UpdateListController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>UpdateListController</servlet-name>
-		<url-pattern>/UpdateList</url-pattern>
-	</servlet-mapping>
-
-	<!-- Trello lists - delete -->
-	<servlet>
-		<servlet-name>DeleteListController</servlet-name>
-		<servlet-class>aiss.controller.DeleteListController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DeleteListController</servlet-name>
-		<url-pattern>/DeleteList</url-pattern>
-	</servlet-mapping>
-
-	<!-- Trello cards - retrieve -->
-	<servlet>
-		<servlet-name>GetCardController</servlet-name>
-		<servlet-class>aiss.controller.GetCardController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GetCardController</servlet-name>
-		<url-pattern>/getCard</url-pattern>
-	</servlet-mapping>
-
-	<!-- Trello cards - create -->
-	<servlet>
-		<servlet-name>AddCardController</servlet-name>
-		<servlet-class>aiss.controller.AddCardController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AddCardController</servlet-name>
-		<url-pattern>/AddCard</url-pattern>
-	</servlet-mapping>
-
-	<!-- Trello cards - update -->
-	<servlet>
-		<servlet-name>UpdateCardController</servlet-name>
-		<servlet-class>aiss.controller.UpdateCardController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>UpdateCardController</servlet-name>
-		<url-pattern>/UpdateCard</url-pattern>
-	</servlet-mapping>
-
-	<!-- Trello cards - delete -->
-	<servlet>
-		<servlet-name>DeleteCardController</servlet-name>
-		<servlet-class>aiss.controller.DeleteCardController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DeleteCardController</servlet-name>
-		<url-pattern>/DeleteCard</url-pattern>
-	</servlet-mapping>
-
-	<!-- OAUTH SERVLETS -->
-	<!--TrelloAuthController -->
-	<servlet>
-		<description />
-		<servlet-name>TrelloAuthController</servlet-name>
-		<servlet-class>aiss.controller.oauth.GenericAuthController</servlet-class>
-		<init-param>
-			<param-name>provider</param-name>
-			<param-value>Trello</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>TrelloAuthController</servlet-name>
-		<url-pattern>/AuthController/Trello</url-pattern>
-	</servlet-mapping>
-
-	<!--TrelloOAuth2Callback -->
-	<servlet>
-		<description />
-		<servlet-name>TrelloOAuth2Callback</servlet-name>
-		<servlet-class>aiss.controller.oauth.OAuth2Callback</servlet-class>
-		<init-param>
-			<param-name>provider</param-name>
-			<param-value>Trello</param-value>
-		</init-param>
-		<init-param>
-			<param-name>onSuccess</param-name>
-			<param-value>redirect:/getBoard</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>TrelloOAuth2Callback</servlet-name>
-		<url-pattern>/oauth2callback/Trello</url-pattern>
-	</servlet-mapping>
-
-	<!--GitHubAuthController -->
-	<servlet>
-		<description />
-		<servlet-name>GitHubAuthController</servlet-name>
-		<servlet-class>aiss.controller.oauth.GenericAuthController</servlet-class>
-		<init-param>
-			<param-name>provider</param-name>
-			<param-value>GitHub</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GitHubAuthController</servlet-name>
-		<url-pattern>/AuthController/GitHub</url-pattern>
-	</servlet-mapping>
-
-	<!--GitHubOAuth2Callback -->
-	<servlet>
-		<description />
-		<servlet-name>GitHubOAuth2Callback</servlet-name>
-		<servlet-class>aiss.controller.oauth.OAuth2Callback</servlet-class>
-		<init-param>
-			<param-name>provider</param-name>
-			<param-value>GitHub</param-value>
-		</init-param>
-		<init-param>
-			<param-name>onSuccess</param-name>
-			<param-value>redirect:/getGitHubRepository</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GitHubOAuth2Callback</servlet-name>
-		<url-pattern>/oauth2callback/GitHub</url-pattern>
-	</servlet-mapping>
-
+	
 	<!--GitLabAuthController -->
 	<servlet>
 		<description />
@@ -269,38 +67,39 @@
 		<servlet-name>GitLabOAuth2Callback</servlet-name>
 		<url-pattern>/oauth2callback/GitLab</url-pattern>
 	</servlet-mapping>
-
-	<!--BitbucketAuthController -->
+	
+	<!--GitHubAuthController -->
 	<servlet>
 		<description />
-		<servlet-name>BitbucketAuthController</servlet-name>
+		<servlet-name>GitHubAuthController</servlet-name>
 		<servlet-class>aiss.controller.oauth.GenericAuthController</servlet-class>
 		<init-param>
 			<param-name>provider</param-name>
-			<param-value>Bitbucket</param-value>
+			<param-value>GitHub</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>BitbucketAuthController</servlet-name>
-		<url-pattern>/AuthController/Bitbucket</url-pattern>
+		<servlet-name>GitHubAuthController</servlet-name>
+		<url-pattern>/AuthController/GitHub</url-pattern>
 	</servlet-mapping>
 
-	<!--BitbucketOAuth2Callback -->
+	<!--GitHubOAuth2Callback -->
 	<servlet>
 		<description />
-		<servlet-name>BitbucketOAuth2Callback</servlet-name>
+		<servlet-name>GitHubOAuth2Callback</servlet-name>
 		<servlet-class>aiss.controller.oauth.OAuth2Callback</servlet-class>
 		<init-param>
 			<param-name>provider</param-name>
-			<param-value>Bitbucket</param-value>
+			<param-value>GitHub</param-value>
 		</init-param>
 		<init-param>
 			<param-name>onSuccess</param-name>
-			<param-value>redirect:/getBitbucketRepository</param-value>
+			<param-value>redirect:/getGitLabRepository</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>BitbucketOAuth2Callback</servlet-name>
-		<url-pattern>/oauth2callback/Bitbucket</url-pattern>
+		<servlet-name>GitHubOAuth2Callback</servlet-name>
+		<url-pattern>/oauth2callback/GitHub</url-pattern>
 	</servlet-mapping>
+  
 </web-app>

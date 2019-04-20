@@ -1,9 +1,23 @@
 {	
-	"Github":{ 
+	"GitHub":{ 
 		"tokenUrl":"https://github.com/login/oauth/access_token",
-		"clientId":"b23df899ca3abb357ddd",
-		"clientSecret":"29d62b511d5879b67289a00cb71628d739cc29a7" ,
+		"clientId":"70bccbacfa4a9ba97884",
+		"clientSecret":"a3990dcf4cfffe5336cfbc4bb8871646a79d9036" ,
 		"authorizationFormUrl":"https://github.com/login/oauth/authorize",
-		"scopes":["repo","user"]
-	}
+		"scopes": ["repo", "user"]
+	},
+	"Spotify": {
+        "tokenUrl": "https://accounts.spotify.com/api/token",
+        "clientId": "203faa857d4e46209ac534adfddb8bec",
+        "clientSecret": "05a361378ced4b6a95f6e6944d6e16e4",
+        "authorizationFormUrl": "https://accounts.spotify.com/authorize",
+        "scopes": []
+    },
+    "GitLab": {
+        "tokenUrl": "https://gitlab.com/oauth/token",
+        "clientId": "f753b00f0914454ba5c4fad097625e592c20f271541101424c4211428731496d",
+        "clientSecret": "241cb9df7f1d9abdb529586fdc1f70fe7e0f266bdb9657623c7ac6647fe272dd",
+        "authorizationFormUrl": "https://gitlab.com/oauth/authorize",
+        "scopes": []
+    }
 }	
