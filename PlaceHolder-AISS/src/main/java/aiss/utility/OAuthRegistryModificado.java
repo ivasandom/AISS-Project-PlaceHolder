@@ -34,7 +34,7 @@ import aiss.controller.oauth.AuthorizationCodeFlowModificado;
  *
  */
 
-public class OAuthRegistry {
+public class OAuthRegistryModificado {
 	
 	private static Logger log=Logger.getLogger(OAuthRegistry.class.getName());
             
@@ -57,8 +57,8 @@ public class OAuthRegistry {
 	 * @return authorizatin flow
 	 * @throws IOException
 	 */
-	public static AuthorizationCodeFlow initializeFlow(String tokenURL, String clientID, String clientSecret, String authorizationFormURL,Set<String> scopes) throws IOException {
-		AuthorizationCodeFlow.Builder flowBuilder = new AuthorizationCodeFlow.Builder(
+	public static AuthorizationCodeFlowModificado initializeFlow(String tokenURL, String clientID, String clientSecret, String authorizationFormURL,Set<String> scopes) throws IOException {
+		AuthorizationCodeFlowModificado.Builder flowBuilder = new AuthorizationCodeFlowModificado.Builder(
 				BearerToken.authorizationHeaderAccessMethod(), new NetHttpTransport(), new JacksonFactory(),
 				new GenericUrl(tokenURL),
 				new ClientParametersAuthentication(clientID, clientSecret),
@@ -79,7 +79,7 @@ public class OAuthRegistry {
 	 * @throws IOException when there is no configuration for the service in 
 	 * the registry
 	 */
-	public static AuthorizationCodeFlow initializeFlow(String service) throws IOException{
+	public static AuthorizationCodeFlowModificado initializeFlow(String service) throws IOException{
 		log.finest("Creating authorization flow for "+service);
 		if(serviceConfigurations==null)
 			loadConfig();
