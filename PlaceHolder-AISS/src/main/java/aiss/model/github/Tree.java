@@ -105,5 +105,10 @@ public class Tree {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
+    
+    public String getName() {
+    	String[] paths = this.getPath().split("/");
+    	return paths[paths.length - 1];
+    }
 
 }

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import aiss.model.github.Repository;
 import aiss.model.github.RepositoryTree;
 import aiss.model.github.User;

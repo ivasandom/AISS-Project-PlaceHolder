@@ -5,17 +5,32 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Editor</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 </head>
 <body>
 <div id="container">
 
+
 <c:forEach items="${repositoryTrees}" var="tree">
-	<p><c:out value="${tree.path}" /></p>
+<div style="display:none" data-path="<c:out value="${tree.path}" />" data-type="<c:out value="${tree.type}" />"
+	data-name="<c:out value="${tree.name}" />" data-size="<c:out value="${tree.size}" />" class="tree"></div>
 </c:forEach>
 
 
 
 </div>
 
+ <div id="jstree_demo_div"></div>
+
+<script src="/js/editor.main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script>
+$('#jstree_demo_div').jstree({
+	'core': {
+		'data': fileExplorer
+	}
+});
+</script>
 </body>
 </html>
