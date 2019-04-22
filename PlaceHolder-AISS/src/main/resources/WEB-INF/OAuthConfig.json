@@ -11,7 +11,7 @@
         "clientId": "f753b00f0914454ba5c4fad097625e592c20f271541101424c4211428731496d",
         "clientSecret": "241cb9df7f1d9abdb529586fdc1f70fe7e0f266bdb9657623c7ac6647fe272dd",
         "authorizationFormUrl": "https://gitlab.com/oauth/authorize",
-        "scopes": ["write_repository", "read_user"]
+        "scopes": ["api"]
     },
     "Bitbucket": {
         "tokenUrl": "https://bitbucket.org/site/oauth2/access_token",
@@ -19,5 +19,12 @@
         "clientSecret": "6VVnWLR5RhvRVVyrHFyxauKL5nVw7kYt",
         "authorizationFormUrl": "https://bitbucket.org/site/oauth2/authorize",
         "scopes": ["repository:write", "account"]
+    },
+    "Trello": {
+        "tokenUrl": "https://trello.com/1/OAuthGetAccessToken",
+        "clientId": "d2fb3aa536d60add47698a0ffeb00b4c",
+        "clientSecret": "f1b6f1e1b2c8da1087ed2969c9a29872cffd50d84f4e7281db8b0dae351db71a",
+        "authorizationFormUrl": "https://trello.com/1/OAuthAuthorizeToken",
+        "scopes": ["write", "account"]
     }
 }	

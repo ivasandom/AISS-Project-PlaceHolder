@@ -49,6 +49,15 @@ ul {
 .btn-github:hover {
 	color:#ddd;
 }
+.btn-trello {
+	background: #000080;
+	padding:15px;
+	border-radius:5px;
+	color:#fff;
+}
+.btn-trello:hover {
+	color:#000080;
+}
 </style>
 
 <h1>PlaceHolder</h1>
@@ -56,6 +65,7 @@ ul {
 
 <a class="btn-github" href="/login?provider=GitLab">Sign in with GitLab</a>
 <a class="btn-github" href="/login?provider=GitHub">Sign in with GitHub</a>
+<a class="btn-trello" href="/login?provider=Trello">Sign in with Trello</a>
 
 <h2>Repositorios Github</h2>
 <ul>
