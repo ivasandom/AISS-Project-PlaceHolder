@@ -6,18 +6,18 @@
 		"authorizationFormUrl":"https://github.com/login/oauth/authorize",
 		"scopes": ["repo", "user"]
 	},
-	"Spotify": {
-        "tokenUrl": "https://accounts.spotify.com/api/token",
-        "clientId": "203faa857d4e46209ac534adfddb8bec",
-        "clientSecret": "05a361378ced4b6a95f6e6944d6e16e4",
-        "authorizationFormUrl": "https://accounts.spotify.com/authorize",
-        "scopes": []
-    },
     "GitLab": {
         "tokenUrl": "https://gitlab.com/oauth/token",
         "clientId": "f753b00f0914454ba5c4fad097625e592c20f271541101424c4211428731496d",
         "clientSecret": "241cb9df7f1d9abdb529586fdc1f70fe7e0f266bdb9657623c7ac6647fe272dd",
         "authorizationFormUrl": "https://gitlab.com/oauth/authorize",
-        "scopes": []
+        "scopes": ["write_repository", "read_user"]
+    },
+    "Bitbucket": {
+        "tokenUrl": "https://bitbucket.org/site/oauth2/access_token",
+        "clientId": "Ybxj7MWesCbGDVCea8",
+        "clientSecret": "6VVnWLR5RhvRVVyrHFyxauKL5nVw7kYt",
+        "authorizationFormUrl": "https://bitbucket.org/site/oauth2/authorize",
+        "scopes": ["repository:write", "account"]
     }
 }	
