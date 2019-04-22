@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
 
-import aiss.resources.TrelloResource;
-import aiss.trello.List;
+import aiss.model.resource.TrelloResource;
+import aiss.model.trello.List;
 
 
 public class DeleteListController extends HttpServlet {

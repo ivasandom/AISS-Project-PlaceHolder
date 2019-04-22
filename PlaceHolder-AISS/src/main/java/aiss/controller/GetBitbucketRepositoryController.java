@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
 
-import aiss.bitbucket.BitbucketRepository;
-import aiss.resources.BitbucketResource;
+import aiss.model.bitbucket.BitbucketRepository;
+import aiss.model.resource.BitbucketResource;
 
 
 public class GetBitbucketRepositoryController extends HttpServlet {

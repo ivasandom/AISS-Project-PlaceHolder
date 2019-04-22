@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
 
-import aiss.resources.TrelloResource;
-import aiss.trello.Card;
+import aiss.model.resource.TrelloResource;
+import aiss.model.trello.Card;
 
 public class UpdateCardController extends HttpServlet {
 

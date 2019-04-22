@@ -13,9 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
 
-
-import aiss.gitLab.GitLabRepository;
-import aiss.resources.GitLabResource;
+import aiss.model.gitLab.GitLabRepository;
+import aiss.model.resource.GitLabResource;
 
 public class GetGitLabRepositoryController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

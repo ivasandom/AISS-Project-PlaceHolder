@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
 
-import aiss.resources.TrelloResource;
-import aiss.trello.Board;
-import aiss.trello.List;
+import aiss.model.resource.TrelloResource;
+import aiss.model.trello.Board;
+import aiss.model.trello.List;
 
 
 public class AddListController extends HttpServlet {
