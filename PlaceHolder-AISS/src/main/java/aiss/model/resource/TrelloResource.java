@@ -13,15 +13,17 @@ import aiss.model.trello.List;
 
 public class TrelloResource {
 	private final String access_token;
-	public TrelloResource(String access_token) {
+	private final String key;
+	public TrelloResource(String access_token, String key) {
         this.access_token = access_token;
+        this.key =key;
     }
 	public Collection<Board> getAllBoards(String id) {
 
 		ClientResource cr = null;
 		Board[] boards = null;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/boards"+"/"+id+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/boards"+"/"+id+ "?key="+key+"&token=" + access_token);
 			boards = cr.get(Board[].class);
 
 		} catch (ResourceException re) {
@@ -36,7 +38,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		Board board = null;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/boards" + "/" + id+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/boards" + "/" + id+ "?key="+key+"&token=" + access_token);
 			board = cr.get(Board.class);
 
 		} catch (ResourceException re) {
@@ -52,7 +54,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		Board board = null;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/boards" +"/" +id+"/cards"+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/boards" +"/" +id+"/cards"+ "?key="+key+"&token=" + access_token);
 			board = cr.get(Board.class);
 
 		} catch (ResourceException re) {
@@ -68,7 +70,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		Board board = null;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/boards" +"/" +id+"/lists"+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/boards" +"/" +id+"/lists"+ "?key="+key+"&token=" + access_token);
 			board = cr.get(Board.class);
 
 		} catch (ResourceException re) {
@@ -84,7 +86,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		List list = null;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/lists" + "/" + id+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/lists" + "/" + id+ "?key="+key+"&token=" + access_token);
 			list = cr.get(List.class);
 
 		} catch (ResourceException re) {
@@ -100,7 +102,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		List list = null;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/lists" + "/" +id+"/cards"+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/lists" + "/" +id+"/cards"+ "?key="+key+"&token=" + access_token);
 			list = cr.get(List.class);
 
 		} catch (ResourceException re) {
@@ -115,7 +117,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		Card card = null;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/cards" + "/" + id+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/cards" + "/" + id+ "?key="+key+"&token=" + access_token);
 			card = cr.get(Card.class);
 
 		} catch (ResourceException re) {
@@ -130,7 +132,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		Board resultBoard = null;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/boards"+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/boards"+ "?key="+key+"&token=" + access_token);
 			cr.setEntityBuffering(true);
 			resultBoard = cr.post(name, Board.class);
 		} catch (ResourceException re) {
@@ -144,7 +146,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/lists" +"/" +idBoard +"/"+name+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/lists" +"/" +idBoard +"/"+name+ "?key="+key+"&token=" + access_token);
 			cr.setEntityBuffering(true);
 			cr.post(" ");
 		} catch (ResourceException re) {
@@ -158,7 +160,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/cards" +"/" +idList+"/"+name+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/cards" +"/" +idList+"/"+name+ "?key="+key+"&token=" + access_token);
 			cr.setEntityBuffering(true);
 			cr.post(" ");
 		} catch (ResourceException re) {
@@ -172,7 +174,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/boards" +"/" +id+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/boards" +"/" +id+ "?key="+key+"&token=" + access_token);
 			cr.setEntityBuffering(true);
 			cr.delete();
 		}catch (ResourceException re) {
@@ -187,7 +189,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/cards" +"/" +id+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/cards" +"/" +id+ "?key="+key+"&token=" + access_token);
 			cr.setEntityBuffering(true);
 			cr.delete();
 		}catch (ResourceException re) {
@@ -202,7 +204,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/lists"+"/"+id+"/closed"+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/lists"+"/"+id+"/closed"+ "?key="+key+"&token=" + access_token);
 			cr.setEntityBuffering(true);
 			cr.put(" ");
 		}catch (ResourceException re) {
@@ -217,7 +219,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/boards"+"/"+id+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/boards"+"/"+id+ "?key="+key+"&token=" + access_token);
 			cr.setEntityBuffering(true);
 			cr.put(id);
 		} catch (ResourceException re) {
@@ -232,7 +234,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/cards"+"/"+id+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/cards"+"/"+id+ "?key="+key+"&token=" + access_token);
 			cr.setEntityBuffering(true);
 			cr.put(id);
 		} catch (ResourceException re) {
@@ -247,7 +249,7 @@ public class TrelloResource {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource("https://api.trello.com/1/lists"+"/"+id+ "?access_token=" + access_token);
+			cr = new ClientResource("https://api.trello.com/1/lists"+"/"+id+ "?key="+key+"&token=" + access_token);
 			cr.setEntityBuffering(true);
 			cr.put(id);
 		} catch (ResourceException re) {

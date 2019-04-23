@@ -25,6 +25,6 @@
         "clientId": "d2fb3aa536d60add47698a0ffeb00b4c",
         "clientSecret": "f1b6f1e1b2c8da1087ed2969c9a29872cffd50d84f4e7281db8b0dae351db71a",
         "authorizationFormUrl": "https://trello.com/1/OAuthAuthorizeToken",
-        "scopes": ["write", "account"]
+        "scopes": ["write", "read", "account"]
     }
 }	

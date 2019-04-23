@@ -21,7 +21,8 @@ public class GetBoardController extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		
 		String accessToken = (String) req.getSession().getAttribute("Trello-token");
-		TrelloResource trelloResource =new TrelloResource(accessToken);
+		String key = (String) req.getSession().getAttribute("Trello-key");
+		TrelloResource trelloResource =new TrelloResource(accessToken, key);
 		String id = req.getParameter("id");
 		if (accessToken != null) {
 			
