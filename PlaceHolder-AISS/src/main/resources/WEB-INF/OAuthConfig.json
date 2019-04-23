@@ -26,5 +26,12 @@
         "clientSecret": "f1b6f1e1b2c8da1087ed2969c9a29872cffd50d84f4e7281db8b0dae351db71a",
         "authorizationFormUrl": "https://trello.com/1/OAuthAuthorizeToken",
         "scopes": ["write", "read", "account"]
+    },
+    "Todoist": {
+        "tokenUrl": "https://todoist.com/oauth/access_token",
+        "clientId": "a6756739e19b456c971ad293d8a6f55c",
+        "clientSecret": "48092f28265445c7ae628e0934d136d6",
+        "authorizationFormUrl": "https://todoist.com/oauth/authorize",
+        "scopes": ["data:read_write"]
     }
 }	

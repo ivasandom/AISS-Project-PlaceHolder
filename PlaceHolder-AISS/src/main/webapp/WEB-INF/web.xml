@@ -101,7 +101,7 @@
 		<servlet-name>GitHubOAuth2Callback</servlet-name>
 		<url-pattern>/oauth2callback/GitHub</url-pattern>
 	</servlet-mapping>
-<!--GitHubAuthController -->
+	<!--TrelloAuthController -->
 	<servlet>
 		<description />
 		<servlet-name>TrelloAuthController</servlet-name>
@@ -116,7 +116,7 @@
 		<url-pattern>/AuthController/Trello</url-pattern>
 	</servlet-mapping>
 
-	<!--GitHubOAuth2Callback -->
+	<!--TrelloOAuth2Callback -->
 	<servlet>
 		<description />
 		<servlet-name>TrelloOAuth2Callback</servlet-name>
@@ -133,5 +133,38 @@
 	<servlet-mapping>
 		<servlet-name>TrelloOAuth2Callback</servlet-name>
 		<url-pattern>/oauth2callback/Trello</url-pattern>
+	</servlet-mapping>
+	<!--TrelloAuthController -->
+	<servlet>
+		<description />
+		<servlet-name>TodoistAuthController</servlet-name>
+		<servlet-class>aiss.controller.oauth.GenericAuthController</servlet-class>
+		<init-param>
+			<param-name>provider</param-name>
+			<param-value>Todoist</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TodoistAuthController</servlet-name>
+		<url-pattern>/AuthController/Todoist</url-pattern>
+	</servlet-mapping>
+
+	<!--TrelloOAuth2Callback -->
+	<servlet>
+		<description />
+		<servlet-name>TodoistOAuth2Callback</servlet-name>
+		<servlet-class>aiss.controller.oauth.OAuth2Callback</servlet-class>
+		<init-param>
+			<param-name>provider</param-name>
+			<param-value>Todoist</param-value>
+		</init-param>
+		<init-param>
+			<param-name>onSuccess</param-name>
+			<param-value>redirect:/getBoard</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TodoistOAuth2Callback</servlet-name>
+		<url-pattern>/oauth2callback/Todoist</url-pattern>
 	</servlet-mapping>
 </web-app>
