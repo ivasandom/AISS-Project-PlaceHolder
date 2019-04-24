@@ -29,7 +29,7 @@ public class GetProjectsController extends HttpServlet {
 				req.getRequestDispatcher("/AuthController/Todoist").forward(req,resp);
 			}
 		}else{
-			log.info("Trying to acces to todoist without an acces token, redirecting to OAuth servle");
+			log.info("Trying to acces to todoist without an acces token, redirecting to OAuth servlet");
 			req.getRequestDispatcher("/AuthController/Todoist").forward(req,resp);
 		}
 	}
