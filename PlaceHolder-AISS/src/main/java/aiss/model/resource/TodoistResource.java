@@ -10,13 +10,16 @@ import aiss.model.todoist.Project;
 
 
 public class TodoistResource {
+	
 	private final String access_token;
+	
 	public TodoistResource(String access_token) {
         this.access_token = access_token;
     }
-private static final String BASE_URL = "https://beta.todoist.com/API/v8"; 
 	
-	public static Project[] getMyProjects(String access_token) {
+	private static final String BASE_URL = "https://beta.todoist.com/API/v8"; 
+	
+	public Project[] getMyProjects() {
 		
 		ClientResource cr = null;
 		Project[] projects = null;
@@ -33,7 +36,7 @@ private static final String BASE_URL = "https://beta.todoist.com/API/v8";
 		
 	}
 	
-	public static Event[] getActiveTasks(String access_token, String idProject) {
+	public Event[] getActiveTasks(String idProject) {
 		
 		ClientResource cr = null;
 		Event[] events = null;
