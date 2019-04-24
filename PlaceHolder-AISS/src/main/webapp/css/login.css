@@ -1,0 +1,52 @@
+body {
+	text-align: center;
+	padding: 150px;
+}
+h1 {
+	font-size: 50px;
+}
+body {
+	font: 20px Helvetica, sans-serif;
+	color: #333;
+}
+article {
+	display: block;
+	text-align: left;
+	width: 650px;
+	margin: 0 auto;
+}
+a {
+	color: #dc8100;
+	text-decoration: none;
+}
+a:hover {
+	color: #333;
+	text-decoration: none;
+}
+ul {
+	display: block;
+	list-style-type: decimal;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 40px;
+}
+.btn-github {
+	background: #333;
+	padding:15px;
+	border-radius:5px;
+	color:#fff;
+}
+.btn-github:hover {
+	color:#ddd;
+}
+.btn-trello {
+	background: #000080;
+	padding:15px;
+	border-radius:5px;
+	color:#fff;
+}
+.btn-trello:hover {
+	color:#000080;
+}

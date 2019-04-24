@@ -60,7 +60,7 @@
 		</init-param>
 		<init-param>
 			<param-name>onSuccess</param-name>
-			<param-value>redirect:/getGitLabRepository</param-value>
+			<param-value>redirect:/listaTareas.jsp</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -94,7 +94,7 @@
 		</init-param>
 		<init-param>
 			<param-name>onSuccess</param-name>
-			<param-value>redirect:/getGitHubRepository</param-value>
+			<param-value>redirect:/listaTareas.jsp</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -134,7 +134,7 @@
 		<servlet-name>TrelloOAuth2Callback</servlet-name>
 		<url-pattern>/oauth2callback/Trello</url-pattern>
 	</servlet-mapping>
-	<!--TrelloAuthController -->
+	<!--TodoistuthController -->
 	<servlet>
 		<description />
 		<servlet-name>TodoistAuthController</servlet-name>
@@ -149,7 +149,7 @@
 		<url-pattern>/AuthController/Todoist</url-pattern>
 	</servlet-mapping>
 
-	<!--TrelloOAuth2Callback -->
+	<!--TodoistOAuth2Callback -->
 	<servlet>
 		<description />
 		<servlet-name>TodoistOAuth2Callback</servlet-name>
@@ -160,7 +160,7 @@
 		</init-param>
 		<init-param>
 			<param-name>onSuccess</param-name>
-			<param-value>redirect:/getBoard</param-value>
+			<param-value>redirect:/listaTareas.jsp</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>

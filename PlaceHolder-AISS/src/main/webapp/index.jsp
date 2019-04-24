@@ -3,62 +3,10 @@
 <!doctype html>
 <head>
     <meta name="google-site-verification" content="_NmfhoumLzs-Z5B1TMC85vXgfkkzMEjuwNivJBGcPqQ" />
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <title>PlaceHolder</title>
 </head>
-<title>PlaceHolder</title>
-<style>
-body {
-	text-align: center;
-	padding: 150px;
-}
-h1 {
-	font-size: 50px;
-}
-body {
-	font: 20px Helvetica, sans-serif;
-	color: #333;
-}
-article {
-	display: block;
-	text-align: left;
-	width: 650px;
-	margin: 0 auto;
-}
-a {
-	color: #dc8100;
-	text-decoration: none;
-}
-a:hover {
-	color: #333;
-	text-decoration: none;
-}
-ul {
-	display: block;
-	list-style-type: decimal;
-	margin-top: 1em;
-	margin-bottom: 1em;
-	margin-left: 0;
-	margin-right: 0;
-	padding-left: 40px;
-}
-.btn-github {
-	background: #333;
-	padding:15px;
-	border-radius:5px;
-	color:#fff;
-}
-.btn-github:hover {
-	color:#ddd;
-}
-.btn-trello {
-	background: #000080;
-	padding:15px;
-	border-radius:5px;
-	color:#fff;
-}
-.btn-trello:hover {
-	color:#000080;
-}
-</style>
+
 
 <h1>PlaceHolder</h1>
 
@@ -89,8 +37,8 @@ ul {
 <ul>
 	<c:forEach items="${projects}" var="project">
 		<li>
-			<a href="<c:out value='${project.svnUrl}' />" target="_blank">
-				<c:out value='${project.fullName}' />
+			<a href="<c:out value='${project.id}' />" target="_blank">
+				<c:out value='${project.name}' />
 			</a>
 		</li>
 	</c:forEach>
