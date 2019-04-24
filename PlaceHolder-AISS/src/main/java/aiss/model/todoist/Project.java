@@ -1,164 +1,148 @@
+
 package aiss.model.todoist;
 
-public class Project extends TodoistObject {
-    public static final int MAX_DEPTH = 3;
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-    public static final int MAX_COUNT_FREE = 80;
-    public static final int MAX_COUNT_PREMIUM = 300;
-    public static final int MAX_COUNT_BUSINESS = 500;
-    public static final int MAX_SECTION_COUNT = 10;
-    public static final int MAX_ITEM_COUNT_FREE = 150;
-    public static final int MAX_ITEM_COUNT_PREMIUM = 300;
-    public static final int MAX_COLLABORATOR_COUNT_FREE = 5;
-    public static final int MAX_COLLABORATORS_COUNT_PREMIUM = 25;
-    public static final int MAX_COLLABORATORS_COUNT_BUSINESS = 50;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+    "is_deleted",
+    "indent",
+    "item_order",
+    "name",
+    "collapsed",
+    "shared",
+    "id",
+    "is_archived",
+    "color"
+})
+public class Project {
 
+    @JsonProperty("is_deleted")
+    private Integer isDeleted;
+    @JsonProperty("indent")
+    private Integer indent;
+    @JsonProperty("item_order")
+    private Integer itemOrder;
+    @JsonProperty("name")
     private String name;
-    private int color;
-    private Long parentId;
-    private int childOrder;
-    private boolean collapsed;
-    private boolean inbox;
-    private boolean teamInbox;
-    private boolean hasMoreNotes;
-    private boolean shared;
-    private boolean favorite;
-    private boolean archived;
+    @JsonProperty("collapsed")
+    private Integer collapsed;
+    @JsonProperty("shared")
+    private Boolean shared;
+    @JsonProperty("id")
+    private Integer id;
+    @JsonProperty("is_archived")
+    private Integer isArchived;
+    @JsonProperty("color")
+    private Integer color;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public Project(long id, String name, int color, Long parentId, int childOrder, boolean collapsed, boolean inbox,
-                   boolean teamInbox, boolean hasMoreNotes, boolean shared, boolean favorite, boolean archived,
-                   boolean deleted) {
-        super(id, deleted);
-        this.name = sanitizeName(name);
-        this.color = color;
-        this.parentId = parentId;
-        this.childOrder = childOrder;
-        this.collapsed = collapsed;
-        this.inbox = inbox;
-        this.teamInbox = teamInbox;
-        this.hasMoreNotes = hasMoreNotes;
-        this.shared = shared;
-        this.favorite = favorite;
-        this.archived = archived;
+    @JsonProperty("is_deleted")
+    public Integer getIsDeleted() {
+        return isDeleted;
     }
 
-    public Project(long id, String name, int color, Long parentId, int childOrder, boolean collapsed, boolean inbox,
-                   boolean teamInbox, boolean hasMoreNotes, boolean shared, boolean favorite) {
-        this(id, name, color, parentId, childOrder, collapsed, inbox, teamInbox, hasMoreNotes, shared, favorite, false,
-             false);
+    @JsonProperty("is_deleted")
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
-    public Project(long id, String name, int color, Long parentId, int childOrder, boolean favorite) {
-        this(id, name, color, parentId, childOrder, false, false, false, false, false, favorite, false, false);
+    @JsonProperty("indent")
+    public Integer getIndent() {
+        return indent;
     }
 
-    public Project(long id, String name, int childOrder) {
-        this(id, name, Colors.DEFAULT_COLOR_ID, null, childOrder, false, false, false, false, false, false, false,
-             false);
+    @JsonProperty("indent")
+    public void setIndent(Integer indent) {
+        this.indent = indent;
     }
 
+    @JsonProperty("item_order")
+    public Integer getItemOrder() {
+        return itemOrder;
+    }
+
+    @JsonProperty("item_order")
+    public void setItemOrder(Integer itemOrder) {
+        this.itemOrder = itemOrder;
+    }
+
+    @JsonProperty("name")
     public String getName() {
         return name;
     }
 
+    @JsonProperty("name")
     public void setName(String name) {
-        this.name = sanitizeName(name);
+        this.name = name;
     }
 
-    /**
-     * Returns the color id.
-     */
-    public int getColor() {
-        return color;
-    }
-
-    /**
-     * Returns the color value.
-     */
-    public int getColorInt() {
-        return Colors.getColor(color);
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public int getChildOrder() {
-        return childOrder;
-    }
-
-    public void setChildOrder(int childOrder) {
-        this.childOrder = childOrder;
-    }
-
-    public boolean isCollapsed() {
+    @JsonProperty("collapsed")
+    public Integer getCollapsed() {
         return collapsed;
     }
 
-    public void setCollapsed(boolean collapsed) {
+    @JsonProperty("collapsed")
+    public void setCollapsed(Integer collapsed) {
         this.collapsed = collapsed;
     }
 
-    public boolean isInbox() {
-        return inbox;
-    }
-
-    public void setInbox(boolean inbox) {
-        this.inbox = inbox;
-    }
-
-    public boolean isTeamInbox() {
-        return teamInbox;
-    }
-
-    public void setTeamInbox(boolean teamInbox) {
-        this.teamInbox = teamInbox;
-    }
-
-    public boolean hasMoreNotes() {
-        return hasMoreNotes;
-    }
-
-    public void setHasMoreNotes(boolean hasMoreNotes) {
-        this.hasMoreNotes = hasMoreNotes;
-    }
-
-    public boolean isShared() {
+    @JsonProperty("shared")
+    public Boolean getShared() {
         return shared;
     }
 
-    public void setShared(boolean shared) {
+    @JsonProperty("shared")
+    public void setShared(Boolean shared) {
         this.shared = shared;
     }
 
-    public boolean isFavorite() {
-        return favorite;
+    @JsonProperty("id")
+    public Integer getId() {
+        return id;
     }
 
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
+    @JsonProperty("id")
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public boolean isArchived() {
-        return archived;
+    @JsonProperty("is_archived")
+    public Integer getIsArchived() {
+        return isArchived;
     }
 
-    public void setArchived(boolean archived) {
-        this.archived = archived;
+    @JsonProperty("is_archived")
+    public void setIsArchived(Integer isArchived) {
+        this.isArchived = isArchived;
     }
 
-    public static String sanitizeName(String name) {
-        if (name != null) {
-            name = Sanitizers.PROJECT_NAME_INVALID_PATTERN.matcher(name.trim()).replaceAll(Sanitizers.REPLACEMENT);
-        }
-        return name;
+    @JsonProperty("color")
+    public Integer getColor() {
+        return color;
     }
+
+    @JsonProperty("color")
+    public void setColor(Integer color) {
+        this.color = color;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
+    }
+
 }
