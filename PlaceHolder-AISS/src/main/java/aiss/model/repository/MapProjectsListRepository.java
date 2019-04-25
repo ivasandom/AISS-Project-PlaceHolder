@@ -97,7 +97,7 @@ public class MapProjectsListRepository implements ProjectsListRepository{
 		
 	}
 	@Override
-	public void removeTsaks(String projectslistId, String tasksId) {
+	public void removeTasks(String projectslistId, String tasksId) {
 		// TODO Auto-generated method stub
 		
 	}

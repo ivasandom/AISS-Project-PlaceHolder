@@ -23,5 +23,5 @@ public interface ProjectsListRepository {
 		public void deleteProjectsList(String projectslistId);
 		public Collection<Tasks> getAll(String projectslistId);
 		public void addTasks(String projectslistId, String tasksId);
-		public void removeTsaks(String projectslistId, String tasksId); 
+		public void removeTasks(String projectslistId, String tasksId); 
 }
