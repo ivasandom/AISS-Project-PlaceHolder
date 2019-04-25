@@ -1,4 +1,5 @@
-package aiss.model.bitbucket;
+
+package aiss.model.github;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,36 +12,49 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id",
-    "displayId"
+    "name",
+    "date",
+    "email"
 })
-public class Parent {
+public class Author {
 
-    @JsonProperty("id")
-    private String id;
-    @JsonProperty("displayId")
-    private String displayId;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("date")
+    private String date;
+    @JsonProperty("email")
+    private String email;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("id")
-    public String getId() {
-        return id;
+    @JsonProperty("name")
+    public String getName() {
+        return name;
     }
 
-    @JsonProperty("id")
-    public void setId(String id) {
-        this.id = id;
+    @JsonProperty("name")
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @JsonProperty("displayId")
-    public String getDisplayId() {
-        return displayId;
+    @JsonProperty("date")
+    public String getDate() {
+        return date;
     }
 
-    @JsonProperty("displayId")
-    public void setDisplayId(String displayId) {
-        this.displayId = displayId;
+    @JsonProperty("date")
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    @JsonProperty("email")
+    public String getEmail() {
+        return email;
+    }
+
+    @JsonProperty("email")
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @JsonAnyGetter

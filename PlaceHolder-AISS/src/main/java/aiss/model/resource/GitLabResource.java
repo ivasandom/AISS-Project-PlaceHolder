@@ -3,7 +3,7 @@ package aiss.model.resource;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 
-import aiss.model.gitLab.GitLabRepository;
+import aiss.model.gitlab.GitLabRepository;
 
 public class GitLabResource {
 	

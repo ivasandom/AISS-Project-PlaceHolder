@@ -1,5 +1,4 @@
-
-package com.example;
+package aiss.model.bitbucket;
 
 import java.util.HashMap;
 import java.util.List;

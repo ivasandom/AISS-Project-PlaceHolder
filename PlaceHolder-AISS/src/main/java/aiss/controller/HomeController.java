@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import aiss.model.gitHub.Repository;
-import aiss.model.gitHub.User;
+import aiss.model.github.Repository;
+import aiss.model.github.User;
 import aiss.model.resource.GitHubResource;
 
 

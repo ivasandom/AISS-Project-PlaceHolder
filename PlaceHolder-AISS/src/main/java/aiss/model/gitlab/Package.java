@@ -1,4 +1,5 @@
-package aiss.model.bitbucket;
+
+package aiss.model.gitlab;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,35 +13,61 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "id",
-    "displayId"
+    "name",
+    "version",
+    "package_type"
 })
-public class Parent {
+public class Package {
 
     @JsonProperty("id")
-    private String id;
-    @JsonProperty("displayId")
-    private String displayId;
+    private Integer id;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("version")
+    private String version;
+    @JsonProperty("package_type")
+    private String packageType;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("id")
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
     @JsonProperty("id")
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    @JsonProperty("displayId")
-    public String getDisplayId() {
-        return displayId;
+    @JsonProperty("name")
+    public String getName() {
+        return name;
     }
 
-    @JsonProperty("displayId")
-    public void setDisplayId(String displayId) {
-        this.displayId = displayId;
+    @JsonProperty("name")
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @JsonProperty("version")
+    public String getVersion() {
+        return version;
+    }
+
+    @JsonProperty("version")
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    @JsonProperty("package_type")
+    public String getPackageType() {
+        return packageType;
+    }
+
+    @JsonProperty("package_type")
+    public void setPackageType(String packageType) {
+        this.packageType = packageType;
     }
 
     @JsonAnyGetter

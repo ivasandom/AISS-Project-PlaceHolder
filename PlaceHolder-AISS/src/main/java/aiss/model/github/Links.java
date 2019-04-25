@@ -1,4 +1,5 @@
-package aiss.model.bitbucket;
+
+package aiss.model.github;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,36 +12,36 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id",
-    "displayId"
+    "html",
+    "self"
 })
-public class Parent {
+public class Links {
 
-    @JsonProperty("id")
-    private String id;
-    @JsonProperty("displayId")
-    private String displayId;
+    @JsonProperty("html")
+    private String html;
+    @JsonProperty("self")
+    private String self;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("id")
-    public String getId() {
-        return id;
+    @JsonProperty("html")
+    public String getHtml() {
+        return html;
     }
 
-    @JsonProperty("id")
-    public void setId(String id) {
-        this.id = id;
+    @JsonProperty("html")
+    public void setHtml(String html) {
+        this.html = html;
     }
 
-    @JsonProperty("displayId")
-    public String getDisplayId() {
-        return displayId;
+    @JsonProperty("self")
+    public String getSelf() {
+        return self;
     }
 
-    @JsonProperty("displayId")
-    public void setDisplayId(String displayId) {
-        this.displayId = displayId;
+    @JsonProperty("self")
+    public void setSelf(String self) {
+        this.self = self;
     }
 
     @JsonAnyGetter

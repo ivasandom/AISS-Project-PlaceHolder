@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import aiss.model.gitHub.Repository;
-import aiss.model.gitHub.RepositoryTree;
-import aiss.model.gitHub.User;
+import aiss.model.github.Repository;
+import aiss.model.github.RepositoryTree;
+import aiss.model.github.User;
 import aiss.model.resource.GitHubResource;
 
 public class EditorController extends HttpServlet {

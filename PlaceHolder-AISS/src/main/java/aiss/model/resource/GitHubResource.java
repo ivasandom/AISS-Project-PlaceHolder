@@ -3,11 +3,11 @@ package aiss.model.resource;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 
-import aiss.model.gitHub.Blob;
-import aiss.model.gitHub.Branch;
-import aiss.model.gitHub.Repository;
-import aiss.model.gitHub.RepositoryTree;
-import aiss.model.gitHub.User;
+import aiss.model.github.Blob;
+import aiss.model.github.Branch;
+import aiss.model.github.Repository;
+import aiss.model.github.RepositoryTree;
+import aiss.model.github.User;
 
 public class GitHubResource {
 	

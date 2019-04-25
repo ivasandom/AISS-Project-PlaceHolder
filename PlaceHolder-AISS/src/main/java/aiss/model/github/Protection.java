@@ -1,4 +1,5 @@
-package aiss.model.bitbucket;
+
+package aiss.model.github;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,36 +12,36 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id",
-    "displayId"
+    "enabled",
+    "required_status_checks"
 })
-public class Parent {
+public class Protection {
 
-    @JsonProperty("id")
-    private String id;
-    @JsonProperty("displayId")
-    private String displayId;
+    @JsonProperty("enabled")
+    private Boolean enabled;
+    @JsonProperty("required_status_checks")
+    private RequiredStatusChecks requiredStatusChecks;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("id")
-    public String getId() {
-        return id;
+    @JsonProperty("enabled")
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    @JsonProperty("id")
-    public void setId(String id) {
-        this.id = id;
+    @JsonProperty("enabled")
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
-    @JsonProperty("displayId")
-    public String getDisplayId() {
-        return displayId;
+    @JsonProperty("required_status_checks")
+    public RequiredStatusChecks getRequiredStatusChecks() {
+        return requiredStatusChecks;
     }
 
-    @JsonProperty("displayId")
-    public void setDisplayId(String displayId) {
-        this.displayId = displayId;
+    @JsonProperty("required_status_checks")
+    public void setRequiredStatusChecks(RequiredStatusChecks requiredStatusChecks) {
+        this.requiredStatusChecks = requiredStatusChecks;
     }
 
     @JsonAnyGetter

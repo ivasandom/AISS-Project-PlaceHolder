@@ -1,4 +1,5 @@
-package aiss.model.bitbucket;
+
+package aiss.model.gitlab;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,14 +13,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "id",
-    "displayId"
+    "name",
+    "type",
+    "path",
+    "mode"
 })
-public class Parent {
+public class RepositoryTree {
 
     @JsonProperty("id")
     private String id;
-    @JsonProperty("displayId")
-    private String displayId;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("type")
+    private String type;
+    @JsonProperty("path")
+    private String path;
+    @JsonProperty("mode")
+    private String mode;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -33,14 +43,44 @@ public class Parent {
         this.id = id;
     }
 
-    @JsonProperty("displayId")
-    public String getDisplayId() {
-        return displayId;
+    @JsonProperty("name")
+    public String getName() {
+        return name;
     }
 
-    @JsonProperty("displayId")
-    public void setDisplayId(String displayId) {
-        this.displayId = displayId;
+    @JsonProperty("name")
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @JsonProperty("type")
+    public String getType() {
+        return type;
+    }
+
+    @JsonProperty("type")
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @JsonProperty("path")
+    public String getPath() {
+        return path;
+    }
+
+    @JsonProperty("path")
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    @JsonProperty("mode")
+    public String getMode() {
+        return mode;
+    }
+
+    @JsonProperty("mode")
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 
     @JsonAnyGetter

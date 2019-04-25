@@ -1,4 +1,5 @@
-package aiss.model.bitbucket;
+
+package aiss.model.github;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,17 +12,36 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
+    "key",
     "name",
-    "emailAddress"
+    "spdx_id",
+    "url",
+    "node_id"
 })
-public class Author {
+public class License {
 
+    @JsonProperty("key")
+    private String key;
     @JsonProperty("name")
     private String name;
-    @JsonProperty("emailAddress")
-    private String emailAddress;
+    @JsonProperty("spdx_id")
+    private String spdxId;
+    @JsonProperty("url")
+    private String url;
+    @JsonProperty("node_id")
+    private String nodeId;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    @JsonProperty("key")
+    public String getKey() {
+        return key;
+    }
+
+    @JsonProperty("key")
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     @JsonProperty("name")
     public String getName() {
@@ -33,14 +53,34 @@ public class Author {
         this.name = name;
     }
 
-    @JsonProperty("emailAddress")
-    public String getEmailAddress() {
-        return emailAddress;
+    @JsonProperty("spdx_id")
+    public String getSpdxId() {
+        return spdxId;
     }
 
-    @JsonProperty("emailAddress")
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    @JsonProperty("spdx_id")
+    public void setSpdxId(String spdxId) {
+        this.spdxId = spdxId;
+    }
+
+    @JsonProperty("url")
+    public String getUrl() {
+        return url;
+    }
+
+    @JsonProperty("url")
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @JsonProperty("node_id")
+    public String getNodeId() {
+        return nodeId;
+    }
+
+    @JsonProperty("node_id")
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
     }
 
     @JsonAnyGetter

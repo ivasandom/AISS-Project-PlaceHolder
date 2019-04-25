@@ -1,6 +1,8 @@
-package aiss.model.bitbucket;
+
+package aiss.model.github;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -11,36 +13,36 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id",
-    "displayId"
+    "enforcement_level",
+    "contexts"
 })
-public class Parent {
+public class RequiredStatusChecks {
 
-    @JsonProperty("id")
-    private String id;
-    @JsonProperty("displayId")
-    private String displayId;
+    @JsonProperty("enforcement_level")
+    private String enforcementLevel;
+    @JsonProperty("contexts")
+    private List<String> contexts = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("id")
-    public String getId() {
-        return id;
+    @JsonProperty("enforcement_level")
+    public String getEnforcementLevel() {
+        return enforcementLevel;
     }
 
-    @JsonProperty("id")
-    public void setId(String id) {
-        this.id = id;
+    @JsonProperty("enforcement_level")
+    public void setEnforcementLevel(String enforcementLevel) {
+        this.enforcementLevel = enforcementLevel;
     }
 
-    @JsonProperty("displayId")
-    public String getDisplayId() {
-        return displayId;
+    @JsonProperty("contexts")
+    public List<String> getContexts() {
+        return contexts;
     }
 
-    @JsonProperty("displayId")
-    public void setDisplayId(String displayId) {
-        this.displayId = displayId;
+    @JsonProperty("contexts")
+    public void setContexts(List<String> contexts) {
+        this.contexts = contexts;
     }
 
     @JsonAnyGetter

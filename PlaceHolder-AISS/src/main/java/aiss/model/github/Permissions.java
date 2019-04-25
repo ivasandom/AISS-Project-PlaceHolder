@@ -1,4 +1,5 @@
-package aiss.model.bitbucket;
+
+package aiss.model.github;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,36 +12,49 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id",
-    "displayId"
+    "admin",
+    "push",
+    "pull"
 })
-public class Parent {
+public class Permissions {
 
-    @JsonProperty("id")
-    private String id;
-    @JsonProperty("displayId")
-    private String displayId;
+    @JsonProperty("admin")
+    private Boolean admin;
+    @JsonProperty("push")
+    private Boolean push;
+    @JsonProperty("pull")
+    private Boolean pull;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("id")
-    public String getId() {
-        return id;
+    @JsonProperty("admin")
+    public Boolean getAdmin() {
+        return admin;
     }
 
-    @JsonProperty("id")
-    public void setId(String id) {
-        this.id = id;
+    @JsonProperty("admin")
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
-    @JsonProperty("displayId")
-    public String getDisplayId() {
-        return displayId;
+    @JsonProperty("push")
+    public Boolean getPush() {
+        return push;
     }
 
-    @JsonProperty("displayId")
-    public void setDisplayId(String displayId) {
-        this.displayId = displayId;
+    @JsonProperty("push")
+    public void setPush(Boolean push) {
+        this.push = push;
+    }
+
+    @JsonProperty("pull")
+    public Boolean getPull() {
+        return pull;
+    }
+
+    @JsonProperty("pull")
+    public void setPull(Boolean pull) {
+        this.pull = pull;
     }
 
     @JsonAnyGetter
