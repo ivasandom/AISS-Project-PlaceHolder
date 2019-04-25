@@ -83,17 +83,18 @@ public class TodoistResource {
 
 	}
 	
-	public Project addProject(String name) {
+	public boolean addProject(String id) {
 		ClientResource cr = null;
-		Project resultProject = null;
+		boolean success = true;
 		try {
-			cr = new ClientResource(BASE_URL + "?access_token=" + access_token);
+			cr = new ClientResource(BASE_URL + "/tasks"+"/"+id+"?access_token=" + access_token);
 			cr.setEntityBuffering(true);
-			resultProject = cr.post(name, Project.class);
+			cr.post(" ");
 		} catch (ResourceException re) {
-			System.err.println("Error when adding the project: " + name +" " + cr.getResponse().getStatus());
+			System.err.println("Error when adding the task: " + cr.getResponse().getStatus());
+			success = false;
 		}
-		return resultProject;
+		return success;
 	}
 
 
