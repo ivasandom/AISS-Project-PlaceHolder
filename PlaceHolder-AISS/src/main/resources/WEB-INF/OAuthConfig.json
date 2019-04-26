@@ -20,13 +20,6 @@
         "authorizationFormUrl": "https://bitbucket.org/site/oauth2/authorize",
         "scopes": ["repository:write", "account"]
     },
-    "Trello": {
-        "tokenUrl": "https://trello.com/1/OAuthGetAccessToken",
-        "clientId": "d2fb3aa536d60add47698a0ffeb00b4c",
-        "clientSecret": "f1b6f1e1b2c8da1087ed2969c9a29872cffd50d84f4e7281db8b0dae351db71a",
-        "authorizationFormUrl": "https://trello.com/1/OAuthAuthorizeToken",
-        "scopes": ["write", "read", "account"]
-    },
     "Todoist": {
         "tokenUrl": "https://todoist.com/oauth/access_token",
         "clientId": "a6756739e19b456c971ad293d8a6f55c",
