@@ -69,7 +69,7 @@ public class ProyectosResource {
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response addProjectsList(@Context UriInfo uriInfo, Project project) {
+	public Response addProject(@Context UriInfo uriInfo, Project project) {
 		if (project.getName() == null || "".equals(project.getName()))
 			throw new BadRequestException("The name of the project must not be null");
 		
@@ -89,7 +89,7 @@ public class ProyectosResource {
 	
 	@PUT
 	@Consumes("application/json")
-	public Response updateVenuesList(Project project) {
+	public Response updateProject(Project project) {
 		Project oldproject = repository.getProject(project.getId());
 		if (oldproject == null) {
 			throw new NotFoundException("The project with id "+ project.getId() +" was not found");			

@@ -7,7 +7,7 @@ public class Project {
 	
 	private String id;
 	private String name;
-	private List<Task> task;
+	private List<Task> tasks;
 	
 	public Project() {
 	}
@@ -17,7 +17,7 @@ public class Project {
 	}
 	
 	protected void setTasks(List<Task> t) {
-		this.task = t;
+		this.tasks = t;
 	}
 
 	public String getId() {
@@ -37,15 +37,15 @@ public class Project {
 	}
 
 	public List<Task> getTasks() {
-		return task;
+		return tasks;
 	}
 	
 	public Task getTask(String id) {
-		if (task == null)
+		if (tasks == null)
 			return null;
 		
 		Task task = null;
-		for(Task p: this.task)
+		for(Task p: tasks)
 			if (p.getId().equals(id))
 			{
 				task=p;
@@ -56,18 +56,18 @@ public class Project {
 	}
 	
 	public void addTask(Task t) {
-		if (task==null)
-			task = new ArrayList<Task>();
-		task.add(t);
+		if (tasks==null)
+			tasks = new ArrayList<Task>();
+		tasks.add(t);
 	}
 	
 	public void deleteTask(Task p) {
-		task.remove(p);
+		tasks.remove(p);
 	}
 	
 	public void deleteTask(String id) {
 		Task t = getTask(id);
 		if (t!=null)
-			task.remove(t);
+			tasks.remove(t);
 	}
 }

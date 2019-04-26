@@ -69,7 +69,7 @@ public class TareasResource {
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response addTasks(@Context UriInfo uriInfo, Task task) {
+	public Response addTask(@Context UriInfo uriInfo, Task task) {
 		if(task.getName() == null || "".equals(task.getName()))
 			throw new BadRequestException("The name of the task must not be null");
 		
@@ -87,7 +87,7 @@ public class TareasResource {
 	
 	@PUT
 	@Consumes("application/json")
-	public Response updateTasks(Task task) {
+	public Response updateTask(Task task) {
 		Task oldTask = repository.getTask(task.getId());
 		if(oldTask == null) {
 			throw new NotFoundException("The task with id= " +  task.getId() + " was not found");
