@@ -36,11 +36,11 @@
           				Tokens oauth
         			</a>
         			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          				<a class="dropdown-item" href="/login?provider=GitLab">GitLab - <c:out value='${sessionScope["GitLab-token"]}' /></a>
-          				<a class="dropdown-item" href="/login?provider=GitHub">GitHub - <c:out value='${sessionScope["GitHub-token"]}' /></a>
-          				<a class="dropdown-item" href="/login?provider=Bitbucket">Bitbucket - <c:out value='${sessionScope["Bitbucket-token"]}' /></a>
+          				<a class="dropdown-item" href="/login?provider=GitLab">GitLab - ${sessionScope["GitLab-token"]}</a>
+          				<a class="dropdown-item" href="/login?provider=GitHub">GitHub - ${sessionScope["GitHub-token"]}</a>
+          				<a class="dropdown-item" href="/login?provider=Bitbucket">Bitbucket - ${sessionScope["Bitbucket-token"]}</a>
           				<div class="dropdown-divider"></div>
-          				<a class="dropdown-item" href="/login?provider=Todoist">Todoist - <c:out value='${sessionScope["Todoist-token"]}' /></a>
+          				<a class="dropdown-item" href="/login?provider=Todoist">Todoist - ${sessionScope["Todoist-token"]}</a>
         			</div>
       			</li>
       			<c:if test="${not empty sessionScope['GitHub-token']}">
@@ -50,10 +50,27 @@
         			</a>
         			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
         				<c:forEach items="${repositories}" var="repository">
-							<a class="dropdown-item" href="/editor?owner=<c:out value='${repository.owner.login}' />&repo=<c:out value='${repository.name}' />">
-      							<c:out value='${repository.fullName}' />
+							<a class="dropdown-item" href="/editor?owner=${repository.owner.login}&repo=${repository.name}">
+      							${repository.fullName}
       						</a>
       					</c:forEach>
+        			</div>
+      			</li>
+      			</c:if>
+      			
+      			<c:if test="${not empty sessionScope['Todoist-token']}">
+      			<li class="nav-item dropdown">
+        			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          				Mis proyectos
+        			</a>
+        			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        				<c:forEach items="${myProjects}" var="project">
+							<a class="dropdown-item" href="/projects?id=${project.id}">
+      							${project.name}
+      						</a>
+      					</c:forEach>
+      					<div class="dropdown-divider"></div>
+      					<a class="dropdown-item" href="#">Create new project</a>
         			</div>
       			</li>
       			</c:if>
