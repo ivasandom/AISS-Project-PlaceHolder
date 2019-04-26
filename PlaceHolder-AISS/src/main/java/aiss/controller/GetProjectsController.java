@@ -18,9 +18,12 @@ public class GetProjectsController extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String accessToken=(String)req.getSession().getAttribute("Todoist-token");
+		
 		if(accessToken!=null && !"".equals(accessToken)){
+			
 			TodoistResource tdResource=new TodoistResource(accessToken);
 			Project[] projects=tdResource.getMyProjects();
+			
 			if(projects!=null){
 				req.setAttribute("files", projects);
 				req.getRequestDispatcher("/index.jsp").forward(req,resp);

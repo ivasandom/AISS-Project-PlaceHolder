@@ -22,6 +22,7 @@ public class GetTaskController extends HttpServlet{
 		String access_token = (String) req.getSession().getAttribute("Todoist-token");
 		TodoistResource todoistResource = new TodoistResource(access_token);
 		String id = req.getParameter("id");
+		
 		if (access_token != null) {
 			
 			Event task = todoistResource.getTask(id);

@@ -30,10 +30,10 @@ public class DeleteTaskController {
 			}
 			else {
 				req.setAttribute("message", "The task could not be deleted");
-				log.log(Level.FINE, "The task with id=" + id + " could not be deleted. Perhaps it is duplicated. Forwarding to index.");
+				log.log(Level.FINE, "The task with id=" + id + " could not be deleted. Perhaps it doesn´t exists. Forwarding to index.");
 			}
-		
-		}req.getRequestDispatcher("index.jsp").forward(req, resp);
+		req.getRequestDispatcher("index.jsp").forward(req, resp);
+		}
 		
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

@@ -35,8 +35,8 @@ public class AddProjectController extends HttpServlet{
 				req.setAttribute("message", "The project could not be added");
 				log.log(Level.FINE, "The project with id=" + id + " could not be added. Perhaps it is duplicated. Forwarding to index .");
 			}
-		
-		}req.getRequestDispatcher("index.jsp").forward(req, resp);
+		req.getRequestDispatcher("index.jsp").forward(req, resp);
+		}
 		
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

@@ -31,7 +31,7 @@ public class DeleteProjectController {
 			}
 			else {
 				req.setAttribute("message", "The project could not be deleted");
-				log.log(Level.FINE, "The project with id=" + id + " could not be deleted. Perhaps it is duplicated. Forwarding to index.");
+				log.log(Level.FINE, "The project with id=" + id + " could not be deleted. Perhaps it doesn´t exists. Forwarding to index.");
 			}
 		
 		}req.getRequestDispatcher("index.jsp").forward(req, resp);
