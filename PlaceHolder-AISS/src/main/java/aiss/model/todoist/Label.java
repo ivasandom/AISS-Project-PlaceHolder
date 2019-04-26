@@ -1,69 +1,70 @@
+
 package aiss.model.todoist;
 
-public class Label extends TodoistObject {
-    public static final int MAX_COUNT = 500;
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+    "id",
+    "name",
+    "order"
+})
+public class Label {
+
+    @JsonProperty("id")
+    private Long id;
+    @JsonProperty("name")
     private String name;
-    private int color;
-    private int itemOrder;
-    private boolean favorite;
+    @JsonProperty("order")
+    private Long order;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public Label(long id, String name, int color, int itemOrder, boolean favorite, boolean deleted) {
-        super(id, deleted);
-        this.name = sanitizeName(name);
-        this.color = color;
-        this.itemOrder = itemOrder;
-        this.favorite = favorite;
+    @JsonProperty("id")
+    public Long getId() {
+        return id;
     }
 
-    public Label(long id, String name, int color, int itemOrder, boolean favorite) {
-        this(id, name, color, itemOrder, favorite, false);
+    @JsonProperty("id")
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Label(long id, String name, int itemOrder, boolean favorite) {
-        this(id, name, Colors.DEFAULT_COLOR_ID, itemOrder, favorite, false);
-    }
-
+    @JsonProperty("name")
     public String getName() {
         return name;
     }
 
+    @JsonProperty("name")
     public void setName(String name) {
-        this.name = sanitizeName(name);
+        this.name = name;
     }
 
-    public int getColor() {
-        return color;
+    @JsonProperty("order")
+    public Long getOrder() {
+        return order;
     }
 
-    public int getColorInt() {
-        return Colors.getColor(color);
+    @JsonProperty("order")
+    public void setOrder(Long order) {
+        this.order = order;
     }
 
-    public void setColor(int color) {
-        this.color = color;
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
-    public int getItemOrder() {
-        return itemOrder;
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 
-    public void setItemOrder(int itemOrder) {
-        this.itemOrder = itemOrder;
-    }
-
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
-    }
-
-    public static String sanitizeName(String name) {
-        if (name != null) {
-            name = Sanitizers.LABEL_NAME_INVALID_PATTERN.matcher(name.trim()).replaceAll(Sanitizers.REPLACEMENT);
-        }
-        return name;
-    }
 }

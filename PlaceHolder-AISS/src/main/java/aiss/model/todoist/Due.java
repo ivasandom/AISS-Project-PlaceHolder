@@ -1,62 +1,83 @@
+
 package aiss.model.todoist;
 
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+    "date",
+    "datetime",
+    "string",
+    "timezone"
+})
 public class Due {
-    private final String date;
-    private final String timezone;
-    private final String string;
-    private final String lang;
-    private final boolean isRecurring;
 
-    public Due(String date, String timezone, String string, String lang, boolean isRecurring) {
-        this.date = date;
-        this.timezone = timezone;
-        this.string = string;
-        this.lang = lang;
-        this.isRecurring = isRecurring;
-    }
+    @JsonProperty("date")
+    private String date;
+    @JsonProperty("datetime")
+    private String datetime;
+    @JsonProperty("string")
+    private String string;
+    @JsonProperty("timezone")
+    private String timezone;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
+    @JsonProperty("date")
     public String getDate() {
         return date;
     }
 
-    public String getTimezone() {
-        return timezone;
+    @JsonProperty("date")
+    public void setDate(String date) {
+        this.date = date;
     }
 
+    @JsonProperty("datetime")
+    public String getDatetime() {
+        return datetime;
+    }
+
+    @JsonProperty("datetime")
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
+
+    @JsonProperty("string")
     public String getString() {
         return string;
     }
 
-    public String getLang() {
-        return lang;
+    @JsonProperty("string")
+    public void setString(String string) {
+        this.string = string;
     }
 
-    public boolean isRecurring() {
-        return isRecurring;
+    @JsonProperty("timezone")
+    public String getTimezone() {
+        return timezone;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Due d = (Due) o;
-        return Utils.equals(date, d.date) && Utils.equals(timezone, d.timezone) && Utils.equals(string, d.string) &&
-                Utils.equals(lang, d.lang) && isRecurring == d.isRecurring;
+    @JsonProperty("timezone")
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 23;
-        hash = 31 * hash + (date != null ? date.hashCode() : 0);
-        hash = 31 * hash + (timezone != null ? timezone.hashCode() : 0);
-        hash = 31 * hash + (string != null ? string.hashCode() : 0);
-        hash = 31 * hash + (lang != null ? lang.hashCode() : 0);
-        hash = 31 * hash + (isRecurring ? 1231 : 1237);
-        return hash;
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
+    }
+
 }
