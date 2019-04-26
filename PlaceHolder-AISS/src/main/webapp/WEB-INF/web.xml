@@ -154,4 +154,16 @@
 		<servlet-name>TodoistOAuth2Callback</servlet-name>
 		<url-pattern>/oauth2callback/Todoist</url-pattern>
 	</servlet-mapping>
+	
+	<!-- WebApp -->
+	
+	<servlet>
+		<servlet-name>TodoistProjectPage</servlet-name>
+		<servlet-class>aiss.controller.GetProjectController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TodoistProjectPage</servlet-name>
+		<url-pattern>/projects</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
