@@ -8,11 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-import aiss.model.github.Repository;
 import aiss.model.github.RepositoryTree;
-import aiss.model.github.User;
 import aiss.model.resource.GitHubResource;
 
 public class EditorController extends HttpServlet {
@@ -21,18 +17,19 @@ public class EditorController extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		
-		String accessToken = (String) req.getSession().getAttribute("GitHub-token");
+		String accessTokenGitHub = (String) req.getSession().getAttribute("GitHub-token");
 		String owner = req.getParameter("owner");
 		String repo = req.getParameter("repo");
 		
-		if (owner != null && repo != null && accessToken != null) {
-			RepositoryTree repositoryTree = GitHubResource.getRepositoryTree(owner, repo, accessToken);
+		if (owner != null && repo != null && accessTokenGitHub != null) {
+			
+			GitHubResource githubResource = new GitHubResource(accessTokenGitHub);
+			RepositoryTree repositoryTree = githubResource.getRepositoryTree(owner, repo);
 			req.setAttribute("repositoryTrees", repositoryTree.getTree());
 			req.getRequestDispatcher("editor.jsp").forward(req, resp);
+		
 		}
 		
 		
-//		
-// 		req.getRequestDispatcher("index.jsp").forward(req, resp);
 	}
 }

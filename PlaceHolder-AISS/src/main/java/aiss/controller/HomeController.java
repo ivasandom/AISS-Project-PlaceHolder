@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import aiss.model.github.Repository;
 import aiss.model.github.User;
 import aiss.model.resource.GitHubResource;
+import aiss.model.resource.TodoistResource;
+import aiss.model.todoist.Project;
 
 
 public class HomeController extends HttpServlet {
@@ -19,20 +21,29 @@ public class HomeController extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		
-		String accessToken = (String) req.getSession().getAttribute("GitHub-token");
+		String accessTokenGitHub = (String) req.getSession().getAttribute("GitHub-token");
+		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
 		
-		if (accessToken != null) {
+		if (accessTokenGitHub != null) {
 			
-			User currentUser = GitHubResource.getGithubUser(accessToken);
-			Repository[] repositories = GitHubResource.getMyRepositories(accessToken);
+			GitHubResource githubResource = new GitHubResource(accessTokenGitHub);
+			User currentUser = githubResource.getGithubUser();
+			Repository[] repositories = githubResource.getMyRepositories();
 			
-//			System.out.println(currentUser.getName());
-//			log.info(currentUser.getLogin());
 			req.setAttribute("repositories", repositories);
+			req.setAttribute("user", currentUser);
 			
 		}
 		
+		if (accessTokenTodoist != null) {
+			
+			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
+			Project[] myProjects = todoistResource.getMyProjects();
+			req.setAttribute("myProjects", myProjects);
+			
+		}
 		
  		req.getRequestDispatcher("index.jsp").forward(req, resp);
+ 		
 	}
 }
