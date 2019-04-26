@@ -20,20 +20,20 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 
-import aiss.model.ProjectsList;
-import aiss.model.Tasks;
-import aiss.model.repository.MapProjectsListRepository;
-import aiss.model.repository.ProjectsListRepository;
+import aiss.model.Project;
+import aiss.model.Task;
+import aiss.model.repository.MapProjectRepository;
+import aiss.model.repository.ProjectRepository;
 
 @Path("/projects")
 public class ProyectosResource {
 	
 	/* Singleton */
 	private static ProyectosResource _instance=null;
-	ProjectsListRepository repository;
+	ProjectRepository repository;
 	
 	private ProyectosResource() {
-		repository=MapProjectsListRepository.getInstance();
+		repository=MapProjectRepository.getInstance();
 
 	}
 	
@@ -46,21 +46,21 @@ public class ProyectosResource {
 	
 	@GET
 	@Produces("application/json")
-	public Collection<ProjectsList> getAll()
+	public Collection<Project> getAll()
 	{
-		return repository.getAllProjectsLists();
+		return repository.getAllProjects();
 	}
 	
 	
 	@GET
 	@Path("/{id}")
 	@Produces("application/json")
-	public ProjectsList get(@PathParam("id") String id)
+	public Project get(@PathParam("id") String id)
 	{
-		ProjectsList list = repository.getProjectsList(id);
+		Project list = repository.getProject(id);
 		
 		if (list == null) {
-			throw new NotFoundException("The Projects List with id "+ id +" was not found");			
+			throw new NotFoundException("The Project with id "+ id +" was not found");			
 		}
 		
 		return list;
@@ -69,99 +69,99 @@ public class ProyectosResource {
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response addProjectsList(@Context UriInfo uriInfo, ProjectsList projectslist) {
-		if (projectslist.getName() == null || "".equals(projectslist.getName()))
+	public Response addProjectsList(@Context UriInfo uriInfo, Project project) {
+		if (project.getName() == null || "".equals(project.getName()))
 			throw new BadRequestException("The name of the project must not be null");
 		
-		if (projectslist.getTasks()!=null)
-			throw new BadRequestException("The tasks is not editable.");
+		if (project.getTasks()!=null)
+			throw new BadRequestException("The tasks are not editable.");
 
-		repository.addProjectsList(projectslist);
+		repository.addProject(project);
 
-		// Builds the response. Returns the projectslist the has just been added.
+		// Builds the response. Returns the project the has just been added.
 		UriBuilder ub = uriInfo.getAbsolutePathBuilder().path(this.getClass(), "get");
-		URI uri = ub.build(projectslist.getId());
+		URI uri = ub.build(project.getId());
 		ResponseBuilder resp = Response.created(uri);
-		resp.entity(projectslist);			
+		resp.entity(project);			
 		return resp.build();
 	}
 
 	
 	@PUT
 	@Consumes("application/json")
-	public Response updateVenuesList(ProjectsList projectslist) {
-		ProjectsList oldprojectslist = repository.getProjectsList(projectslist.getId());
-		if (oldprojectslist == null) {
-			throw new NotFoundException("The projects list with id "+ projectslist.getId() +" was not found");			
+	public Response updateVenuesList(Project project) {
+		Project oldproject = repository.getProject(project.getId());
+		if (oldproject == null) {
+			throw new NotFoundException("The project with id "+ project.getId() +" was not found");			
 		}
 		
-		if (projectslist.getTasks()!=null)
-			throw new BadRequestException("The tasks is not editable.");
+		if (project.getTasks()!=null)
+			throw new BadRequestException("The tasks are not editable.");
 		
 		// Update name
-		if (projectslist.getName()!=null)
-			oldprojectslist.setName(projectslist.getName());
+		if (project.getName()!=null)
+			oldproject.setName(project.getName());
 		
 		return Response.noContent().build();
 	}
 	
 	@DELETE
 	@Path("/{id}")
-	public Response removeProjectsList(@PathParam("id") String id) {
-		ProjectsList toberemoved = repository.getProjectsList(id);
+	public Response removeProject(@PathParam("id") String id) {
+		Project toberemoved = repository.getProject(id);
 		if (toberemoved == null)
-			throw new NotFoundException("The projects list with id " + id + " was not found");
+			throw new NotFoundException("The project with id " + id + " was not found");
 		else
-			repository.deleteProjectsList(id);
+			repository.deleteProject(id);
 		
 		return Response.noContent().build();
 	}
 	
 	
 	@POST	
-	@Path("/{projectslistId}/{tasksId}")
+	@Path("/{projectId}/{taskId}")
 	@Consumes("text/plain")
 	@Produces("application/json")
-	public Response addPlaces(@Context UriInfo uriInfo,@PathParam("projectslistId") String projectslistId, @PathParam("tasksId") String tasksId)
+	public Response addTask(@Context UriInfo uriInfo,@PathParam("projectId") String projectId, @PathParam("taskId") String taskId)
 	{				
 		
-		ProjectsList projectslist = repository.getProjectsList(projectslistId);
-		Tasks tasks = repository.getTasks(tasksId);
+		Project project = repository.getProject(projectId);
+		Task task = repository.getTask(taskId);
 		
-		if (projectslist==null)
-			throw new NotFoundException("The project list with id " + projectslistId + " was not found");
+		if (project==null)
+			throw new NotFoundException("The project with id " + projectId + " was not found");
 		
-		if (tasks == null)
-			throw new NotFoundException("The task with id " + tasksId + " was not found");
+		if (task == null)
+			throw new NotFoundException("The task with id " + taskId + " was not found");
 		
-		if (projectslist.getTasks(tasksId)!=null)
-			throw new BadRequestException("The task is already included in this project list.");
+		if (project.getTask(taskId)!=null)
+			throw new BadRequestException("The task is already included in this project.");
 			
-		repository.addTasks(projectslistId, tasksId);		
+		repository.addTask(projectId, taskId);		
 
 		// Builds the response
 		UriBuilder ub = uriInfo.getAbsolutePathBuilder().path(this.getClass(), "get");
-		URI uri = ub.build(projectslistId);
+		URI uri = ub.build(projectId);
 		ResponseBuilder resp = Response.created(uri);
-		resp.entity(projectslist);			
+		resp.entity(project);			
 		return resp.build();
 	}
 	
 	
 	@DELETE
-	@Path("/{projectslistId}/{tasksId}")
-	public Response removePlaces(@PathParam("projectslistId") String projectslistId, @PathParam("tasksId") String tasksId) {
-		ProjectsList projectslist = repository.getProjectsList(projectslistId);
-		Tasks tasks = repository.getTasks(tasksId);
+	@Path("/{projectId}/{taskId}")
+	public Response removeTask(@PathParam("projectId") String projectId, @PathParam("taskId") String taskId) {
+		Project project = repository.getProject(projectId);
+		Task task = repository.getTask(taskId);
 		
-		if (projectslist==null)
-			throw new NotFoundException("The projects list with id " + projectslistId + " was not found");
+		if (project==null)
+			throw new NotFoundException("The project with id " + projectId + " was not found");
 		
-		if (tasks == null)
-			throw new NotFoundException("The task with id " + tasksId + " was not found");
+		if (task == null)
+			throw new NotFoundException("The task with id " + taskId + " was not found");
 		
 		
-		repository.removeTasks(projectslistId, tasksId);		
+		repository.removeTask(projectId, taskId);		
 		
 		return Response.noContent().build();
 	}

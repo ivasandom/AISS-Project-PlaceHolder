@@ -1,18 +1,18 @@
 package aiss.model;
 
-public class Tasks {
+public class Task {
 	
 	private String name;
 	private String id;
 	
-	public Tasks(){
+	public Task(){
 	}
 	
-	public Tasks(String name) {
+	public Task(String name) {
 		this.name = name;
 	}
 	
-	public Tasks(String id, String name) {
+	public Task(String id, String name) {
 		this.id = id;
 		this.name = name;
 	}

@@ -20,19 +20,19 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 
-import aiss.model.ProjectsList;
-import aiss.model.Tasks;
-import aiss.model.repository.MapProjectsListRepository;
-import aiss.model.repository.ProjectsListRepository;
+import aiss.model.Project;
+import aiss.model.Task;
+import aiss.model.repository.MapProjectRepository;
+import aiss.model.repository.ProjectRepository;
 
 
 @Path("/tasks")
 public class TareasResource {
 	public static TareasResource _instance=null;
-	ProjectsListRepository repository;
+	ProjectRepository repository;
 	
 	private TareasResource(){
-		repository=MapProjectsListRepository.getInstance();
+		repository=MapProjectRepository.getInstance();
 	}
 	
 	public static TareasResource getInstance()
@@ -44,18 +44,18 @@ public class TareasResource {
 	
 	@GET
 	@Produces("application/json")
-	public Collection<ProjectsList> getAll()
+	public Collection<Project> getAll()
 	{
-		return repository.getAllProjectsLists();
+		return repository.getAllProjects();
 	}
 	
 	
 	@GET
 	@Path("/{id}")
 	@Produces("application/json")
-	public Tasks get(@PathParam("id") String taskId)
+	public Task get(@PathParam("id") String taskId)
 	{
-		Tasks gtask = repository.getTasks(taskId);
+		Task gtask = repository.getTask(taskId);
 		
 		if(gtask == null)
 		{
@@ -69,12 +69,12 @@ public class TareasResource {
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response addTasks(@Context UriInfo uriInfo, Tasks task) {
+	public Response addTasks(@Context UriInfo uriInfo, Task task) {
 		if(task.getName() == null || "".equals(task.getName()))
 			throw new BadRequestException("The name of the task must not be null");
 		
-		repository.addTasks(task);
-		
+		repository.addTask(task);
+	
 		//Builds the response. Returns the task the has just been added.
 		UriBuilder ub = uriInfo.getAbsolutePathBuilder().path(this.getClass(), "get");
 		URI uri = ub.build(task.getId());
@@ -87,18 +87,18 @@ public class TareasResource {
 	
 	@PUT
 	@Consumes("application/json")
-	public Response updateTasks(Tasks tasks) {
-		Tasks oldTask = repository.getTasks(tasks.getId());
+	public Response updateTasks(Task task) {
+		Task oldTask = repository.getTask(task.getId());
 		if(oldTask == null) {
-			throw new NotFoundException("The task with id= " +  tasks.getId() + " was not found");
+			throw new NotFoundException("The task with id= " +  task.getId() + " was not found");
 		}
 		
-		if(tasks.getName() == null) {
-			throw new NotFoundException("The task with id= " + tasks.getName() + " was not found");
+		if(task.getName() == null) {
+			throw new NotFoundException("The task with id= " + task.getName() + " was not found");
 		}
 		
-		if(tasks.getName() != null) {
-			oldTask.setName(tasks.getName());
+		if(task.getName() != null) {
+			oldTask.setName(task.getName());
 		}		
 		return Response.noContent().build();
 	}
@@ -108,7 +108,7 @@ public class TareasResource {
 	public Response removeTask(@PathParam("id") String taskId) {
 		
 		if(taskId == null) {
-			throw new NotFoundException("The task whit id= " + taskId + " was not found");
+			throw new NotFoundException("The task with id= " + taskId + " was not found");
 		}
 		
 		_instance.removeTask(taskId);
