@@ -11,16 +11,21 @@ import aiss.model.github.User;
 
 public class GitHubResource {
 	
-	private static final String BASE_URL = "https://api.github.com"; 
+	private final String accessToken;
+	private final String BASE_URL = "https://api.github.com"; 
 	
-	public static Repository[] getMyRepositories(String accessToken) {
+	public GitHubResource(String accessToken) {
+		this.accessToken = accessToken;
+	}
+	
+	public Repository[] getMyRepositories() {
 		
 		ClientResource cr = null;
 		Repository[] repositories = null;
+		String resourceURL = BASE_URL + "/user/repos?access_token=" + this.accessToken;
 		
 		try {
-			String url = BASE_URL + "/user/repos?access_token=" + accessToken;
-			cr = new ClientResource(url);
+			cr = new ClientResource(resourceURL);
 			repositories = cr.get(Repository[].class);
 		} catch (ResourceException e) {
 			System.err.println("Error when retrieving repositories.");
@@ -30,15 +35,14 @@ public class GitHubResource {
 		
 	}
 	
-	public static User getGithubUser(String accessToken) {
+	public User getGithubUser() {
 		
 		ClientResource cr = null;
 		User user = null;
+		String resourceURL = BASE_URL + "/user?access_token=" + this.accessToken;
 		
 		try {
-			String url = BASE_URL + "/user?access_token=" + accessToken;
-//			System.out.println(url);
-			cr = new ClientResource(url);
+			cr = new ClientResource(resourceURL);
 			user = cr.get(User.class);
 		} catch (ResourceException e) {
 			System.err.println("Error when retrieving authenticated user.");
@@ -47,15 +51,14 @@ public class GitHubResource {
 		return user;
 	}
 	
-	public static Branch getMasterBranch(String owner, String repo, String accessToken) {
+	public Branch getMasterBranch(String owner, String repo) {
 		
 		ClientResource cr = null;
 		Branch master = null;
+		String resourceURL = BASE_URL + "/repos/" + owner + "/" + repo + "/branches/master?access_token=" + this.accessToken;
 		
 		try {
-			String url = BASE_URL + "/repos/" + owner + "/" + repo + "/branches/master?access_token=" + accessToken;
-//			System.out.println("URL peticion " + url);
-			cr = new ClientResource(url);
+			cr = new ClientResource(resourceURL);
 			master = cr.get(Branch.class);
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving master branch.");
@@ -65,17 +68,17 @@ public class GitHubResource {
 
 	}
 	
-	public static RepositoryTree getRepositoryTree(String owner, String repo, String accessToken) {
+	public RepositoryTree getRepositoryTree(String owner, String repo) {
 		
 		System.out.println("Datos" +  owner + repo);
-		String treeSha = getMasterBranch(owner, repo, accessToken).getCommit().getSha();
+		String treeSha = this.getMasterBranch(owner, repo).getCommit().getSha();
 		
 		ClientResource cr = null;
 		RepositoryTree tree = null;
+		String resourceURL = BASE_URL + "/repos/" + owner + "/" + repo + "/git/trees/" + treeSha + "?recursive=1&access_token=" + this.accessToken;
 		
 		try {
-			String url = BASE_URL + "/repos/" + owner + "/" + repo + "/git/trees/" + treeSha + "?recursive=1&access_token=" + accessToken;
-			cr = new ClientResource(url);
+			cr = new ClientResource(resourceURL);
 			tree = cr.get(RepositoryTree.class);
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving tree.");
@@ -84,7 +87,7 @@ public class GitHubResource {
 		return tree;
 	}
 	
-	public static Blob getBlob(String urlBlob, String accessToken) {
+	public Blob getBlob(String urlBlob) {
 		/**
 		 * Carga un archivo codificado en base64
 		 * despues se decodifica en javascript y para
@@ -92,12 +95,13 @@ public class GitHubResource {
 		 * 
 		 * pensado para utilizarse peticiones ajax......
 		 */
-		String resource = urlBlob + "?access_token=" + accessToken;
+		
 		ClientResource cr = null;
 		Blob blob = null;
+		String resourceURL = urlBlob + "?access_token=" + this.accessToken;
 		
 		try {
-			cr = new ClientResource(resource);
+			cr = new ClientResource(resourceURL);
 			blob = cr.get(Blob.class);
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving blob");

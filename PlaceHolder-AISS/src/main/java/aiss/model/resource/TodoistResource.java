@@ -11,22 +11,21 @@ import aiss.model.todoist.Project;
 
 public class TodoistResource {
 	
-	private final String access_token;
+	private final String accessToken;
+	private final String BASE_URL = "https://beta.todoist.com/API/v8"; 
 	
-	public TodoistResource(String access_token) {
-        this.access_token = access_token;
+	public TodoistResource(String accessToken) {
+        this.accessToken = accessToken;
     }
-	
-	private static final String BASE_URL = "https://beta.todoist.com/API/v8"; 
 	
 	public Project[] getMyProjects() {
 		
 		ClientResource cr = null;
 		Project[] projects = null;
+		String resourceURL = BASE_URL + "/projects?token=" + this.accessToken;
 		
 		try {
-			String url = BASE_URL + "/projects?access_token=" + access_token;
-			cr = new ClientResource(url);
+			cr = new ClientResource(resourceURL);
 			projects = cr.get(Project[].class);
 		} catch (ResourceException e) {
 			System.err.println("Error when retrieving projects.");
@@ -40,10 +39,10 @@ public class TodoistResource {
 		
 		ClientResource cr = null;
 		Event[] events = null;
+		String resourceURL = BASE_URL + "/tasks"+idProject+"?token=" + this.accessToken;
 		
 		try {
-			String url = BASE_URL + "/tasks"+idProject+"?access_token=" + access_token;
-			cr = new ClientResource(url);
+			cr = new ClientResource(resourceURL);
 			events = cr.get(Event[].class);
 		} catch (ResourceException e) {
 			System.err.println("Error when retrieving eventss.");
@@ -56,8 +55,10 @@ public class TodoistResource {
 
 		ClientResource cr = null;
 		Project project = null;
+		String resourceURL = BASE_URL + "/projects/" + id + "?token=" + this.accessToken;
+		
 		try {
-			cr = new ClientResource(BASE_URL + "/projects"+"/"+id+"?access_token=" + access_token);
+			cr = new ClientResource(resourceURL);
 			project = cr.get(Project.class);
 
 		} catch (ResourceException re) {
@@ -71,10 +72,11 @@ public class TodoistResource {
 
 		ClientResource cr = null;
 		Event task = null;
+		String resourceURL = BASE_URL + "/tasks/" + id + "?token=" + this.accessToken;
+		
 		try {
-			cr = new ClientResource(BASE_URL + "/tasks"+"/"+id+"?access_token=" + access_token);
+			cr = new ClientResource(resourceURL);
 			task = cr.get(Event.class);
-
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving the board: " + cr.getResponse().getStatus());
 		}
@@ -84,10 +86,13 @@ public class TodoistResource {
 	}
 	
 	public boolean addProject(String id) {
+		
 		ClientResource cr = null;
 		boolean success = true;
+		String resourceURL = BASE_URL + "/tasks/" + id + "?token=" + this.accessToken;
+		
 		try {
-			cr = new ClientResource(BASE_URL + "/tasks"+"/"+id+"?access_token=" + access_token);
+			cr = new ClientResource(resourceURL);
 			cr.setEntityBuffering(true);
 			cr.post(" ");
 		} catch (ResourceException re) {
@@ -99,10 +104,13 @@ public class TodoistResource {
 
 
 	public boolean addTask(String name, String idProject) {
+		
 		ClientResource cr = null;
 		boolean success = true;
+		String resourceURL = BASE_URL + "/tasks/" + idProject + "/" + name + "?token=" + this.accessToken;
+		
 		try {
-			cr = new ClientResource(BASE_URL + "/tasks"+"/"+idProject+"/"+name+"?access_token=" + access_token);
+			cr = new ClientResource(resourceURL);
 			cr.setEntityBuffering(true);
 			cr.post(" ");
 		} catch (ResourceException re) {
@@ -113,40 +121,51 @@ public class TodoistResource {
 	}
 
 	public boolean deleteProject(String id) {
+		
 		ClientResource cr = null;
 		boolean success = true;
+		String resourceURL = BASE_URL + "/projects/" + id + "?token=" + this.accessToken;
+		
 		try {
-			cr = new ClientResource(BASE_URL + "/projects"+"/"+id+"?access_token=" + access_token);
+			cr = new ClientResource(resourceURL);
 			cr.setEntityBuffering(true);
 			cr.delete();
-		}catch (ResourceException re) {
+		} catch (ResourceException re) {
 			System.err.println("Error when deleting the project: " + cr.getResponse().getStatus());
 			success = false;
 			throw re;
 		}
+		
 		return success;
 	}
 
 	public boolean deleteTask(String id) {
+		
 		ClientResource cr = null;
 		boolean success = true;
+		String resourceURL = BASE_URL + "/tasks/" + id + "?token=" + this.accessToken;
+		
 		try {
-			cr = new ClientResource(BASE_URL + "/tasks"+"/"+id+"?access_token=" + access_token);
+			cr = new ClientResource(resourceURL);
 			cr.setEntityBuffering(true);
 			cr.delete();
-		}catch (ResourceException re) {
+		} catch (ResourceException re) {
 			System.err.println("Error when deleting the task: " + cr.getResponse().getStatus());
 			success = false;
 			throw re;
 		}
+		
 		return success;
 	}
 
 	public boolean updateProject(String id, String name) {
+		
 		ClientResource cr = null;
 		boolean success = true;
+		String resourceURL = BASE_URL + "/projects/" + id + "?token=" + this.accessToken;
+		
 		try {
-			cr = new ClientResource(BASE_URL + "/projects"+"/"+id+"?access_token=" + access_token);
+			cr = new ClientResource(resourceURL);
 			cr.setEntityBuffering(true);
 			cr.put(name);
 		} catch (ResourceException re) {
@@ -158,10 +177,13 @@ public class TodoistResource {
 	}
 
 	public boolean updateTask(String name, String idProject) {
+		
 		ClientResource cr = null;
 		boolean success = true;
+		String resourceURL = BASE_URL + "/tasks/" + idProject + "/" + name + "?token=" + this.accessToken;
+		
 		try {
-			cr = new ClientResource(BASE_URL + "/tasks"+"/"+idProject+"/"+name+"?access_token=" + access_token);
+			cr = new ClientResource(resourceURL);
 			cr.setEntityBuffering(true);
 			cr.put(name);
 		} catch (ResourceException re) {
