@@ -21,18 +21,19 @@ public class AddProjectController extends HttpServlet{
 		
 		String access_token = (String) req.getSession().getAttribute("Todoist-token");
 		TodoistResource todoistResource = new TodoistResource(access_token);
-		String id = req.getParameter("id");
+	//	String id = req.getParameter("id");
+		String name = req.getParameter("name");
 		if (access_token != null) {
 			
-			boolean success = todoistResource.addProject(id);
+			Project project = todoistResource.createProject(name);
 			
-			if (success) {
+			if (project!=null) {
 				req.setAttribute("message", "Project added successfully");
-				log.log(Level.FINE, "Project with id=" + id + " added. Forwarding to index.");
+				log.log(Level.FINE, "Project added. Forwarding to index.");
 			}
 			else {
 				req.setAttribute("message", "The project could not be added");
-				log.log(Level.FINE, "The project with id=" + id + " could not be added. Perhaps it is duplicated. Forwarding to index .");
+				log.log(Level.FINE, "The project could not be added. Perhaps it is duplicated. Forwarding to index .");
 			}
 		req.getRequestDispatcher("index.jsp").forward(req, resp);
 		}
