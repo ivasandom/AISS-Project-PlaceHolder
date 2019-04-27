@@ -83,20 +83,20 @@
 			
 		<div class="jumbotron">
 			<div class="container">
-  			<h1 class="display-4 mt-5">Proyecto: ${project.name}</h1>
+  			<h1 class="display-4 mt-5">Proyecto: ${project.name}
+  			<button class="btn btn-danger btn-sm" id="delete-confirm" data-url="/projects/delete?id=${project.id}">Eliminar proyecto</button></h1>
   			</div>
 		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">
 					<h2>Tareas</h2>
-					<c:if test="${not empty projectTasks}">
-						<ul id="lista-tareas">
-							<c:forEach items="${projectTasks}" var="task">
-								<li>${task.content}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
+	
+					<ul id="lista-tareas">
+						<c:forEach items="${projectTasks}" var="task">
+							<li>${task.content}</li>
+						</c:forEach>
+					</ul>
 					<form id="ajax-add-task" method="POST" action="/tasks/create">
 						<div class="input-group mb-3">
 							<input type="hidden" name="projectId" value="${project.id}">
@@ -122,7 +122,8 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.js"></script>
+	
 	<script>
 		// Crear una nueva tarea AJAX
 		var formularioTarea = $("#ajax-add-task");
@@ -141,6 +142,25 @@
 					alert("Error creando tarea");
 				}
 			});
+		})
+		
+		// Confirmar eliminación proyecto
+		var confirmar = $("#delete-confirm");
+		$(confirmar).click(function(){
+			Swal.fire({
+				  title: '¿Estás seguro que quieres borrar el proyecto?',
+				  text: "Se borrarán todas las tareas y configuraciones.",
+				  type: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Eliminar',
+				  cancelButtonText: 'Cancelar'
+				}).then((result) => {
+				  if (result.value) {
+				    location.href = confirmar.attr("data-url");
+				  }
+				})
 		})
 	</script>
 </body>

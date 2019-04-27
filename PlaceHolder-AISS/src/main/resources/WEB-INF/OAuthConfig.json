@@ -25,6 +25,6 @@
         "clientId": "a6756739e19b456c971ad293d8a6f55c",
         "clientSecret": "48092f28265445c7ae628e0934d136d6",
         "authorizationFormUrl": "https://todoist.com/oauth/authorize",
-        "scopes": ["data:read_write"]
+        "scopes": ["data:read_write, project:delete"]
     }
 }	

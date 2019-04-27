@@ -177,6 +177,16 @@
 		<url-pattern>/projects/create</url-pattern>
 	</servlet-mapping>
 	
+	<!-- Eliminar un proyecto -->
+	<servlet>
+		<servlet-name>TodoistDeleteProject</servlet-name>
+		<servlet-class>aiss.controller.DeleteProjectController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TodoistDeleteProject</servlet-name>
+		<url-pattern>/projects/delete</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Crear nueva tarea -->
 	<servlet>
 		<servlet-name>TodoistCreateTask</servlet-name>
@@ -186,5 +196,7 @@
 		<servlet-name>TodoistCreateTask</servlet-name>
 		<url-pattern>/tasks/create</url-pattern>
 	</servlet-mapping>
+	
+	
 	
 </web-app>

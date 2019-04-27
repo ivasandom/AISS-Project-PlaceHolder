@@ -76,12 +76,12 @@ public class TodoistResource {
 		ClientResource cr = null;
 		boolean deleted = true;
 		String resourceURL = BASE_URL + "/projects/" + id + "?token=" + this.accessToken;
-		
+		System.out.println(resourceURL);
 		try {
 			cr = new ClientResource(resourceURL);
 			cr.delete();
 		} catch (ResourceException e) {
-			System.err.println("Error when retrieving project");
+			System.err.println("Error when deleting project: " + cr.getResponse().getStatus());
 			deleted = false;
 		}
 		
