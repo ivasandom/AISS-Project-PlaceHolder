@@ -15,6 +15,35 @@
 
 </head>
 
+<c:if test="${not empty sessionScope['Todoist-token']}">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New project</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/projects/create" method="post">
+      <div class="modal-body">
+        
+          <div class="form-group">
+            <label for="project-name" class="col-form-label">Project name:</label>
+            <input type="text" class="form-control" id="project-name" name="name">
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+</c:if>
+
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 		<a class="navbar-brand" href="#">Placeholder</a>
@@ -70,7 +99,7 @@
       						</a>
       					</c:forEach>
       					<div class="dropdown-divider"></div>
-      					<a class="dropdown-item" href="#">Create new project</a>
+      					<a class="dropdown-item" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Create new project</a>
         			</div>
       			</li>
       			</c:if>
