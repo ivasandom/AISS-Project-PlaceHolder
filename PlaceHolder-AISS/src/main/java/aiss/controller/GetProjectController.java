@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import aiss.model.resource.TodoistResource;
 import aiss.model.todoist.Project;
-import aiss.model.todoist.Task;
 import aiss.model.todoist.TaskSimple;
 
 public class GetProjectController extends HttpServlet {
@@ -25,11 +24,14 @@ public class GetProjectController extends HttpServlet {
 		
 		if (accessTokenTodoist != null && projectId != null) {
 			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
+			Project[] myProjects = todoistResource.getMyProjects();
 			Project project = todoistResource.getProject(projectId);
 			if (project == null) {
-				// return HTTP404
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			}
 			TaskSimple[] tasks = todoistResource.getActiveTasks(projectId);
+			
+			req.setAttribute("myProjects", myProjects);
 			req.setAttribute("project", project);
 			req.setAttribute("projectTasks", tasks);
 		}

@@ -1,6 +1,10 @@
 package aiss.model.resource;
 
+import java.util.Map;
+
 import org.restlet.data.Form;
+import org.restlet.data.MediaType;
+import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 
@@ -11,7 +15,6 @@ import aiss.model.todoist.Project;
 import aiss.model.todoist.Task;
 import aiss.model.todoist.TaskSimple;
 
-
 public class TodoistResource {
 	
 	private final String accessToken;
@@ -21,6 +24,16 @@ public class TodoistResource {
         this.accessToken = accessToken;
     }
 	
+	public void setCustomHttpHeader(ClientResource client, String header, String value) { 
+        final String RESTLET_HTTP_HEADERS = "org.restlet.http.headers"; 
+        Map<String, Object> reqAttribs = client.getRequestAttributes(); 
+        Form headers = (Form)reqAttribs.get(RESTLET_HTTP_HEADERS); 
+        if (headers == null) { 
+            headers = new Form(); 
+            reqAttribs.put(RESTLET_HTTP_HEADERS, headers); 
+        } 
+        headers.add(header, value); 
+    } 
 	
 	// Project CRUD
 	
@@ -100,13 +113,15 @@ public class TodoistResource {
 	
 		ClientResource cr = null;
 		Project newProject = null;
-		String resourceURL = BASE_URL + "/projects/?token=" + this.accessToken;
+		String resourceURL = BASE_URL + "/projects?token=" + this.accessToken;
 		
 		try {
-			cr = new ClientResource(resourceURL);
+			cr = new ClientResource(resourceURL);				
 			Form form = new Form();
 			form.add("name", name);
-			newProject = cr.post(form, Project.class);
+			Representation rep = cr.post(form, MediaType.APPLICATION_JSON);
+			newProject = cr.toObject(rep, Project.class);
+
 		} catch (ResourceException re) {
 			System.err.println("Error when adding the task: " + cr.getResponse().getStatus());
 		}
@@ -152,18 +167,29 @@ public class TodoistResource {
 		
 	}
 	
-	public Task createTask(String content, String projectId) {
+	public Task createTask(Task tarea) {
+		/**
+
+			$.ajax({
+			    data:{projectId:"2209568886", content:"Tarea ajax"},
+			    type:"POST",
+			    url:"/tasks/create",
+			    success: function(result){
+			        alert(result.content);
+			    }
+			})
+			
+		 */
 		
 		ClientResource cr = null;
 		Task newTask = null;
-		String resourceURL = BASE_URL + "/tasks/?token=" + this.accessToken;
+		String resourceURL = BASE_URL + "/tasks?token=" + this.accessToken;
 		
 		try {
 			cr = new ClientResource(resourceURL);
-			Form form = new Form();
-			form.add("content", content);
-			form.add("project_id", projectId);
-			newTask = cr.post(form, Task.class);
+			Representation rep = cr.post(tarea, MediaType.APPLICATION_JSON);
+			newTask = cr.toObject(rep, Task.class);
+			
 		} catch (ResourceException re) {
 			System.err.println("Error when adding the task: " + cr.getResponse().getStatus());
 		}
