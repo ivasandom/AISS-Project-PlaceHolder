@@ -16,6 +16,8 @@ public class UpdateTaskController {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		log.log(Level.INFO, "Processing UpdateTaskController.");
+
 		String id = req.getParameter("id");
 		String access_token = (String) req.getSession().getAttribute("Todoist-token");
 		String name = req.getParameter("name");
@@ -23,7 +25,8 @@ public class UpdateTaskController {
 		TodoistResource todoistResource = new TodoistResource(access_token);
 		
 		if (access_token != null) {
-			
+			log.log(Level.INFO, "Updating task.");
+
 			boolean success = todoistResource.updateTask(name, id);
 			
 			if (success) {

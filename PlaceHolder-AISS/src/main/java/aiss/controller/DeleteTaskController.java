@@ -1,6 +1,7 @@
 package aiss.controller;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -18,20 +19,29 @@ public class DeleteTaskController extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		log.log(Level.INFO, "Processing DeleteTaskController.");
+
 		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
 		String taskId = req.getParameter("id");
 		
 		if (Checkers.notNull(accessTokenTodoist, taskId)) {
+			
+			log.log(Level.INFO, "Deleting task.");
+
 			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
 			boolean deleted = todoistResource.deleteTask(taskId);
 			if (deleted) {
 				// Si se ha eliminado devolvemos a pagina inicio
 				resp.sendRedirect("/");
+				log.log(Level.FINE, "Task deleted. Forwarding to index.");
+
 			}
 		}
 		
 		// Si no se ha eliminado devolvemos 404
 		resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+		log.log(Level.SEVERE, "The project with could not be added. Perhaps it doesn´t exists. Forwarding to index .");
+
 		
 		
 	}

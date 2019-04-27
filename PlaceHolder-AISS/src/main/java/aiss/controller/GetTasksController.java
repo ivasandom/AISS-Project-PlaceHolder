@@ -1,6 +1,7 @@
 package aiss.controller;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -17,14 +18,21 @@ public class GetTasksController extends HttpServlet{
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		
+		log.log(Level.INFO, "Processing GetTasksController.");
+
 		String accessToken=(String)req.getSession().getAttribute("Todoist-token");
 		String idProject = req.getParameter("parentProjectId");
 		
 		if(accessToken!=null && !"".equals(accessToken)){
+			log.log(Level.INFO, "Getting tasks");
+
 			TodoistResource tdResource=new TodoistResource(accessToken);
 			TaskSimple[] tasks=tdResource.getActiveTasks(idProject);
 			if(tasks!=null){
 				req.setAttribute("files", tasks);
+				
+				log.log(Level.INFO, "Tasks obtained successfully. Forwarding to index");
+
 				req.getRequestDispatcher("/index.jsp").forward(req,resp);
 			}else{
 				log.info("The tasks returned are null... probably your token has experied. Redirecting to OAuth servlet.");

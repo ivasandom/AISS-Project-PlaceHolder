@@ -1,6 +1,7 @@
 package aiss.controller;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -19,9 +20,14 @@ public class AddProjectController extends HttpServlet{
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		log.log(Level.INFO, "Processing AddProjectController.");
+
 		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
 		
 		if (accessTokenTodoist != null) {
+			
+			log.log(Level.INFO, "Adding project.");
+
 			req.getRequestDispatcher("projects-create.jsp");
 		} else {
 			resp.sendRedirect("/");
@@ -38,15 +44,20 @@ public class AddProjectController extends HttpServlet{
 			Project nuevoProject = todoistResource.createProject(newProjectName);
 			
 			if (nuevoProject != null) {
-				// Si lo hemos creado redirigimos a la página del nuevo proyecto
 				resp.sendRedirect("/projects?id="+nuevoProject.getId());
+				log.log(Level.FINE, "Project added. Forwarding to new project page.");
+
 			} else {
 				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+				log.log(Level.SEVERE, "The project with could not be added. Perhaps it is duplicated. Forwarding to index .");
+
 			}
 			
 		} else {
 			// Si no está logueado entonces devolvemos error
 			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			log.log(Level.WARNING, "Error when adding the project.");
+
 		}
 		
 	}

@@ -1,6 +1,7 @@
 package aiss.controller;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -21,6 +22,8 @@ public class HomeController extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		
+		log.log(Level.INFO, "Processing HomeController.");
+
 		String accessTokenGitHub = (String) req.getSession().getAttribute("GitHub-token");
 		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
 		
@@ -43,6 +46,8 @@ public class HomeController extends HttpServlet {
 			
 		}
 		
+		log.log(Level.INFO, "HomeController obtained successfully. Forwarding to index");
+
  		req.getRequestDispatcher("index.jsp").forward(req, resp);
  		
 	}

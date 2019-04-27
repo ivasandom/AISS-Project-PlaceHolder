@@ -2,6 +2,7 @@ package aiss.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -27,12 +28,17 @@ public class AddTaskController extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		
+		log.log(Level.WARNING, "Error al añadir la tarea.");
+
 		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
 		String newTaskContent = req.getParameter("content");
 		String newTaskProjectId = req.getParameter("projectId");
 		
 		boolean parametrosRecibidos = Checkers.notNull(accessTokenTodoist, newTaskContent, newTaskProjectId);
-		if (parametrosRecibidos) {
+		if (parametrosRecibidos) {		
+			
+			log.log(Level.INFO, "Adding task.");
+
 			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
 			
 			Task tarea = new Task();
@@ -44,18 +50,26 @@ public class AddTaskController extends HttpServlet {
 			if (nuevaTarea != null) {
 				// AJAX
 				// https://stackoverflow.com/questions/2010990/how-do-you-return-a-json-object-from-a-java-servlet
+
 				resp.setContentType("application/json");
 				PrintWriter out = resp.getWriter();
 				out.print(new JSONObject(nuevaTarea));
 				out.flush();
 				
+				log.log(Level.FINE, "Task added. Forwarding to index.");
+
+				
 			} else {
 				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+				log.log(Level.SEVERE, "The task with could not be added. Perhaps it is duplicated. Forwarding to index .");
+
 			}
 			
 		} else {
 			// Si no está logueado entonces devolvemos error
 			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			log.log(Level.WARNING, "Error when adding the task.");
+
 		}
 		
 	}

@@ -17,6 +17,8 @@ public class UpdateProjectController {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		log.log(Level.INFO, "Processing UpdateProjectController.");
+
 		String id = req.getParameter("id");
 		String access_token = (String) req.getSession().getAttribute("Todoist-token");
 		String name = req.getParameter("name");
@@ -25,6 +27,8 @@ public class UpdateProjectController {
 		
 		if (access_token != null) {
 			
+			log.log(Level.INFO, "Updating project.");
+
 			boolean success = todoistResource.updateProject(id, name);
 			
 			if (success) {

@@ -1,6 +1,7 @@
 package aiss.controller;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -17,6 +18,8 @@ public class EditorController extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		
+		log.log(Level.INFO, "Processing EditorController.");
+
 		String accessTokenGitHub = (String) req.getSession().getAttribute("GitHub-token");
 		String owner = req.getParameter("owner");
 		String repo = req.getParameter("repo");
@@ -27,6 +30,8 @@ public class EditorController extends HttpServlet {
 			RepositoryTree repositoryTree = githubResource.getRepositoryTree(owner, repo);
 			req.setAttribute("repositoryTrees", repositoryTree.getTree());
 			req.getRequestDispatcher("editor.jsp").forward(req, resp);
+			log.log(Level.FINE," Forwarding to editor.");
+
 		
 		}
 		
