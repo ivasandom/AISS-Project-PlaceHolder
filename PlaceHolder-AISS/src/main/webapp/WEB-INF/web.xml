@@ -157,6 +157,7 @@
 	
 	<!-- WebApp -->
 	
+	<!-- Pagina de proyecto -->
 	<servlet>
 		<servlet-name>TodoistProjectPage</servlet-name>
 		<servlet-class>aiss.controller.GetProjectController</servlet-class>
@@ -164,6 +165,26 @@
 	<servlet-mapping>
 		<servlet-name>TodoistProjectPage</servlet-name>
 		<url-pattern>/projects</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Crear nuevo proyecto -->
+	<servlet>
+		<servlet-name>TodoistCreateProject</servlet-name>
+		<servlet-class>aiss.controller.AddProjectController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TodoistCreateProject</servlet-name>
+		<url-pattern>/projects/create</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Crear nueva tarea -->
+	<servlet>
+		<servlet-name>TodoistCreateTask</servlet-name>
+		<servlet-class>aiss.controller.AddTaskController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TodoistCreateTask</servlet-name>
+		<url-pattern>/tasks/create</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

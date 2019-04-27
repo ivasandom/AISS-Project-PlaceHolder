@@ -91,13 +91,21 @@
 				<div class="col-md-6">
 					<h2>Tareas</h2>
 					<c:if test="${not empty projectTasks}">
-						<ul>
+						<ul id="lista-tareas">
 							<c:forEach items="${projectTasks}" var="task">
 								<li>${task.content}</li>
 							</c:forEach>
 						</ul>
 					</c:if>
-					<button class="btn btn-primary">Añadir</button>
+					<form id="ajax-add-task" method="POST" action="/tasks/create">
+						<div class="input-group mb-3">
+							<input type="hidden" name="projectId" value="${project.id}">
+	  						<input type="text" name="content" class="form-control" placeholder="Título tarea">
+	  						<div class="input-group-append">
+	    						<button class="btn btn-primary" type="submit">Añadir</button>
+	  						</div>
+						</div>
+					</form>
 				</div>
 				<div class="col-md-6"></div>
 			</div>
@@ -111,8 +119,29 @@
 		<a class='api' href='/docs/index.html'> Ver documentación de la API</a>
 	</footer>
 	
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+	<script>
+		// Crear una nueva tarea AJAX
+		var formularioTarea = $("#ajax-add-task");
+		var listaTareas = $("#lista-tareas");
+		$(formularioTarea).submit(function(event){
+			event.preventDefault();
+			var datosFormulario = $(formularioTarea).serialize();
+			$.ajax({
+				url: "/tasks/create",
+				type: "POST",
+				data: datosFormulario,
+				success: function(response){
+					listaTareas.append("<li data-id='" + response.id + "'>" + response.content + "</li>");
+				},
+				error: function(response){
+					alert("Error creando tarea");
+				}
+			});
+		})
+	</script>
 </body>
 </html>
