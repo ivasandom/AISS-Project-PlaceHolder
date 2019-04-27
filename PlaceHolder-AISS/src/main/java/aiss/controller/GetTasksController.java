@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import aiss.model.resource.TodoistResource;
-import aiss.model.todoist.Event;
-import aiss.model.todoist.Project;
+import aiss.model.todoist.TaskSimple;
 
 public class GetTasksController extends HttpServlet{
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(GetTasksController.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -22,7 +22,7 @@ public class GetTasksController extends HttpServlet{
 		
 		if(accessToken!=null && !"".equals(accessToken)){
 			TodoistResource tdResource=new TodoistResource(accessToken);
-			Event[] tasks=tdResource.getActiveTasks(idProject);
+			TaskSimple[] tasks=tdResource.getActiveTasks(idProject);
 			if(tasks!=null){
 				req.setAttribute("files", tasks);
 				req.getRequestDispatcher("/index.jsp").forward(req,resp);

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import aiss.model.resource.TodoistResource;
-import aiss.model.todoist.Event;
+import aiss.model.todoist.Task;
 
 public class GetTaskController extends HttpServlet{
 
@@ -25,7 +25,7 @@ public class GetTaskController extends HttpServlet{
 		
 		if (access_token != null) {
 			
-			Event task = todoistResource.getTask(id);
+			Task task = todoistResource.getTask(id);
 			req.setAttribute("task", task);
 		}
 		

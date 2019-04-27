@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import aiss.model.resource.TodoistResource;
-import aiss.model.todoist.Event;
 import aiss.model.todoist.Project;
 
 public class AddProjectController extends HttpServlet{
