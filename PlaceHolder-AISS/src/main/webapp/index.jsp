@@ -113,7 +113,7 @@
 		<div class="jumbotron">
 			<div class="container">
   			<h1 class="display-4 mt-5">Bienvenido a Placeholder!</h1>
-  			<p class="lead">Placeholder es una herramienta web de gestión de proyectos de desarrollo software. Podrás gestionar y controlar las horas que dedicas a cada tarea, así como editar los repositorios sin necesidad de tener un editor instalado.</p>
+  			<p class="lead">Placeholder es una herramienta web de gestión de proyectos de desarrollo software. Podrás gestionar los proyectos y tareas que tienes asignados a los repositorios, así como editar los repositorios sin necesidad de tener un editor instalado.</p>
   			<hr class="my-4">
   			<p class="lead">
     			<a class="btn btn-primary btn-lg" href="#" role="button">Ver más</a>
