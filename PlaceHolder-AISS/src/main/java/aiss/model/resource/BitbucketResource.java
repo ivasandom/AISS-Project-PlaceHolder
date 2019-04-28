@@ -14,15 +14,15 @@ public class BitbucketResource {
 		this.accessToken = accessToken;
 	}
 	
-	public BitbucketRepository getMyRepos(String username) {
+	public BitbucketRepository[] getMyRepos() {
 
 		ClientResource cr = null;
-		BitbucketRepository repositories = null;
-		String resourceURL = BASE_URL + "/users/" + username + "/repositories?access_token=" + this.accessToken;
+		BitbucketRepository[] repositories = null;
+		String resourceURL = BASE_URL + "/repositories?access_token=" + this.accessToken;
 		
 		try {
 			cr = new ClientResource(resourceURL);
-			repositories = cr.get(BitbucketRepository.class);
+			repositories = cr.get(BitbucketRepository[].class);
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving the repos: " + cr.getResponse().getStatus());
 		}

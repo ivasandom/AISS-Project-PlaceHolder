@@ -9,9 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import aiss.model.github.Repository;
 import aiss.model.github.User;
+import aiss.model.gitlab.GitLabRepository;
+
 import aiss.model.resource.GitHubResource;
+import aiss.model.resource.GitLabResource;
 import aiss.model.resource.TodoistResource;
 import aiss.model.todoist.Project;
 
@@ -26,6 +30,7 @@ public class HomeController extends HttpServlet {
 
 		String accessTokenGitHub = (String) req.getSession().getAttribute("GitHub-token");
 		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
+		String accessTokenGitLab = (String) req.getSession().getAttribute("GitLab-token");
 		
 		if (accessTokenGitHub != null) {
 			
@@ -38,6 +43,16 @@ public class HomeController extends HttpServlet {
 			
 		}
 		
+		if (accessTokenGitLab != null) {
+			
+			GitLabResource gitLabResource = new GitLabResource(accessTokenGitLab);
+			GitLabRepository[] repositories = gitLabResource.getMyRepos();
+			
+			req.setAttribute("repositories", repositories);
+
+			
+		}
+
 		if (accessTokenTodoist != null) {
 			
 			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);

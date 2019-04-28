@@ -18,7 +18,7 @@
         "clientId": "Ybxj7MWesCbGDVCea8",
         "clientSecret": "6VVnWLR5RhvRVVyrHFyxauKL5nVw7kYt",
         "authorizationFormUrl": "https://bitbucket.org/site/oauth2/authorize",
-        "scopes": ["repository:write", "account"]
+        "scopes": ["repository:admin"]
     },
     "Todoist": {
         "tokenUrl": "https://todoist.com/oauth/access_token",

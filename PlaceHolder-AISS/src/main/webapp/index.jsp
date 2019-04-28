@@ -86,6 +86,20 @@
         			</div>
       			</li>
       			</c:if>
+      			<c:if test="${not empty sessionScope['GitLab-token']}">
+      			<li class="nav-item dropdown">
+        			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          				Mis repositorios
+        			</a>
+        			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        				<c:forEach items="${projects}" var="gitlabrepository">
+							<a class="dropdown-item" href="/editor?owner=${gitlabrepository.owner.login}&repo=${gitlabrepository.name}">
+      							${gitlabrepository.name}
+      						</a>
+      					</c:forEach>
+        			</div>
+      			</li>
+      			</c:if>
       			
       			<c:if test="${not empty sessionScope['Todoist-token']}">
       			<li class="nav-item dropdown">
