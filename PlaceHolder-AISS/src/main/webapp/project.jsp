@@ -95,6 +95,7 @@
 					<ul id="lista-tareas">
 						<c:forEach items="${projectTasks}" var="task">
 							<li>${task.content}</li>
+							<button class="btn btn-danger btn-sm" data-url="/tasks/delete?id=${task.id}">Eliminar tarea</button></h1>
 						</c:forEach>
 					</ul>
 					<form id="ajax-add-task" method="POST" action="/tasks/create">
