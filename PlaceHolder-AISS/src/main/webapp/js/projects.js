@@ -1,4 +1,4 @@
-// Crear una nueva tarea AJAX
+		// Crear una nueva tarea AJAX
 		var formularioTarea = $("#ajax-add-task");
 		var listaTareas = $("#lista-tareas");
 		$(formularioTarea).submit(function(event){
