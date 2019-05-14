@@ -95,7 +95,7 @@
 					<ul id="lista-tareas">
 						<c:forEach items="${projectTasks}" var="task">
 							<li>${task.content}</li>
-							<button class="btn btn-danger btn-sm delete-task-confirm" data-url="/tasks/delete?id=${task.id}">Eliminar tarea</button></h1>
+							<button type="button" class="btn btn-danger btn-sm delete-task-confirm" data-url="/tasks/delete?id=${task.id}">Eliminar tarea</button></h1>
 							<button type="button" class="btn btn-success btn-sm update-task-confirm" data-toggle="modal" data-target="#update-task-modal" data-whatever="@getbootstrap">Actualizar tarea</button>
 						</c:forEach>
 					</ul>

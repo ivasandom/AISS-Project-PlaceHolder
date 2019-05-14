@@ -38,8 +38,7 @@
 		
 		
 		
-		var confirmar = $(".delete-task-confirm");
-		$(confirmar).click(function(){
+		$(".delete-task-confirm").on("click", function(){
 			Swal.fire({
 				  title: '¿Estás seguro que quieres borrar la tarea?',
 				  text: "Se borrará la tarea.",
@@ -51,7 +50,7 @@
 				  cancelButtonText: 'Cancelar'
 				}).then((result) => {
 				  if (result.value) {
-				    location.href = confirmar.attr("data-url");
+				    location.href = $(this).attr("data-url");
 				  }
 				})
 		})
