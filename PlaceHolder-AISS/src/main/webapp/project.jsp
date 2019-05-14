@@ -25,7 +25,7 @@
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" target="_blank" href="https://github.com/ivasandom/AISS-Project-PlaceHolder/">Github repository</a>
@@ -95,7 +95,8 @@
 					<ul id="lista-tareas">
 						<c:forEach items="${projectTasks}" var="task">
 							<li>${task.content}</li>
-							<button class="btn btn-danger btn-sm" data-url="/tasks/delete?id=${task.id}">Eliminar tarea</button></h1>
+							<button class="btn btn-danger btn-sm delete-task-confirm" data-url="/tasks/delete?id=${task.id}">Eliminar tarea</button></h1>
+							<button type="button" class="btn btn-success btn-sm update-task-confirm" data-toggle="modal" data-target="#update-task-modal" data-whatever="@getbootstrap">Actualizar tarea</button>
 						</c:forEach>
 					</ul>
 					<form id="ajax-add-task" method="POST" action="/tasks/create">
@@ -120,49 +121,42 @@
 		<a class='api' href='/docs/index.html'> Ver documentación de la API</a>
 	</footer>
 	
+	<div class="modal fade" id="update-task-modal" tabindex="-1" role="dialog" aria-labelledby="updateTaskModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Actualizar tarea</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="get" action="/tasks/update">
+        <input type="hidden" id="task-id" name="id">
+          <div class="form-group">
+            <label for="task-name" class="col-form-label">Nombre:</label>
+            <input type="text" class="form-control" name="name" id="task-name">
+          </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.js"></script>
 	
-	<script>
-		// Crear una nueva tarea AJAX
-		var formularioTarea = $("#ajax-add-task");
-		var listaTareas = $("#lista-tareas");
-		$(formularioTarea).submit(function(event){
-			event.preventDefault();
-			var datosFormulario = $(formularioTarea).serialize();
-			$.ajax({
-				url: "/tasks/create",
-				type: "POST",
-				data: datosFormulario,
-				success: function(response){
-					listaTareas.append("<li data-id='" + response.id + "'>" + response.content + "</li>");
-				},
-				error: function(response){
-					alert("Error creando tarea");
-				}
-			});
-		})
-		
-		// Confirmar eliminación proyecto
-		var confirmar = $("#delete-confirm");
-		$(confirmar).click(function(){
-			Swal.fire({
-				  title: '¿Estás seguro que quieres borrar el proyecto?',
-				  text: "Se borrarán todas las tareas y configuraciones.",
-				  type: 'warning',
-				  showCancelButton: true,
-				  confirmButtonColor: '#3085d6',
-				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Eliminar',
-				  cancelButtonText: 'Cancelar'
-				}).then((result) => {
-				  if (result.value) {
-				    location.href = confirmar.attr("data-url");
-				  }
-				})
-		})
+	<script src="/js/projects.js">
+
 	</script>
+	
+	
 </body>
 </html>
