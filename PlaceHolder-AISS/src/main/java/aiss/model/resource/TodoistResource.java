@@ -223,17 +223,17 @@ public class TodoistResource {
 		ClientResource cr = null;
 		boolean deleted = true;
 		String resourceURL = BASE_URL + "/tasks/" + id + "?token=" + this.accessToken;
-		
+		System.out.println(resourceURL);
 		try {
 			cr = new ClientResource(resourceURL);
 			cr.delete();
 		} catch (ResourceException e) {
-			System.err.println("Error when deleting task");
+			System.err.println("Error when deleting task: " + cr.getResponse().getStatus());
 			deleted = false;
 		}
 		
 		return deleted;
-	
+		
 	}
 	
 	

@@ -37,7 +37,7 @@ public class UpdateTaskController {
 				req.setAttribute("message", "The task could not be updated");
 				log.log(Level.FINE, "The task with id=" + id + " could not be updated. Perhaps it is duplicated. Forwarding to index .");
 			}
-		req.getRequestDispatcher("index.jsp").forward(req, resp);
+		req.getRequestDispatcher("projects.jsp").forward(req, resp);
 		}
 		
 	}

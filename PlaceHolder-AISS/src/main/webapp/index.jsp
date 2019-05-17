@@ -46,7 +46,7 @@
 
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-		<a class="navbar-brand" href="#">Placeholder</a>
+		<a class="navbar-brand" href="/">Placeholder</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
 			aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -55,7 +55,7 @@
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" target="_blank" href="https://github.com/ivasandom/AISS-Project-PlaceHolder/">Github repository</a>
@@ -78,7 +78,7 @@
           				Mis repositorios GitHub
         			</a>
         			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        				<c:forEach items="${repositories}" var="repository">
+        				<c:forEach items="${repositoriesGitHub}" var="repository">
 							<a class="dropdown-item" href="/editor?owner=${repository.owner.login}&repo=${repository.name}">
       							${repository.fullName}
       						</a>
@@ -92,7 +92,7 @@
           				Mis repositorios GitLab
         			</a>
         			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        				<c:forEach items="${projects}" var="gitlabrepository">
+        				<c:forEach items="${repositoriesGitLab}" var="gitlabrepository">
 							<a class="dropdown-item" href="/editor?owner=${gitlabrepository.owner.login}&repo=${gitlabrepository.name}">
       							${gitlabrepository.name}
       						</a>
@@ -107,7 +107,7 @@
           				Mis repositorios Bitbucket
         			</a>
         			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        				<c:forEach items="${repositories}" var="repository">
+        				<c:forEach items="${repositoriesBitbucket}" var="repository">
 							<a class="dropdown-item" href="/editor?owner=${repository.owner.login}&repo=${repository.name}">
       							${BitbucketRepository.fullName}
       						</a>
@@ -145,7 +145,7 @@
   			<p class="lead">Placeholder es una herramienta web de gestión de proyectos de desarrollo software. Podrás gestionar los proyectos y tareas que tienes asignados a los repositorios, así como editar los repositorios sin necesidad de tener un editor instalado.</p>
   			<hr class="my-4">
   			<p class="lead">
-    			<a class="btn btn-primary btn-lg" href="#" role="button">Ver más</a>
+    			<a class="btn btn-primary btn-lg" href="/images/error.png" role="button">Ver más</a>
   			</p>
   			</div>
 		</div>

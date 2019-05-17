@@ -43,6 +43,8 @@ public class GetProjectController extends HttpServlet {
 			req.setAttribute("projectTasks", tasks);
 			log.log(Level.INFO, "Project obtained successfully.");
 
+		} else {
+			log.log(Level.WARNING, "Error when logging");
 		}
 	
 		

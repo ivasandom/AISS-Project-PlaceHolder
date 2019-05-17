@@ -231,5 +231,15 @@
 	</servlet-mapping>
 	
 	
+	<!-- Eliminar una tarea -->
+	<servlet>
+		<servlet-name>TodoistDeleteTask</servlet-name>
+		<servlet-class>aiss.controller.DeleteTaskController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TodoistDeleteTask</servlet-name>
+		<url-pattern>/tasks/delete</url-pattern>
+	</servlet-mapping>
+	
 	
 </web-app>

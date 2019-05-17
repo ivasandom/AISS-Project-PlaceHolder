@@ -8,8 +8,8 @@
 	},
     "GitLab": {
         "tokenUrl": "https://gitlab.com/oauth/token",
-        "clientId": "f753b00f0914454ba5c4fad097625e592c20f271541101424c4211428731496d",
-        "clientSecret": "241cb9df7f1d9abdb529586fdc1f70fe7e0f266bdb9657623c7ac6647fe272dd",
+        "clientId": "bc31afef2502b193bf746a8d1d4ffb12fdef1a9cb8eb55d356021e9f606b793c",
+        "clientSecret": "98b6b78dfcdff18eae8a85a9e18a20c74d1779d3ddc41e3588f82ed31817bd04",
         "authorizationFormUrl": "https://gitlab.com/oauth/authorize",
         "scopes": ["api"]
     },

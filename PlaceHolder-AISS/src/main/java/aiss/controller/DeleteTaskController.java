@@ -35,13 +35,20 @@ public class DeleteTaskController extends HttpServlet {
 				resp.sendRedirect("/");
 				log.log(Level.FINE, "Task deleted. Forwarding to index.");
 
+			}else {
+				// Si no se ha eliminado devolvemos 404
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				log.log(Level.SEVERE, "The task with could not be deleted. Perhaps it doesn´t exists. Forwarding to index .");
+				resp.sendRedirect("/error.jsp");
+
 			}
 		}
-		
+		else {
 		// Si no se ha eliminado devolvemos 404
 		resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-		log.log(Level.SEVERE, "The project with could not be added. Perhaps it doesn´t exists. Forwarding to index .");
-
+		log.log(Level.SEVERE, "The task with could not be added. Perhaps it doesn´t exists. Forwarding to index .");
+		resp.sendRedirect("/error.jsp");
+		}
 		
 		
 	}

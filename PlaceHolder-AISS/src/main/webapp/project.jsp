@@ -17,7 +17,7 @@
 
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-		<a class="navbar-brand" href="#">Placeholder</a>
+		<a class="navbar-brand" href="/">Placeholder</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
 			aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -26,7 +26,7 @@
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" target="_blank" href="https://github.com/ivasandom/AISS-Project-PlaceHolder/">Github repository</a>
@@ -98,7 +98,7 @@
 					<ul id="lista-tareas">
 						<c:forEach items="${projectTasks}" var="task">
 							<li>${task.content}</li>
-							<button type="button" class="btn btn-danger btn-sm delete-task-confirm" data-url="/tasks/delete?id=${task.id}">Eliminar tarea</button></h1>
+							<button type="button" class="btn btn-danger btn-sm delete-task-confirm" data-url="/tasks/delete?id=${task.id}">Eliminar tarea</button>
 							<button type="button" class="btn btn-success btn-sm update-task-confirm" data-toggle="modal" data-target="#update-task-modal" data-whatever="@getbootstrap">Actualizar tarea</button>
 						</c:forEach>
 					</ul>
@@ -144,7 +144,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         <button type="submit" class="btn btn-primary">Actualizar</button>
       </div>
     </div>
