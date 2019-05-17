@@ -45,97 +45,8 @@
 </c:if>
 
 <body>
-	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-		<a class="navbar-brand" href="#">Placeholder</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-			aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" target="_blank" href="https://github.com/ivasandom/AISS-Project-PlaceHolder/">Github repository</a>
-				</li>
-				<li class="nav-item dropdown">
-        			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          				Tokens oauth
-        			</a>
-        			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          				<a class="dropdown-item" href="/login?provider=GitLab">GitLab - ${sessionScope["GitLab-token"]}</a>
-          				<a class="dropdown-item" href="/login?provider=GitHub">GitHub - ${sessionScope["GitHub-token"]}</a>
-          				<a class="dropdown-item" href="/login?provider=Bitbucket">Bitbucket - ${sessionScope["Bitbucket-token"]}</a>
-          				<div class="dropdown-divider"></div>
-          				<a class="dropdown-item" href="/login?provider=Todoist">Todoist - ${sessionScope["Todoist-token"]}</a>
-        			</div>
-      			</li>
-      			<c:if test="${not empty sessionScope['GitHub-token']}">
-      			<li class="nav-item dropdown">
-        			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          				Mis repositorios GitHub
-        			</a>
-        			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        				<c:forEach items="${repositories}" var="repository">
-							<a class="dropdown-item" href="/editor?owner=${repository.owner.login}&repo=${repository.name}">
-      							${repository.fullName}
-      						</a>
-      					</c:forEach>
-        			</div>
-      			</li>
-      			</c:if>
-      			<c:if test="${not empty sessionScope['GitLab-token']}">
-      			<li class="nav-item dropdown">
-        			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          				Mis repositorios GitLab
-        			</a>
-        			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        				<c:forEach items="${projects}" var="gitlabrepository">
-							<a class="dropdown-item" href="/editor?owner=${gitlabrepository.owner.login}&repo=${gitlabrepository.name}">
-      							${gitlabrepository.name}
-      						</a>
-      					</c:forEach>
-        			</div>
-      			</li>
-      			
-      			</c:if>
-      			<c:if test="${not empty sessionScope['Bitbucket-token']}">
-      			<li class="nav-item dropdown">
-        			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          				Mis repositorios Bitbucket
-        			</a>
-        			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        				<c:forEach items="${repositories}" var="repository">
-							<a class="dropdown-item" href="/editor?owner=${repository.owner.login}&repo=${repository.name}">
-      							${BitbucketRepository.fullName}
-      						</a>
-      					</c:forEach>
-        			</div>
-      			</li>
-      			</c:if>
-      			
-      			<c:if test="${not empty sessionScope['Todoist-token']}">
-      			<li class="nav-item dropdown">
-        			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          				Mis proyectos
-        			</a>
-        			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        				<c:forEach items="${myProjects}" var="project">
-							<a class="dropdown-item" href="/projects?id=${project.id}">
-      							${project.name}
-      						</a>
-      					</c:forEach>
-      					<div class="dropdown-divider"></div>
-      					<a class="dropdown-item" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Create new project</a>
-        			</div>
-      			</li>
-      			</c:if>
-      			
-			</ul>
-		</div>
-	</nav>
+	
+	<jsp:include page="header.jsp"></jsp:include>
 
 	<main role="main">
 		
@@ -145,7 +56,7 @@
   			<p class="lead">Placeholder es una herramienta web de gestión de proyectos de desarrollo software. Podrás gestionar los proyectos y tareas que tienes asignados a los repositorios, así como editar los repositorios sin necesidad de tener un editor instalado.</p>
   			<hr class="my-4">
   			<p class="lead">
-    			<a class="btn btn-primary btn-lg" href="#" role="button">Ver más</a>
+    			<a class="btn btn-primary btn-lg" href="https://github.com/ivasandom/AISS-Project-PlaceHolder" role="button">Ver codigo</a>
   			</p>
   			</div>
 		</div>
