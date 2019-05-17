@@ -42,7 +42,7 @@ public class HomeController extends HttpServlet {
 			User currentUser = githubResource.getGithubUser();
 			Repository[] repositories = githubResource.getMyRepositories();
 			
-			req.setAttribute("repositories", repositories);
+			req.setAttribute("repositoriesGitHub", repositories);
 			req.setAttribute("user", currentUser);
 			
 		}
@@ -52,7 +52,7 @@ public class HomeController extends HttpServlet {
 			GitLabResource gitLabResource = new GitLabResource(accessTokenGitLab);
 			GitLabRepository[] repositories = gitLabResource.getMyRepos();
 			
-			req.setAttribute("repositories", repositories);
+			req.setAttribute("repositoriesGitLab", repositories);
 		}
 		
 		if (accessTokenBitbucket != null) {
@@ -60,7 +60,7 @@ public class HomeController extends HttpServlet {
 			BitbucketResource bitbucketResource = new BitbucketResource(accessTokenBitbucket);
 			BitbucketRepository[] repositories = bitbucketResource.getMyRepos();
 			
-			req.setAttribute("repositories", repositories);
+			req.setAttribute("repositoriesBitbucket", repositories);
 		}
 		
 		if (accessTokenTodoist != null) {

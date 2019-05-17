@@ -41,10 +41,8 @@
 					<ul id="lista-tareas">
 						<c:forEach items="${projectTasks}" var="task">
 							<li>${task.content}</li>
-							<button type="button" class="btn btn-danger btn-sm delete-task-confirm"
-								data-url="/tasks/delete?id=${task.id}">Eliminar tarea</button></h1>
-							<button type="button" class="btn btn-success btn-sm update-task-confirm" data-toggle="modal"
-								data-target="#update-task-modal" data-whatever="@getbootstrap">Actualizar tarea</button>
+							<button type="button" class="btn btn-danger btn-sm delete-task-confirm" data-url="/tasks/delete?id=${task.id}">Eliminar tarea</button>
+							<button type="button" class="btn btn-success btn-sm update-task-confirm" data-toggle="modal" data-target="#update-task-modal" data-whatever="@getbootstrap">Actualizar tarea</button>
 						</c:forEach>
 					</ul>
 					<form id="ajax-add-task" method="POST" action="/tasks/create">
@@ -76,62 +74,60 @@
 		<p>Grupo Placeholder - Arquitectura e Integración de Sistemas Software</p>
 		<a class='api' href='/docs/index.html'> Ver documentación de la API</a>
 	</footer>
-
-	<div class="modal fade" id="update-task-modal" tabindex="-1" role="dialog" aria-labelledby="updateTaskModal"
-		aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Actualizar tarea</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form method="get" action="/tasks/update">
-						<input type="hidden" id="task-id" name="id">
-						<div class="form-group">
-							<label for="task-name" class="col-form-label">Nombre:</label>
-							<input type="text" class="form-control" name="name" id="task-name">
-						</div>
-
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary">Actualizar</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
+	
+	<div class="modal fade" id="update-task-modal" tabindex="-1" role="dialog" aria-labelledby="updateTaskModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Actualizar tarea</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="get" action="/tasks/update">
+        <input type="hidden" id="task-id" name="id">
+          <div class="form-group">
+            <label for="task-name" class="col-form-label">Nombre:</label>
+            <input type="text" class="form-control" name="name" id="task-name">
+          </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-	<div class="modal fade" id="updateProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Nuevo nombre para el proyecto:</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="form-group">
-							<label for="recipient-name" class="col-form-label">Nombre:</label>
-							<input type="text" class="form-control" id="recipient-name">
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-primary">Actualizar</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
+<div class="modal fade" id="updateProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nuevo nombre para el proyecto:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Nombre:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"

@@ -64,13 +64,14 @@ public class AddProjectController extends HttpServlet{
 			} else {
 				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 				log.log(Level.SEVERE, "The project with could not be added. Perhaps it is duplicated. Forwarding to index .");
+				resp.sendRedirect("/error.jsp");
 
 			}
 			
 		} else {
 			// Si no está logueado entonces devolvemos error
 			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-			log.log(Level.WARNING, "Error when adding the project.");
+			resp.sendRedirect("/error.jsp");
 
 		}
 		

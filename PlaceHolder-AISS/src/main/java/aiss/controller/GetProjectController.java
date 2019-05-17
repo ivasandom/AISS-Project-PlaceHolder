@@ -82,6 +82,15 @@ public class GetProjectController extends HttpServlet {
 			}
 		} else {
 			// redirect to harvest login oauth
+			TaskSimple[] tasks = todoistResource.getActiveTasks(projectId);
+			
+			req.setAttribute("myProjects", myProjects);
+			req.setAttribute("project", project);
+			req.setAttribute("projectTasks", tasks);
+			log.log(Level.INFO, "Project obtained successfully.");
+
+		} else {
+			log.log(Level.WARNING, "Error when logging");
 		}
 	}
 	

@@ -40,12 +40,14 @@ public class DeleteProjectController extends HttpServlet {
 				// Si no se ha eliminado devolvemos 404
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 				log.log(Level.SEVERE, "The project with could not be deleted. Perhaps it doesn´t exists. Forwarding to index .");
+				resp.sendRedirect("/error.jsp");
 
 			}
 		} else {
 			// Si no se ha eliminado devolvemos 404
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			log.log(Level.WARNING, "Error when deleting the project.");
+			resp.sendRedirect("/error.jsp");
 
 		}
 		
