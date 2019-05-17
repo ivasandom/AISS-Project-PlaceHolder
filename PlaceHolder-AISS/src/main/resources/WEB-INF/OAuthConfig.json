@@ -26,5 +26,12 @@
         "clientSecret": "48092f28265445c7ae628e0934d136d6",
         "authorizationFormUrl": "https://todoist.com/oauth/authorize",
         "scopes": ["data:read_write, project:delete"]
+    },
+    "Harvest": {
+    	"tokenUrl": "https://id.getharvest.com/api/v2/oauth2/token",
+        "clientId": "dy6SybqvNhJH81BGjq8fBicH",
+        "clientSecret": "HbI2vFIVog65PEbaFVThCjYBuj1UGx93vsOE1p1EItIwKuw5OvWJFXV-CBp1AWnPblzmFWtAwdeMUiiuq8ZTNw",
+        "authorizationFormUrl": "https://id.getharvest.com/oauth2/authorize",
+        "scopes": ["all"]
     }
 }	
