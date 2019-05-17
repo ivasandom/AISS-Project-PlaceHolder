@@ -78,7 +78,7 @@ public class Project_ {
     @JsonProperty("notes")
     private String notes;
     @JsonProperty("client")
-    private Client client;
+    private Client_ client;
     @JsonProperty("cost_budget")
     private Object costBudget;
     @JsonProperty("cost_budget_include_expenses")
@@ -281,12 +281,12 @@ public class Project_ {
     }
 
     @JsonProperty("client")
-    public Client getClient() {
+    public Client_ getClient() {
         return client;
     }
 
     @JsonProperty("client")
-    public void setClient(Client client) {
+    public void setClient(Client_ client) {
         this.client = client;
     }
 

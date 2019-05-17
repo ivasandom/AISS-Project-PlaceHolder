@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import aiss.model.harvest.Profile;
 import aiss.model.harvest.Project_;
 import aiss.model.resource.HarvestResource;
+import aiss.model.todoist.TaskSimple;
 import aiss.utility.ProjectConfig;
 
 public class GetProjectController extends HttpServlet {
@@ -82,16 +83,10 @@ public class GetProjectController extends HttpServlet {
 			}
 		} else {
 			// redirect to harvest login oauth
-			TaskSimple[] tasks = todoistResource.getActiveTasks(projectId);
-			
-			req.setAttribute("myProjects", myProjects);
-			req.setAttribute("project", project);
-			req.setAttribute("projectTasks", tasks);
-			log.log(Level.INFO, "Project obtained successfully.");
-
-		} else {
-			log.log(Level.WARNING, "Error when logging");
+			log.log(Level.WARNING, "Unauthorized request");
+			resp.sendRedirect("/login?provider=Harvest");
 		}
+
 	}
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

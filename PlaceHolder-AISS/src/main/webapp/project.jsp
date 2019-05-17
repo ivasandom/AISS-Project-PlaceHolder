@@ -28,8 +28,7 @@
 				<h1 class="display-4 mt-5">Proyecto: ${project.name}
 					<button class="btn btn-danger btn-sm" id="delete-confirm"
 						data-url="/projects/delete?id=${project.id}">Eliminar proyecto</button>
-					<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#updateProject"
-						data-url="/projects/update?id=${project.id}" data-whatever="@getbootstrap">Actualizar proyecto</h1>
+					<a class="btn btn-success" href="/projects/update?id=${project.id}">Actualizar proyecto</a>
 
 			</div>
 		</div>

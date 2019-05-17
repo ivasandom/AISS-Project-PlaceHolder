@@ -1,22 +1,59 @@
 package aiss.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import aiss.model.harvest.Client_;
+import aiss.model.harvest.Project_;
+import aiss.model.resource.HarvestResource;
 import aiss.model.resource.TodoistResource;
 
-public class UpdateProjectController {
+public class UpdateProjectController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(UpdateProjectController.class.getName());
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		log.log(Level.INFO, "Processing UpdateProjectController GET");
+		
+		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
+		String id = req.getParameter("id");
+		
+		
+		if (accessTokenHarvest != null) {
+			
+			if (id != null) {
+				HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
+				Project_ project = harvestResource.getProject(id);
+				List<Client_> clients = harvestResource.getClients();
+				
+				req.setAttribute("project", project);
+				req.setAttribute("clients", clients);
+				req.getRequestDispatcher("/project-edit.jsp").forward(req, resp);
+				
+			} else {
+				// TODO raise HTTP404
+			}
+			
+		} else {
+			// TODO redirect to login
+		}
+				
+		
+	}
+	
+	
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+
+
 		log.log(Level.INFO, "Processing UpdateProjectController.");
 
 		String id = req.getParameter("id");
@@ -42,9 +79,6 @@ public class UpdateProjectController {
 		req.getRequestDispatcher("index.jsp").forward(req, resp);
 		}
 		
-	}
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		doGet(req,resp);
 	}
 
 }
