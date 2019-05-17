@@ -24,9 +24,13 @@
 		<div class="container mt-5">
 			
 			<h1>Create project</h1>
+
+			
 			
 			<form action="/projects/create" method="POST">
-			
+				
+				<h3>Basic Information</h3>
+
 				<div class="form-group">
 					<label id="client-id">Client</label>
 					<select id="client-id" name="client_id" class="form-control">
@@ -74,6 +78,26 @@
 						</div>
 					</div>
 				</div>
+
+				<h3>Todoist project configuration</h3>
+				<div class="form-group">
+					<label for="project-todoist-config">Todoist Project</label>
+					<select name="todoistProject" id="project-todoist-config" class="form-control">
+						<option value="new_project">Create project automatically</option>
+						<option disabled>────────────────────</option>
+						<c:forEach items="${todoistProjects}" var="project">
+							<option value="${project.id}">${project.name}</option>
+						</c:forEach>
+					</select>
+					<small class="form-text text-muted">Enlaza con un proyecto nuevo o con uno existente.</small>
+				</div>
+
+				<h3>Enlazar repositorios al proyecto</h3>
+				<div class="form-group">
+					<label for="repo">Seleccionar repositorio</label>
+					<div class="alert alert-info">Lo sentimos, debes estar logueado en <strong>GitHub, GitLab o Bitbucket</strong> para enlazar un repositorio.</div>
+				</div>
+				
 			
 			
 			<button type="submit" class="btn btn-primary">Create project</button>

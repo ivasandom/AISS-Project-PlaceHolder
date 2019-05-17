@@ -246,6 +246,16 @@
 		<url-pattern>/projects/create</url-pattern>
 	</servlet-mapping>
 	
+	<!--  Actualizar proyecto -->
+	<servlet>
+		<servlet-name>TodoistUpdateProject</servlet-name>
+		<servlet-class>aiss.controller.UpdateProjectController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TodoistUpdateProject</servlet-name>
+		<url-pattern>/projects/update</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Eliminar un proyecto -->
 	<servlet>
 		<servlet-name>TodoistDeleteProject</servlet-name>
