@@ -188,6 +188,42 @@
 		<url-pattern>/oauth2callback/Todoist</url-pattern>
 	</servlet-mapping>
 	
+	
+	<!--HarvestOauthController -->
+	<servlet>
+		<description />
+		<servlet-name>HarvestAuthController</servlet-name>
+		<servlet-class>aiss.controller.oauth.GenericAuthController</servlet-class>
+		<init-param>
+			<param-name>provider</param-name>
+			<param-value>Harvest</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HarvestAuthController</servlet-name>
+		<url-pattern>/AuthController/Harvest</url-pattern>
+	</servlet-mapping>
+
+	<!--TodoistOAuth2Callback -->
+	<servlet>
+		<description />
+		<servlet-name>HarvestOAuth2Callback</servlet-name>
+		<servlet-class>aiss.controller.oauth.OAuth2Callback</servlet-class>
+		<init-param>
+			<param-name>provider</param-name>
+			<param-value>Harvest</param-value>
+		</init-param>
+		<init-param>
+			<param-name>onSuccess</param-name>
+			<param-value>redirect:/</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HarvestOAuth2Callback</servlet-name>
+		<url-pattern>/oauth2callback/Harvest</url-pattern>
+	</servlet-mapping>
+	
+	
 	<!-- WebApp -->
 	
 	<!-- Pagina de proyecto -->
