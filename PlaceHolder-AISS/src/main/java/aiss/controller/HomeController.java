@@ -13,11 +13,13 @@ import aiss.model.bitbucket.BitbucketRepository;
 import aiss.model.github.Repository;
 import aiss.model.github.User;
 import aiss.model.gitlab.GitLabRepository;
+import aiss.model.harvest.Profile;
+import aiss.model.harvest.Project;
 import aiss.model.resource.BitbucketResource;
 import aiss.model.resource.GitHubResource;
 import aiss.model.resource.GitLabResource;
+import aiss.model.resource.HarvestResource;
 import aiss.model.resource.TodoistResource;
-import aiss.model.todoist.Project;
 
 
 public class HomeController extends HttpServlet {
@@ -32,6 +34,7 @@ public class HomeController extends HttpServlet {
 		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
 		String accessTokenGitLab = (String) req.getSession().getAttribute("GitLab-token");
 		String accessTokenBitbucket = (String) req.getSession().getAttribute("Bitbucket-token");
+		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
 		
 		if (accessTokenGitHub != null) {
 			
@@ -63,9 +66,20 @@ public class HomeController extends HttpServlet {
 		if (accessTokenTodoist != null) {
 			
 			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
-			Project[] myProjects = todoistResource.getMyProjects();
-			req.setAttribute("myProjects", myProjects);
+//			Project[] myProjects = todoistResource.getMyProjects();
+//			req.setAttribute("myProjects", myProjects);
 			
+		}
+		
+		if (accessTokenHarvest != null) {
+			HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
+			
+			Profile profile = harvestResource.getProfile();
+			Project myProjects = harvestResource.getMyProjects();
+			
+//			System.out.println(myProjects.getProjects());
+			req.setAttribute("myProjects", myProjects.getProjects());
+			req.setAttribute("profile", profile);
 		}
 		
 		log.log(Level.INFO, "HomeController obtained successfully. Forwarding to index");

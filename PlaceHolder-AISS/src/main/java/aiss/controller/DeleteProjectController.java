@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import aiss.model.resource.HarvestResource;
 import aiss.model.resource.TodoistResource;
 import aiss.utility.Checkers;
 
@@ -21,15 +22,15 @@ public class DeleteProjectController extends HttpServlet {
 		
 		log.log(Level.INFO, "Processing DeleteProjectController.");
 
-		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
+		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
 		String projectId = req.getParameter("id");
 		
-		if (Checkers.notNull(accessTokenTodoist, projectId)) {
+		if (Checkers.notNull(accessTokenHarvest, projectId)) {
 			
 			log.log(Level.INFO, "Deleting project.");
 			
-			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
-			boolean deleted = todoistResource.deleteProject(projectId);
+			HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
+			boolean deleted = harvestResource.deleteProject(projectId);
 			if (deleted) {
 				// Si se ha eliminado devolvemos a pagina inicio
 				resp.sendRedirect("/");

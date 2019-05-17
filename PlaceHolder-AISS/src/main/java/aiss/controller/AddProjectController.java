@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import aiss.model.resource.TodoistResource;
-import aiss.model.todoist.Project;
+import aiss.model.harvest.Project_;
+import aiss.model.resource.HarvestResource;
 import aiss.utility.Checkers;
 
 public class AddProjectController extends HttpServlet{
@@ -22,13 +22,12 @@ public class AddProjectController extends HttpServlet{
 		
 		log.log(Level.INFO, "Processing AddProjectController.");
 
-		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
+		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
 		
-		if (accessTokenTodoist != null) {
-			
-			log.log(Level.INFO, "Adding project.");
-
-			req.getRequestDispatcher("projects-create.jsp");
+		if (accessTokenHarvest != null) {
+			HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
+			req.setAttribute("clients", harvestResource.getClients());
+			req.getRequestDispatcher("/projects-create.jsp").forward(req, resp);
 		} else {
 			resp.sendRedirect("/");
 		}
@@ -36,12 +35,27 @@ public class AddProjectController extends HttpServlet{
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		
-		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
-		String newProjectName = req.getParameter("name");
+		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
 		
-		if (Checkers.notNull(accessTokenTodoist, newProjectName)) {
-			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
-			Project nuevoProject = todoistResource.createProject(newProjectName);
+		Long clientId = null;
+		String name = null;
+		boolean isBillable = false;;
+		String billBy = null;
+		String budgetBy = null;
+		
+		try {
+			clientId = new Long(req.getParameter("client_id"));
+			name = req.getParameter("name");
+			isBillable = new Boolean(req.getParameter("is_billable"));
+			billBy = req.getParameter("bill_by");
+			budgetBy = req.getParameter("budget_by");
+		} catch (Exception e) {
+			
+		}
+		
+		if (Checkers.notNull(accessTokenHarvest)) {
+			HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
+			Project_ nuevoProject = harvestResource.createProject(clientId, name,  isBillable, billBy, budgetBy);
 			
 			if (nuevoProject != null) {
 				resp.sendRedirect("/projects?id="+nuevoProject.getId());
