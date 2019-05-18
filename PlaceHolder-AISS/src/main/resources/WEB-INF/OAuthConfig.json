@@ -22,10 +22,10 @@
     },
     "Todoist": {
         "tokenUrl": "https://todoist.com/oauth/access_token",
-        "clientId": "a6756739e19b456c971ad293d8a6f55c",
-        "clientSecret": "48092f28265445c7ae628e0934d136d6",
+        "clientId": "b81837d8a9e54ffda3b51f7667f1754e",
+        "clientSecret": "5fdfa1cdbe614f78bd1d3809ffa601a2",
         "authorizationFormUrl": "https://todoist.com/oauth/authorize",
-        "scopes": ["data:read_write, project:delete"]
+        "scopes": ["data:read_write, project:delete, data:delete"]
     },
     "Harvest": {
     	"tokenUrl": "https://id.getharvest.com/api/v2/oauth2/token",
