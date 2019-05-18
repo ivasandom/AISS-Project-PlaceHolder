@@ -18,7 +18,9 @@ import aiss.model.harvest.Client;
 import aiss.model.harvest.Client_;
 import aiss.model.harvest.Profile;
 import aiss.model.harvest.Project;
-import aiss.model.harvest.Project_;
+import aiss.model.harvest.Projects;
+import aiss.model.harvest.TaskAssignment;
+import aiss.model.harvest.TaskAssignments;
 import aiss.model.harvest.User;
 
 public class HarvestResource {
@@ -55,9 +57,9 @@ public class HarvestResource {
 	}
 	
 	
-	public Project getMyProjects() {
+	public Projects getMyProjects() {
 		
-		Project projects = null;
+		Projects projects = null;
 		String resourceURL = BASE_URL + "/projects?account_id=" + accountId;
 		ClientResource cr = new ClientResource(resourceURL);
 	
@@ -67,7 +69,7 @@ public class HarvestResource {
 		cr.setChallengeResponse(chr);
 		
 		try {
-			projects = cr.get(Project.class);
+			projects = cr.get(Projects.class);
 		} catch (ResourceException re) {
 			System.out.println(re);
 			System.err.println("Error when retrieving user projects");
@@ -78,9 +80,9 @@ public class HarvestResource {
 	}
 	
 	// ADMIN
-	public Project_ createProject(Long clientId, String name, boolean isBillable, String billBy, String budgetBy) {
+	public Project createProject(Long clientId, String name, boolean isBillable, String billBy, String budgetBy) {
 		
-		Project_ createdProject = null;
+		Project createdProject = null;
 		JsonObject form = new JsonObject();
 		String resourceURL = BASE_URL + "/projects?account_id=" + accountId;
 		ClientResource cr = new ClientResource(resourceURL);
@@ -99,7 +101,7 @@ public class HarvestResource {
 		
 		try {
 			Representation repr = cr.post(new JsonRepresentation(form.toString()), MediaType.APPLICATION_JSON);
-			createdProject = cr.toObject(repr, Project_.class);
+			createdProject = cr.toObject(repr, Project.class);
 		} catch (ResourceException re) {
 			System.out.println(re);
 			System.err.println("Error when creating projects");
@@ -109,6 +111,27 @@ public class HarvestResource {
 		
 	}
 	
+	
+	public List<TaskAssignment> getProjectTasks(String projectId){
+		
+		List<TaskAssignment> tasks = null;
+		String resourceURL = BASE_URL + "/projects/" + projectId + "/task_assignments?account_id=" + accountId;
+		ClientResource cr = new ClientResource(resourceURL);
+	
+		// Token OAuth2
+		ChallengeResponse chr = new ChallengeResponse(ChallengeScheme.HTTP_OAUTH_BEARER);
+		chr.setRawValue(accessToken);
+		cr.setChallengeResponse(chr);
+		
+		try {
+			tasks = cr.get(TaskAssignments.class).getTaskAssignments();
+		} catch (ResourceException re) {
+			System.err.println("Error when project task assignments");
+		}
+		
+		return tasks;
+		
+	}
 	
 	public List<Client_> getClients(){
 		
@@ -131,9 +154,9 @@ public class HarvestResource {
 		return clients;
 	}
 	
-	public Project_ getProject(String id) {
+	public Project getProject(String id) {
 		
-		Project_ project = null;
+		Project project = null;
 		String resourceURL = BASE_URL + "/projects/" + id + "?account_id=" + accountId;
 		ClientResource cr = new ClientResource(resourceURL);
 	
@@ -143,7 +166,7 @@ public class HarvestResource {
 		cr.setChallengeResponse(chr);
 		
 		try {
-			project = cr.get(Project_.class);
+			project = cr.get(Project.class);
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving project");
 		}
