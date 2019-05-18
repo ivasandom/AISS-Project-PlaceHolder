@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,110 +25,129 @@
 	<main role="main mt-5 pt-5">
 
 
-		<div class="jumbotron">
+		<div class="jumbotron mb-0" style='background:linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.8)), url("https://previews.123rf.com/images/karenr/karenr1506/karenr150600007/40831894-blue-and-white-striped-gingham-tile-pattern-repeat-background-that-is-seamless-and-repeats.jpg")'>
 			<div class="container">
-				<h1 class="display-4 mt-5">Proyecto: ${project.name}
-					<button class="btn btn-danger btn-sm" id="delete-confirm"
-						data-url="/projects/delete?id=${project.id}">Eliminar proyecto</button>
-					<a class="btn btn-success" href="/projects/update?id=${project.id}">Actualizar proyecto</a>
-
+				<h1 class="display-4">Proyecto: ${project.name}
 			</div>
 		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-9">
-					<h2>Tareas</h2>
 
-					<ul id="lista-tareas">
-						<c:forEach items="${projectTasks}" var="task">
-							<li>${task.content}</li>
-							<button type="button" class="btn btn-danger btn-sm delete-task-confirm" data-url="/tasks/delete?id=${task.id}">Eliminar tarea</button>
-							<button type="button" class="btn btn-success btn-sm update-task-confirm" data-toggle="modal" data-target="#update-task-modal" data-whatever="@getbootstrap">Actualizar tarea</button>
-						</c:forEach>
-					</ul>
+		<div class="container">
+
+			<ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+						aria-selected="true">Resumen proyecto</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="configuration-tab" data-toggle="tab" href="#configuration" role="tab" aria-controls="configuration"
+						aria-selected="false">Configuracion</a>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<h2 class="my-4">Tareas</h2>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Task</th>
+								<th>Assignments</th>
+								<th>Options</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${harvestTasks}" var="taskAssignment">
+								<tr data-toggle="collapse" id="taskAssignment-${taskAssignment.id}" data-target=".subTask-${taskAssignment.id}">
+									<td>${taskAssignment.task.name}</td>
+									<td>0</td>
+									<td>-</td>
+								</tr>
+							</c:forEach>
+							
+							<tr data-toggle="collapse" id="taskAssignment-other" data-target=".subTask-other">
+								<td>Other</td>
+								<td>${fn:length(todoistTasks)}</td>
+								<td></td>
+							</tr>
+
+							<c:forEach items="${todoistTasks}" var="todoistTask">
+								<tr class="table-info collapse subTask-other" id="task-${todoistTask.id}">
+									<td>${todoistTask.content}</td>
+									<td>-</td>
+									<td><button class="btn btn-danger btn-sm delete-task" data-id="${todoistTask.id}">Eliminar</button></td>
+								</tr>
+							</c:forEach>
+				
+						</tbody>
+					</table>
+					
+					
 					<form id="ajax-add-task" method="POST" action="/tasks/create">
 						<div class="input-group mb-3">
-							<input type="hidden" name="projectId" value="${project.id}">
-							<input type="text" name="content" class="form-control" placeholder="Título tarea">
+							<input type="hidden" name="projectId" value="${projectConfig.todoistProjectId}">
+							<input type="text" name="content" class="form-control" placeholder="Estudiar aiss...">
+							<div class="input-group-append">
+								<select class="form-control" name="assignment">
+									<option value="">Other</option>
+									<c:forEach items="${harvestTasks}" var="taskAssignment">
+										<option value="${taskAssignment.task.id}" disabled>${taskAssignment.task.name}</option>
+									</c:forEach>
+								</select>
+							</div>
 							<div class="input-group-append">
 								<button class="btn btn-primary" type="submit">Añadir</button>
 							</div>
 						</div>
 					</form>
 				</div>
-				<div class="col-md-3">
-					<h1>Project configuration</h1>
-					<ul>
-						<li>Todoist: ${projectConfig.todoistProjectId}</li>
-						<li>GitHub: ${projectConfig.gitlabRepository}</li>
-						<li>GitLab: ${projectConfig.githubRepository}</li>
-						<li>BitBucket: ${projectConfig.bitbucketRepository}</li>
-					</ul>
+				<div class="tab-pane fade" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
+					<h2 class="my-4">Configuración</h2>
+					
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Service</th>
+								<th>Id/Name</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Todoist</td>
+								<td>${projectConfig.todoistProjectId}</td>
+							</tr>
+							<tr>
+								<td>GitHub</td>
+								<td>${projectConfig.gitlabRepository}</td>
+							</tr>
+							<tr>
+								<td>GitLab</td>
+								<td>${projectConfig.githubRepository}</td>
+							</tr>
+							<tr>
+								<td>BitBucket</td>
+								<td>${projectConfig.bitbucketRepository}</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<button class="btn btn-danger btn-sm" id="delete-confirm"
+						data-url="/projects/delete?id=${project.id}">Eliminar</button>
+					<a class="btn btn-info btn-sm" href="/projects/update?id=${project.id}">Editar</a>
+					
 				</div>
 			</div>
-			<hr>
+
+			
 		</div>
 
 	</main>
 
-	<footer class="container">
+	<footer class="container my-5">
+		<hr>
 		<p>Grupo Placeholder - Arquitectura e Integración de Sistemas Software</p>
 		<a class='api' href='/docs/index.html'> Ver documentación de la API</a>
 	</footer>
-	
-	<div class="modal fade" id="update-task-modal" tabindex="-1" role="dialog" aria-labelledby="updateTaskModal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Actualizar tarea</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form method="get" action="/tasks/update">
-        <input type="hidden" id="task-id" name="id">
-          <div class="form-group">
-            <label for="task-name" class="col-form-label">Nombre:</label>
-            <input type="text" class="form-control" name="name" id="task-name">
-          </div>
-          
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary">Actualizar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
-
-<div class="modal fade" id="updateProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nuevo nombre para el proyecto:</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Nombre:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Actualizar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"

@@ -50,18 +50,18 @@
 
 	<main role="main">
 		
-		<div class="jumbotron">
+		<div class="jumbotron" style='background:linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.8)), url("https://previews.123rf.com/images/karenr/karenr1506/karenr150600007/40831894-blue-and-white-striped-gingham-tile-pattern-repeat-background-that-is-seamless-and-repeats.jpg")'>
 			<div class="container">
-  			<h1 class="display-4 mt-5">Bienvenido a Placeholder!</h1>
+  			<h1 class="display-4 mt-5">¡Bienvenido a Placeholder!</h1>
   			<p class="lead">Placeholder es una herramienta web de gestión de proyectos de desarrollo software. Podrás gestionar los proyectos y tareas que tienes asignados a los repositorios, así como editar los repositorios sin necesidad de tener un editor instalado.</p>
   			<hr class="my-4">
   			<p class="lead">
-    			<a class="btn btn-primary btn-lg" href="https://github.com/ivasandom/AISS-Project-PlaceHolder" role="button">Ver codigo</a>
+    			<a class="btn btn-dark btn-lg" href="https://github.com/ivasandom/AISS-Project-PlaceHolder" role="button">Ver código en github.com</a>
   			</p>
   			</div>
 		</div>
 
-		<div class="container">
+		<div class="container" style="display:none;">
 			<div class="row">
 				<div class="col-md-3">
 					<h2>Todoist</h2>

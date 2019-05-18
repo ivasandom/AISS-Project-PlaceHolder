@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-	<a class="navbar-brand" href="#">Placeholder</a>
+	<a class="navbar-brand" href="/" style="letter-spacing:5px;">PLACEHOLDER</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
 		aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -11,23 +11,18 @@
 	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
-				<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+				<a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false">
-					Tokens oauth
+					Repositorios
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="/login?provider=GitLab">GitLab - ${sessionScope["GitLab-token"]}</a>
-					<a class="dropdown-item" href="/login?provider=GitHub">GitHub - ${sessionScope["GitHub-token"]}</a>
-					<a class="dropdown-item" href="/login?provider=Bitbucket">Bitbucket -
+					<a class="dropdown-item" href="/login?provider=GitLab">Conectar con GitLab - ${sessionScope["GitLab-token"]}</a>
+					<a class="dropdown-item" href="/login?provider=GitHub">Conectar con GitHub - ${sessionScope["GitHub-token"]}</a>
+					<a class="dropdown-item" href="/login?provider=Bitbucket">Conectar con Bitbucket -
 						${sessionScope["Bitbucket-token"]}</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="/login?provider=Todoist">Todoist -
-						${sessionScope["Todoist-token"]}</a>
-					<a class="dropdown-item" href="/login?provider=Harvest">Harvest -
-						${sessionScope["Harvest-token"]}</a>
 				</div>
 			</li>
 
@@ -97,8 +92,8 @@
 				</li>
 			</c:if>
 		</ul>
-		<c:if test="${not empty profile}">
-			<ul class="navbar-nav">
+		<ul class="navbar-nav">
+			<c:if test="${not empty profile}">
 				<li class="nav-item dropdown">
 					<a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 						class="nav-link dropdown-toggle" id="navbarDropdown">
@@ -108,10 +103,17 @@
 
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a href="#" class="dropdown-item">Settings</a>
-						<a href="#" class="dropdown-item">Logout</a>
+						<a href="/logout" class="dropdown-item">Logout</a>
 					</div>
 				</li>
-			</ul>
-		</c:if>
+			</c:if>
+			<c:if test="${empty profile}">
+				<li class="nav-item">
+					<a href="/login" class="btn btn-primary" style="font-weight:500;font-size:0.9em;">ENTRAR CON HARVEST & TODOIST</a>
+				</li>
+			</c:if>
+		</ul>
+
+		</ul>
 	</div>
 </nav>
