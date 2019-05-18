@@ -14,7 +14,7 @@ import aiss.model.github.Repository;
 import aiss.model.github.User;
 import aiss.model.gitlab.GitLabRepository;
 import aiss.model.harvest.Profile;
-import aiss.model.harvest.Project;
+import aiss.model.harvest.Projects;
 import aiss.model.resource.BitbucketResource;
 import aiss.model.resource.GitHubResource;
 import aiss.model.resource.GitLabResource;
@@ -75,7 +75,7 @@ public class HomeController extends HttpServlet {
 			HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
 			
 			Profile profile = harvestResource.getProfile();
-			Project myProjects = harvestResource.getMyProjects();
+			Projects myProjects = harvestResource.getMyProjects();
 			
 //			System.out.println(myProjects.getProjects());
 			req.setAttribute("myProjects", myProjects.getProjects());

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import aiss.model.harvest.Client_;
-import aiss.model.harvest.Project_;
+import aiss.model.harvest.Project;
 import aiss.model.resource.HarvestResource;
 import aiss.model.resource.TodoistResource;
 
@@ -32,7 +32,7 @@ public class UpdateProjectController extends HttpServlet {
 			
 			if (id != null) {
 				HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
-				Project_ project = harvestResource.getProject(id);
+				Project project = harvestResource.getProject(id);
 				List<Client_> clients = harvestResource.getClients();
 				
 				req.setAttribute("project", project);

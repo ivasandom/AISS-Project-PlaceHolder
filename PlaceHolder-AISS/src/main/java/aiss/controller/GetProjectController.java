@@ -1,6 +1,7 @@
 package aiss.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import aiss.model.harvest.Profile;
-import aiss.model.harvest.Project_;
+import aiss.model.harvest.Project;
+import aiss.model.harvest.TaskAssignment;
 import aiss.model.resource.HarvestResource;
+import aiss.model.resource.TodoistResource;
 import aiss.model.todoist.TaskSimple;
+import aiss.utility.Checkers;
 import aiss.utility.ProjectConfig;
 
 public class GetProjectController extends HttpServlet {
@@ -20,77 +24,46 @@ public class GetProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(GetProjectController.class.getName());
 	
-//	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		
-//		log.log(Level.INFO, "Processing GetProjectController.");
-//
-//		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
-//		String projectId = req.getParameter("id");
-//		
-//		if (accessTokenHarvest != null && projectId != null) {
-//			log.log(Level.INFO, "Getting project.");
-//
-//			HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
-//			Project_ project = harvestResource.getProject(projectId);
-//			if (project == null) {
-//				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-//				log.log(Level.WARNING, "Error when obtaining project.");
-//
-//			}
-//			
-//			TaskSimple[] tasks = harvestResource.getActiveTasks(projectId);
-//			
-//			req.setAttribute("myProjects", myProjects);
-//			req.setAttribute("project", project);
-//			req.setAttribute("projectTasks", tasks);
-//			log.log(Level.INFO, "Project obtained successfully.");
-//
-//		}
-//	
-//		
-//		req.getRequestDispatcher("project.jsp").forward(req, resp);
-//	}
-	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// Redirects to login if accessTokenHarvest or accessTokenTodoist do not exist.
+		if(Checkers.checkAuthenticatedOrRedirect(req.getSession(), resp)) return;
 		
 		log.log(Level.INFO, "Processing GetProjectController.");
+		String projectId = req.getParameter("id");
 		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
 		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
-		String projectId = req.getParameter("id");
-		
-		if (accessTokenHarvest != null) {
-			if (projectId != null) {
-				log.log(Level.INFO, "Getting project");
-				
-				HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
-				Profile profile = harvestResource.getProfile();
-				Project_ project = harvestResource.getProject(projectId);
-				
-				req.setAttribute("profile", profile);
-				if (project==null) {
-					resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-				} else {
-					ProjectConfig projectConfig = new ProjectConfig(harvestResource, project);
-								
-					req.setAttribute("project", project);
-					req.setAttribute("projectConfig", projectConfig);
+			
+			
+		if (projectId != null) {
+			log.log(Level.INFO, "Getting project");
 					
-					req.getRequestDispatcher("project.jsp").forward(req, resp);
-				}
-				
-			} else {
+			HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
+			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
+			Profile profile = harvestResource.getProfile();
+			Project project = harvestResource.getProject(projectId);
+					
+					
+			req.setAttribute("profile", profile);
+			if (project==null) {
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			} else {
+				ProjectConfig projectConfig = new ProjectConfig(harvestResource, project);
+				List<TaskAssignment> harvestTasks = harvestResource.getProjectTasks(projectId);
+				TaskSimple[] todoistTasks = todoistResource.getActiveTasks(projectConfig.getTodoistProjectId().toString());
+						
+				req.setAttribute("project", project);
+				req.setAttribute("projectConfig", projectConfig);
+				req.setAttribute("harvestTasks", harvestTasks);
+				req.setAttribute("todoistTasks", todoistTasks);
+				req.getRequestDispatcher("project.jsp").forward(req, resp);
 			}
+					
 		} else {
-			// redirect to harvest login oauth
-			log.log(Level.WARNING, "Unauthorized request");
-			resp.sendRedirect("/login?provider=Harvest");
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
-
 	}
-	
+		
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		// ajax
 		doGet(req,resp);
 	}
 }

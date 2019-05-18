@@ -33,8 +33,9 @@ public class AddTaskController extends HttpServlet {
 		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
 		String newTaskContent = req.getParameter("content");
 		String newTaskProjectId = req.getParameter("projectId");
+		String newTaskAssignment = req.getParameter("assignment");
 		
-		boolean parametrosRecibidos = Checkers.notNull(accessTokenTodoist, newTaskContent, newTaskProjectId);
+		boolean parametrosRecibidos = Checkers.notNull(accessTokenTodoist, newTaskContent, newTaskProjectId, newTaskAssignment);
 		if (parametrosRecibidos) {		
 			
 			log.log(Level.INFO, "Adding task.");

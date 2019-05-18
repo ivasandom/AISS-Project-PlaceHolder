@@ -9,10 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import aiss.model.harvest.Project_;
+import aiss.model.harvest.Project;
 import aiss.model.resource.HarvestResource;
 import aiss.model.resource.TodoistResource;
-import aiss.model.todoist.Project;
 import aiss.utility.Checkers;
 import aiss.utility.ProjectConfig;
 
@@ -71,7 +70,7 @@ public class AddProjectController extends HttpServlet{
 			HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
 			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
 			
-			Project_ nuevoProject = harvestResource.createProject(clientId, name,  isBillable, billBy, budgetBy);
+			Project nuevoProject = harvestResource.createProject(clientId, name,  isBillable, billBy, budgetBy);
 			// Creamos la configuracion JSON del proyecto
 			ProjectConfig config = new ProjectConfig(harvestResource, nuevoProject);
 			
