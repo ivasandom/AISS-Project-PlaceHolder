@@ -1,6 +1,7 @@
 		// Crear una nueva tarea AJAX
 		var formularioTarea = $("#ajax-add-task");
-		var listaTareas = $("#lista-tareas");
+		var obj = $("#taskAssignment-other");
+		var listaTareas = $(".subTask-other");
 		$(formularioTarea).submit(function(event){
 			event.preventDefault();
 			var datosFormulario = $(formularioTarea).serialize();
@@ -9,7 +10,19 @@
 				type: "POST",
 				data: datosFormulario,
 				success: function(response){
-					listaTareas.append("<li data-id='" + response.id + "'>" + response.content + "</li>");
+					
+					var trow = (
+							"<tr class='table-info collapse show subTask-other' id='task-" + response.id + "'>" +
+								"<td>" + response.content + "</td>" +
+								"<td></td>" +
+								"<td><button class='btn btn-danger btn-sm delete-task' data-id='" + response.id + "'>Eliminar</button></td>" +
+							"</tr>");
+					
+					(listaTareas.length) ? listaTareas.last().after(trow) : obj.after(trow);
+					
+					
+					obj.collapse("show");
+					
 				},
 				error: function(response){
 					alert("Error creando tarea");
@@ -38,21 +51,19 @@
 		
 		
 		
-		$(".delete-task-confirm").on("click", function(){
-			Swal.fire({
-				  title: '¿Estás seguro que quieres borrar la tarea?',
-				  text: "Se borrará la tarea.",
-				  type: 'warning',
-				  showCancelButton: true,
-				  confirmButtonColor: '#3085d6',
-				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Eliminar',
-				  cancelButtonText: 'Cancelar'
-				}).then((result) => {
-				  if (result.value) {
-				    location.href = $(this).attr("data-url");
-				  }
-				})
+		$(".delete-task").on("click", function(event){
+			var taskId = $(this).data("id");
+			var deleteUrl = "/tasks/delete?id=" + taskId;
+			var trow = $("#task-" + taskId);
+			$.ajax({
+				url: deleteUrl,
+				success: function(response){
+					trow.remove()
+				},
+				error: function(response){
+					alert("Error eliminando la tarea");
+				}
+			})
 		})
 		
 		

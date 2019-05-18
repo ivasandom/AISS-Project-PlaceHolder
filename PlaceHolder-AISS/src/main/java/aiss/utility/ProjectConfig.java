@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import org.json.JSONPropertyName;
 
 import aiss.controller.GetProjectController;
-import aiss.model.harvest.Project_;
+import aiss.model.harvest.Project;
 import aiss.model.resource.HarvestResource;
 
 public class ProjectConfig {
@@ -22,7 +22,7 @@ public class ProjectConfig {
 	
 	// Constructor
 	
-	public ProjectConfig(HarvestResource resource, Project_ project) {
+	public ProjectConfig(HarvestResource resource, Project project) {
 		
 		try {
 			JSONObject config = new JSONObject(project.getNotes());
@@ -45,7 +45,7 @@ public class ProjectConfig {
 	
 	// Update project notes with JSON config object
 	
-	public boolean updateConfig(HarvestResource resource, Project_ project) {
+	public boolean updateConfig(HarvestResource resource, Project project) {
 		System.out.println(new JSONObject(this));
 		return resource.updateProjectConfiguration(project.getId(), new JSONObject(this));
 	}
