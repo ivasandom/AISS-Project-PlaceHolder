@@ -1,13 +1,4 @@
-var trees = Array.from(document.getElementsByClassName("tree"));
 var tree = {};
-
-trees = trees.map(tree => JSON.constructor({
-    "path": tree.getAttribute("data-path"),
-    "type": tree.getAttribute("data-type"),
-    "name": tree.getAttribute("data-name"),
-    "size": tree.getAttribute("data-size"),
-    "url": tree.getAttribute("data-url")
-}));
 
 function addnode(obj) {
     var splitpath = obj.path.replace(/^\/|\/$/g, "").split('/');
@@ -27,7 +18,6 @@ function addnode(obj) {
     }
 }
 
-trees.map(addnode);
 
 function loadFile(url, type) {
     if (type == 'blob') {
@@ -59,14 +49,23 @@ function transformChildren(obj) {
     return lista;
 }
 
-var fileExplorer = [];
-for (var key in tree) {
-    let x = tree[key];
-    var url = tree[key]["url"];
-    var type = tree[key]["type"];
-    tree[key]['li_attr'] = {
-        "onclick": "loadFile('" + url + "', '" + type + "');",
-    }
-    x.children = transformChildren(x.children);
-    fileExplorer.push(x);
+function loadRepositoryTree(response) {
+	response[0].tree.map(addnode);
+	var fileExplorer = [];
+	for (var key in tree) {
+	    let x = tree[key];
+	    var url = tree[key]["url"];
+	    var type = tree[key]["type"];
+	    tree[key]['li_attr'] = {
+	        "onclick": "loadFile('" + url + "', '" + type + "');",
+	    }
+	    x.children = transformChildren(x.children);
+	    fileExplorer.push(x);
+	}
+	
+	$('#fileTree').jstree({
+		'core': {
+			'data': fileExplorer
+		}
+	});
 }

@@ -11,6 +11,8 @@
     <!-- Bootstrap cdn -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
 </head>
 
@@ -63,7 +65,7 @@
         <button class="btn btn-primary btn-lg container-fluid" style="position:relative;bottom:10px;">COMMIT</button>
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="selectRepositoryModal" tabindex="-1" role="dialog" aria-labelledby="selectRepositoryModalLabel"
         aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -109,25 +111,26 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
 
-    <!-- <script src="/js/tabs.js"></script>
+    <script src="/js/tabs.js"></script>
 
     <script src="/js/editor.main.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
     <script>
         $(document).ready(function () {
             var sidebar = $("#fileTree");
 			// cargar modal seleccionar repositorio
-            $("#exampleModal").modal("show");
+            $("#selectRepositoryModal").modal("show");
 			
 			$("#formulario-repositorios").on("submit", function(event){
 				event.preventDefault();
-				$("#boton-seleccionar-repo").html("Loading...");
+				$("#boton-seleccionar-repo").html("<img src='https://loading.io/assets/img/css/spinner.svg' height='22.5px' width='22.5px'> Loading...");
 				$.ajax({
 					url: "/editor/repository/tree",
-					data: $(this).serialize(),
+					data: $("#formulario-repositorios").serialize(),
 					success: function(response){
-						alert("Cargado");
+						loadRepositoryTree(response.tree);
+						$('#selectRepositoryModal').modal("hide");
 					},
 					error: function(response){
 						alert("error cargando arbol");
@@ -157,8 +160,6 @@
             });
         })
     </script>
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.js"></script>
 
 
 

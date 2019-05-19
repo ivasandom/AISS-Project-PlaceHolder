@@ -297,4 +297,14 @@
 		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
 	
+	<!-- Cargar arbol repositorio -->
+	<servlet>
+		<servlet-name>GitRepositoryTree</servlet-name>
+		<servlet-class>aiss.controller.GetTreeController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GitRepositoryTree</servlet-name>
+		<url-pattern>/editor/repository/tree</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
