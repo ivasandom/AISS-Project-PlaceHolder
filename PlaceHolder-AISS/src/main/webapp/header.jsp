@@ -33,7 +33,7 @@
 						Mis repositorios GitHub
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<c:forEach items="${repositories}" var="repository">
+						<c:forEach items="${repositoriesGitHub}" var="repository">
 							<a class="dropdown-item"
 								href="/editor?owner=${repository.owner.login}&repo=${repository.name}">
 								${repository.fullName}
@@ -42,6 +42,7 @@
 					</div>
 				</li>
 			</c:if>
+			
 			<c:if test="${not empty sessionScope['GitLab-token']}">
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -49,9 +50,9 @@
 						Mis repositorios GitLab
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<c:forEach items="${projects}" var="gitlabrepository">
+						<c:forEach items="${projectsGitLab}" var="gitlabrepository">
 							<a class="dropdown-item"
-								href="/editor?owner=${gitlabrepository.owner.login}&repo=${gitlabrepository.name}">
+								href="/editor?owner=${gitlabrepository.author}&repo=${gitlabrepository.name}">
 								${gitlabrepository.name}
 							</a>
 						</c:forEach>
@@ -65,7 +66,7 @@
 						Mis repositorios Bitbucket
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<c:forEach items="${repositories}" var="repository">
+						<c:forEach items="${repositoriesBitbucket}" var="repository">
 							<a class="dropdown-item"
 								href="/editor?owner=${repository.owner.login}&repo=${repository.name}">
 								${BitbucketRepository.fullName}

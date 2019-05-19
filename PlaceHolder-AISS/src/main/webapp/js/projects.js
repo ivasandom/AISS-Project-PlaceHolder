@@ -66,6 +66,40 @@
 			})
 		})
 		
+		//update task
+		$(".update-task").on("click", function(event){
+			Swal.fire({
+				  title: 'Update a task',
+				  input: 'text',
+				  inputAttributes: {
+				    autocapitalize: 'off'
+				  },
+				  showCancelButton: true,
+				  confirmButtonText: 'Update',
+				  showLoaderOnConfirm: true,
+				  preConfirm: (name) => {
+				    return fetch('/')
+				      .then(response => {
+				        if (!response.ok) {
+				          throw new Error(response.statusText)
+				        }
+				        return response.json()
+				      })
+				      .catch(error => {
+				        Swal.showValidationMessage(
+				          `Request failed: ${error}`
+				        )
+				      })
+				  },
+				  allowOutsideClick: () => !Swal.isLoading()
+				}).then((result) => {
+				  if (result.value) {
+				    Swal.fire({
+				      Name: `${result.value.name}`,
+				    })
+				  }
+				})
+		})
 		
 		$('.update-task-confirm').on('show.bs.modal', function (event) {
   			var button = $(event.relatedTarget) // Button that triggered the modal

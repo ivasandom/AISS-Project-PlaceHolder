@@ -204,7 +204,7 @@
 		<url-pattern>/AuthController/Harvest</url-pattern>
 	</servlet-mapping>
 
-	<!--TodoistOAuth2Callback -->
+	<!--HarvestOAuth2Callback -->
 	<servlet>
 		<description />
 		<servlet-name>HarvestOAuth2Callback</servlet-name>

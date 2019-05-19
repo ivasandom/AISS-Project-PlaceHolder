@@ -41,7 +41,7 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="configuration-tab" data-toggle="tab" href="#configuration" role="tab" aria-controls="configuration"
-						aria-selected="false">Configuracion</a>
+						aria-selected="false">Configuración</a>
 				</li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
@@ -75,6 +75,7 @@
 									<td>${todoistTask.content}</td>
 									<td>-</td>
 									<td><button class="btn btn-danger btn-sm delete-task" data-id="${todoistTask.id}">Eliminar</button></td>
+									<td><button class="btn btn-success btn-sm update-task" data-url="/tasks/update?id=${todoistTask.id}">Actualizar</button></td>
 								</tr>
 							</c:forEach>
 				
@@ -90,7 +91,7 @@
 								<select class="form-control" name="assignment">
 									<option value="">Other</option>
 									<c:forEach items="${harvestTasks}" var="taskAssignment">
-										<option value="${taskAssignment.task.id}" disabled>${taskAssignment.task.name}</option>
+										<option value="${taskAssignment.task.id}">${taskAssignment.task.name}</option>
 									</c:forEach>
 								</select>
 							</div>
