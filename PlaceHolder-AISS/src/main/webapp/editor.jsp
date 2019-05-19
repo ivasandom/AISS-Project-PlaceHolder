@@ -27,9 +27,9 @@
         </div>
         <div id="split-bar"></div>
     </div>
-    <div id="menu">
-        <img src="http://tentube.weebly.com/uploads/6/4/4/0/64406749/4455140.png?458"
-            style="width: 40px;height:40px;padding:20px 10px;">
+    <div id="menu" style="padding:10px;">
+        	<button class="btn btn-secondary" data-toggle="modal" data-target="#selectRepositoryModal" style="border-radius:50%;"><i class="fas fa-cog"></i></button>
+
     </div>
 
     <div id="container">
@@ -50,19 +50,28 @@
         <hr>
 
         <div class="form-group">
-            <label for="task-select">Tarea tipe</label>
+            <label for="task-select">Tarea</label>
             <select class="form-control" id="task-select">
-                <option value="hola">HOLA</option>
+                <option value="hola">El workbook</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="task-select">Tarea tipe</label>
+            <label for="task-select">Más detalles..</label>
             <select class="form-control" id="task-select">
-                <option value="hola">HOLA</option>
+                <option value="hola">Ver videos de vegetta</option>
             </select>
         </div>
-
-        <button class="btn btn-primary btn-lg container-fluid" style="position:relative;bottom:10px;">COMMIT</button>
+		<hr>
+		<div class="row mt-4">
+			<div class="col-md-4">
+				<button class="btn btn-secondary container-fluid">TIMER</button>
+			</div>
+			<div class="col-md-8">
+				<button class="btn btn-primary container-fluid">COMMIT AND PUSH</button>
+			</div>
+		</div>
+		
+        
     </div>
 
     <div class="modal fade" id="selectRepositoryModal" tabindex="-1" role="dialog" aria-labelledby="selectRepositoryModalLabel"
@@ -78,7 +87,7 @@
                     <form method="POST" id="formulario-repositorios" action="/editor/repository/tree">
                     	<input type="hidden" name="projectId" value="${project.id}">
 	                    <div class="form-group">
-	                    	<label for="recipient-name" class="col-form-label">Repositorio:</label>
+	                    	<label for="recipient-name" class="col-form-label">Repositorios enlazados a <a href="/projects?id=${project.id}" target="_blank">${project.name}</a>:</label>
 	                    	<select class="form-control" name="repositoryHost">
                                 <c:if test="${not empty projectConfig.githubRepository}">
                                     <option value="github">Github: ${projectConfig.githubRepository}</option>
@@ -129,8 +138,10 @@
 					url: "/editor/repository/tree",
 					data: $("#formulario-repositorios").serialize(),
 					success: function(response){
+						$("#fileTree").replaceWith("<div id='fileTree' style='margin-top:20px;'></div>");
 						loadRepositoryTree(response.tree);
 						$('#selectRepositoryModal').modal("hide");
+						$("#boton-seleccionar-repo").html("Seleccionar");
 					},
 					error: function(response){
 						alert("error cargando arbol");

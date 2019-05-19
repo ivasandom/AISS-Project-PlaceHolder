@@ -63,7 +63,7 @@ public class GetTreeController extends HttpServlet {
 					String repositoryName = repository[2];
 					
 					JSONObject jsonResponse = new JSONObject();
-					jsonResponse.append("tree", new JSONObject(githubResource.getRepositoryTree(owner, repositoryName)));
+					jsonResponse.put("tree", githubResource.getRepositoryTree(owner, repositoryName).getTree());
 					
 					out.print(jsonResponse);
 					out.flush();
@@ -76,7 +76,7 @@ public class GetTreeController extends HttpServlet {
 					String repositoryName = repository[2];
 					
 					JSONObject jsonResponse = new JSONObject();
-					//jsonResponse.append("tree", gitlabResource.getRepositoryTree(owner, repositoryName));
+					jsonResponse.put("tree", gitlabResource.getRepositoryTree(owner, repositoryName));
 					
 					out.print(jsonResponse);
 					out.flush();

@@ -20,6 +20,7 @@ function addnode(obj) {
 
 
 function loadFile(url, type) {
+    // CARGA ARCHIVOS EN EL EDITOR
     if (type == 'blob') {
         // alert(url);
         $.get(url, function(data, status){
@@ -49,8 +50,9 @@ function transformChildren(obj) {
     return lista;
 }
 
-function loadRepositoryTree(response) {
-	response[0].tree.map(addnode);
+function loadRepositoryTree(responseTrees) {
+    tree = {};
+	responseTrees.map(addnode);
 	var fileExplorer = [];
 	for (var key in tree) {
 	    let x = tree[key];

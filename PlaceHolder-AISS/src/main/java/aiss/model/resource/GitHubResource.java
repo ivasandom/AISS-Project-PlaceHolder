@@ -69,8 +69,6 @@ public class GitHubResource {
 	}
 	
 	public RepositoryTree getRepositoryTree(String owner, String repo) {
-		
-		System.out.println("Datos" +  owner + repo);
 		String treeSha = this.getMasterBranch(owner, repo).getCommit().getSha();
 		
 		ClientResource cr = null;
