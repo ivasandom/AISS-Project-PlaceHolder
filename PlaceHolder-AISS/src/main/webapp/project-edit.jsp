@@ -75,8 +75,8 @@
 					</div>
 				</div>
 			
-			
-			<button type="submit" class="btn btn-primary">Create project</button>
+				<button type="submit" class="btn btn-primary">Update project</button>
+				
 			</form>
 		</div>
 

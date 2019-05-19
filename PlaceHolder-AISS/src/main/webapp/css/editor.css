@@ -32,3 +32,21 @@ body{
     width: 6px;
     cursor: col-resize;
 }
+
+#task-git-manager {
+    height:100%;
+    width: 400px;
+    position:absolute;
+    right:0;
+    background-color:#fff;
+    padding:20px;
+    display: none;
+}
+
+.show-sidebar {
+    display: block !important;
+}
+
+#editor.show-sidebar{
+    width: calc(100% - 410px - 400px) !important;
+}

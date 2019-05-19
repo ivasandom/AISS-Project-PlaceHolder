@@ -24,10 +24,11 @@
 
 	<main role="main mt-5 pt-5">
 
-
+	
 		<div class="jumbotron mb-0" style='background:linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.8)), url("https://previews.123rf.com/images/karenr/karenr1506/karenr150600007/40831894-blue-and-white-striped-gingham-tile-pattern-repeat-background-that-is-seamless-and-repeats.jpg")'>
 			<div class="container">
-				<h1 class="display-4">Proyecto: ${project.name}
+				<h1 class="display-4">${project.name}</h1>
+				<a class="btn btn-dark btn-sm" href="/editor?project=${project.id}">Abrir en editor</a>
 			</div>
 		</div>
 
@@ -116,11 +117,11 @@
 							</tr>
 							<tr>
 								<td>GitHub</td>
-								<td>${projectConfig.gitlabRepository}</td>
+								<td>${projectConfig.githubRepository}</td>
 							</tr>
 							<tr>
 								<td>GitLab</td>
-								<td>${projectConfig.githubRepository}</td>
+								<td>${projectConfig.gitlabRepository}</td>
 							</tr>
 							<tr>
 								<td>BitBucket</td>
