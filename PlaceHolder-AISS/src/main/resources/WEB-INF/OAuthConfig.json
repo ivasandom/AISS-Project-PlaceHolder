@@ -8,8 +8,8 @@
 	},
     "GitLab": {
         "tokenUrl": "https://gitlab.com/oauth/token",
-        "clientId": "bc31afef2502b193bf746a8d1d4ffb12fdef1a9cb8eb55d356021e9f606b793c",
-        "clientSecret": "98b6b78dfcdff18eae8a85a9e18a20c74d1779d3ddc41e3588f82ed31817bd04",
+        "clientId": "f753b00f0914454ba5c4fad097625e592c20f271541101424c4211428731496d",
+        "clientSecret": "241cb9df7f1d9abdb529586fdc1f70fe7e0f266bdb9657623c7ac6647fe272dd",
         "authorizationFormUrl": "https://gitlab.com/oauth/authorize",
         "scopes": ["api"]
     },
@@ -22,10 +22,10 @@
     },
     "Todoist": {
         "tokenUrl": "https://todoist.com/oauth/access_token",
-        "clientId": "a6756739e19b456c971ad293d8a6f55c",
-        "clientSecret": "48092f28265445c7ae628e0934d136d6",
+        "clientId": "b81837d8a9e54ffda3b51f7667f1754e",
+        "clientSecret": "5fdfa1cdbe614f78bd1d3809ffa601a2",
         "authorizationFormUrl": "https://todoist.com/oauth/authorize",
-        "scopes": ["data:read_write, project:delete"]
+        "scopes": ["data:read_write, project:delete, data:delete"]
     },
     "Harvest": {
     	"tokenUrl": "https://id.getharvest.com/api/v2/oauth2/token",
