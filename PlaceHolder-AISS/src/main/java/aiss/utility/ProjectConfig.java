@@ -46,7 +46,6 @@ public class ProjectConfig {
 	// Update project notes with JSON config object
 	
 	public boolean updateConfig(HarvestResource resource, Project project) {
-		System.out.println(new JSONObject(this));
 		return resource.updateProjectConfiguration(project.getId(), new JSONObject(this));
 	}
 	

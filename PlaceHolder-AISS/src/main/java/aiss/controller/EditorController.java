@@ -9,31 +9,56 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import aiss.model.github.RepositoryTree;
-import aiss.model.resource.GitHubResource;
+import aiss.model.resource.HarvestResource;
+import aiss.model.resource.TodoistResource;
+import aiss.utility.Checkers;
+import aiss.utility.ProjectConfig;
 
 public class EditorController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(HomeController.class.getName());
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		if (Checkers.checkAuthenticatedOrRedirect(req.getSession(), resp)) return;
 		
 		log.log(Level.INFO, "Processing EditorController.");
 
-		String accessTokenGitHub = (String) req.getSession().getAttribute("GitHub-token");
-		String owner = req.getParameter("owner");
-		String repo = req.getParameter("repo");
+		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
+		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
 		
-		if (owner != null && repo != null && accessTokenGitHub != null) {
+		HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
+		TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
+		
+		String projectId = req.getParameter("project");
+		
+		if (projectId != null) {
+			aiss.model.harvest.Project harvestProject = harvestResource.getProject(projectId);
 			
-			GitHubResource githubResource = new GitHubResource(accessTokenGitHub);
-			RepositoryTree repositoryTree = githubResource.getRepositoryTree(owner, repo);
-			req.setAttribute("repositoryTrees", repositoryTree.getTree());
-			req.getRequestDispatcher("editor.jsp").forward(req, resp);
-			log.log(Level.FINE," Forwarding to editor.");
-
-		
+			if (harvestProject == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
+			
+			ProjectConfig config = new ProjectConfig(harvestResource, harvestProject);
+			aiss.model.todoist.Project todoistProject = todoistResource.getProject(config.getTodoistProjectId());
+			
+			req.setAttribute("project", harvestProject);
+			req.setAttribute("projectConfig", config);
+			req.getRequestDispatcher("/editor.jsp").forward(req, resp);
+						
 		}
+		
+//		if (owner != null && repo != null && accessTokenGitHub != null) {
+//			
+//			GitHubResource githubResource = new GitHubResource(accessTokenGitHub);
+//			RepositoryTree repositoryTree = githubResource.getRepositoryTree(owner, repo);
+//			req.setAttribute("repositoryTrees", repositoryTree.getTree());
+//			req.getRequestDispatcher("editor.jsp").forward(req, resp);
+//			log.log(Level.FINE," Forwarding to editor.");
+//
+//		
+//		}
 		
 		
 	}

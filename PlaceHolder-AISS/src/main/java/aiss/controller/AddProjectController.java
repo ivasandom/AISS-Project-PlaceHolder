@@ -51,17 +51,23 @@ public class AddProjectController extends HttpServlet{
 		String billBy = null;
 		String budgetBy = null;
 		String todoistProjectId = null;
+		String githubRepository = null;
+		String gitlabRepository = null;
+		String bitbucketRepository = null;
 		
 		try {
-			clientId = new Long(req.getParameter("client_id"));
+			
+			clientId = Long.valueOf(req.getParameter("client_id"));
 			name = req.getParameter("name");
-			isBillable = new Boolean(req.getParameter("is_billable"));
+			isBillable = Boolean.valueOf(req.getParameter("is_billable"));
 			billBy = req.getParameter("bill_by");
 			budgetBy = req.getParameter("budget_by");
 			
 			// Enlazar
 			todoistProjectId = req.getParameter("todoistProject");
-			
+			githubRepository = req.getParameter("githubRepository");
+			gitlabRepository = req.getParameter("gitlabRepository");
+			bitbucketRepository = req.getParameter("bitbucketRepository");
 		} catch (Exception e) {
 			
 		}
@@ -82,6 +88,9 @@ public class AddProjectController extends HttpServlet{
 				config.setTodoistProjectId(todoistProjectId);
 			}
 			
+			if (githubRepository != null && githubRepository != "") config.setGithubRepository(githubRepository);
+			if (gitlabRepository != null && gitlabRepository != "") config.setGitlabRepository(gitlabRepository);
+			if (bitbucketRepository != null && bitbucketRepository != "") config.setBitbucketRepository(bitbucketRepository);
 			
 			config.updateConfig(harvestResource, nuevoProject);
 			
