@@ -7,7 +7,7 @@ public class Project {
 	
 	private String id;
 	private String name;
-	private List<Task> tasks = new ArrayList<Task>();
+	private List<Task> tasks;
 	
 	public Project() {
 	}
@@ -56,6 +56,9 @@ public class Project {
 	}
 	
 	public void addTask(Task t) {
+		if(tasks==null) {
+			tasks = new ArrayList<Task>();
+		}
 		tasks.add(t);
 	}
 	

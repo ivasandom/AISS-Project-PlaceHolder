@@ -27,18 +27,18 @@ import aiss.model.repository.ProjectRepository;
 
 
 @Path("/tasks")
-public class TareasResource {
-	public static TareasResource _instance=null;
+public class TaskResource {
+	public static TaskResource _instance=null;
 	ProjectRepository repository;
 	
-	private TareasResource(){
+	private TaskResource(){
 		repository=MapProjectRepository.getInstance();
 	}
 	
-	public static TareasResource getInstance()
+	public static TaskResource getInstance()
 	{
 		if(_instance==null)
-			_instance=new TareasResource();
+			_instance=new TaskResource();
 		return _instance; 
 	}
 	

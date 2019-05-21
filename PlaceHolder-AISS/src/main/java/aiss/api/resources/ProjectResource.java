@@ -26,21 +26,21 @@ import aiss.model.repository.MapProjectRepository;
 import aiss.model.repository.ProjectRepository;
 
 @Path("/projects")
-public class ProyectosResource {
+public class ProjectResource {
 	
 	/* Singleton */
-	private static ProyectosResource _instance=null;
+	private static ProjectResource _instance=null;
 	ProjectRepository repository;
 	
-	private ProyectosResource() {
+	private ProjectResource() {
 		repository=MapProjectRepository.getInstance();
 
 	}
 	
-	public static ProyectosResource getInstance()
+	public static ProjectResource getInstance()
 	{
 		if(_instance==null)
-				_instance=new ProyectosResource();
+				_instance=new ProjectResource();
 		return _instance;
 	}
 	
