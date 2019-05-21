@@ -8,13 +8,14 @@ import aiss.model.Project;
 import aiss.model.Task;
 
 
-
-public class MapProjectRepository implements ProjectRepository{
-	Map<String, Project> projectMap;
-	Map<String, Task> taskMap;
-	private static MapProjectRepository instance=null;
-	private int index=0;			// Index to create projects and tasks' identifiers.
-
+public class MapProjectRepository implements ProjectRepository {
+	
+	private Map<String, Project> projectMap = new HashMap<String,Project>();
+	private Map<String, Task> taskMap = new HashMap<String,Task>();
+	
+	private static MapProjectRepository instance = null;
+	private int indexTask = 0; // Index to create projects and tasks' identifiers.
+	private int indexProject = 0;
 
 	public static MapProjectRepository getInstance() {
 
@@ -25,51 +26,45 @@ public class MapProjectRepository implements ProjectRepository{
 
 		return instance;
 	}
+	
 	public void init() {
-
-		projectMap = new HashMap<String,Project>();
-		taskMap = new HashMap<String,Task>();
 		
-		//Create tasks
-		Task hacerCena = new Task();
-		hacerCena.setName("Hacer la cena");
+		// Create tasks
+		Task hacerCena = new Task("Hacer la cena");
 		addTask(hacerCena);
 		
-		Task sacarBasura = new Task();
-		hacerCena.setName("Sacar la basura");
+		Task sacarBasura = new Task("Sacar la basura");
 		addTask(sacarBasura);
 		
-		Task hacerMockups = new Task();
-		hacerCena.setName("Hacer los mockups");
+		Task hacerMockups = new Task("Hacer los mockups");
 		addTask(hacerMockups);
 		
-		Task hacerDiagramas = new Task();
-		hacerCena.setName("Hacer los diagramas");
+		Task hacerDiagramas = new Task("Hacer los diagramas");
 		addTask(hacerDiagramas);
 		
 		// Create projects
-		Project cosasDeCasa = new Project();
-		cosasDeCasa.setName("Cosas de casa");
+		Project cosasDeCasa = new Project("Cosas de casa");
 		addProject(cosasDeCasa);
 		
-		Project tareasAISS = new Project();
-		cosasDeCasa.setName("Tareas AISS");
+		Project tareasAISS = new Project("Tareas AISS");
 		addProject(tareasAISS);
 		
 		// Add tasks to projects
 		addTask(cosasDeCasa.getId(), hacerCena.getId());
+		System.out.println("id project: " + cosasDeCasa.getId() + " id task: " + hacerCena.getId());
 		addTask(cosasDeCasa.getId(), sacarBasura.getId());
 		
-		addTask(hacerMockups.getId(), tareasAISS.getId());
-		addTask(hacerDiagramas.getId(), tareasAISS.getId());
+		addTask(tareasAISS.getId(), hacerMockups.getId());
+		addTask(tareasAISS.getId(), hacerDiagramas.getId());
 		
 	}
 	
 	// Tasks related operations
+	
 	@Override
 	public void addTask(Task t) {
 		// TODO Auto-generated method stub
-		String id = "t" + index++;
+		String id = "t" + indexTask++;
 		t.setId(id);
 		taskMap.put(id, t);
 		
@@ -100,7 +95,7 @@ public class MapProjectRepository implements ProjectRepository{
 	@Override
 	public void addProject(Project p) {
 		// TODO Auto-generated method stub
-		String id = "p" + index++;	
+		String id = "p" + indexProject++;	
 		p.setId(id);
 		projectMap.put(id,p);
 		
@@ -113,6 +108,7 @@ public class MapProjectRepository implements ProjectRepository{
 	@Override
 	public Project getProject(String projectid) {
 		// TODO Auto-generated method stub
+		System.out.println("proyecto obtenido: " + projectMap.get(projectid));
 		return projectMap.get(projectid);
 	}
 	@Override
@@ -134,6 +130,8 @@ public class MapProjectRepository implements ProjectRepository{
 	public void addTask(String projectId, String taskId) {
 		// TODO Auto-generated method stub
 		Project project = getProject(projectId);
+		System.out.println("obteniendo projectId:" + projectId);
+		System.out.println("tareaOBTENIDA: " + taskMap.get(taskId));
 		project.addTask(taskMap.get(taskId));
 		
 	}
