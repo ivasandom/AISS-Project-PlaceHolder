@@ -8,7 +8,7 @@ import aiss.model.bitbucket.BitbucketRepository;
 public class BitbucketResource {
 	
 	private final String accessToken;
-	private final String BASE_URL = "https://bitbucket.org/2.0"; 
+	private final String BASE_URL = "https://api.bitbucket.org/2.0"; 
 	
 	public BitbucketResource(String accessToken) {
 		this.accessToken = accessToken;
