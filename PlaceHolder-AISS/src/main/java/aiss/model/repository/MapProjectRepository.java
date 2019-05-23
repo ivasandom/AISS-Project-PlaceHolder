@@ -1,5 +1,6 @@
 package aiss.model.repository;
 
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -103,6 +104,10 @@ public class MapProjectRepository implements ProjectRepository {
 	@Override
 	public Collection<Project> getAllProjects() {
 		// TODO Auto-generated method stub
+		return projectMap.values();
+	}
+	@Override
+	public Collection<Project> getAllProjectsFilterByFirstLetter(String firstLetter){
 		return projectMap.values();
 	}
 	@Override
