@@ -15,8 +15,8 @@
     },
     "Bitbucket": {
         "tokenUrl": "https://bitbucket.org/site/oauth2/access_token",
-        "clientId": "Ybxj7MWesCbGDVCea8",
-        "clientSecret": "6VVnWLR5RhvRVVyrHFyxauKL5nVw7kYt",
+        "clientId": "2KT28d8vWAJctuC6Jw",
+        "clientSecret": "CVPMUAAPvbJ6DnzcmTAUcQkzvz3X4cQt",
         "authorizationFormUrl": "https://bitbucket.org/site/oauth2/authorize",
         "scopes": ["repository:admin"]
     },
