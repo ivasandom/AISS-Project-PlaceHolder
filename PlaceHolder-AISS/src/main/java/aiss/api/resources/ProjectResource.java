@@ -59,7 +59,7 @@ public class ProjectResource {
 	@Produces("application/json")
 	public Collection<Project> getAll(@QueryParam("offset") @DefaultValue("0") Integer offset, 
 			@QueryParam("limit") @DefaultValue("20") Integer limit ){
-		//TODO
+		
 		return repository.getAllProjects();
 	}
 	
