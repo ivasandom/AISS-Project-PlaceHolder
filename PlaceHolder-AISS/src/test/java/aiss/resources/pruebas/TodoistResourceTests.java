@@ -25,7 +25,17 @@ public class TodoistResourceTests {
 		//TODO
 	}
 	
-	//UPDATE TASK
+	
+	@Test
+	public void testUpdateTask() {
+		Boolean updateTarea = td.updateTask("3210017843", "newTask");
+		if (updateTarea==true) {
+			System.out.println("Test de updateTask completado exitosamente");
+		}
+		assertTrue("La tarea no se actualizó correctamente", updateTarea);
+	}
+	
+	
 	@Test
 	public void testDeleteTaskTodoist() {
 		Boolean borraTarea = td.deleteTask("3210017843");

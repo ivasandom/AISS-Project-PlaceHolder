@@ -5,12 +5,17 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.json.JSONObject;
 import org.junit.Test;
+
+import com.google.api.client.json.Json;
+import com.google.appengine.repackaged.com.google.gson.JsonObject;
 
 import aiss.model.harvest.Project;
 import aiss.model.harvest.Projects;
 import aiss.model.harvest.TaskAssignment;
 import aiss.model.resource.HarvestResource;
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 
 public class HarvestResourceTests {
 	
@@ -50,6 +55,15 @@ public class HarvestResourceTests {
 	
 	//UPDATE PROJECT
 	
+	@Test
+	public void testUpdateProject() {
+		Boolean updateProject = hv.updateProjectConfiguration(dy6SybqvNhJH81BGjq8fBicH, new JSONObject());
+		if (updateProject==true) {
+			System.out.println("UpdateProject completado con exito");
+		}
+		assertTrue("El proyecto no se actualizo correctamente", updateProject);
+	}
+		
 	@Test
 	public void testGetProjectTasksHarvest() {
 		List<TaskAssignment> tareas = hv.getProjectTasks("21216212");
