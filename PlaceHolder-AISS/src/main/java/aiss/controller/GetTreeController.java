@@ -47,7 +47,7 @@ public class GetTreeController extends HttpServlet {
 		resp.setContentType("application/json");
 		PrintWriter out = resp.getWriter();
 		
-		List<String> hosts = new ArrayList<>(Arrays.asList("github", "gitlab", "bitbucket"));
+		List<String> hosts = new ArrayList<>(Arrays.asList("GitHub", "GitLab", "Bitbucket"));
 		
 		if (accessTokenHarvest != null) {
 			if (hosts.contains(repositoryHost) && repositoryHost != null) {
@@ -55,7 +55,11 @@ public class GetTreeController extends HttpServlet {
 				Project project = harvestResource.getProject(projectId);
 				ProjectConfig config = new ProjectConfig(harvestResource, project);
 				
-				if (repositoryHost.equals("github")) {
+				if (repositoryHost.equals("GitHub")) {
+					if ((String) req.getSession().getAttribute("GitHub-token") == null) {
+						resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+						return;
+					}
 					GitHubResource githubResource = new GitHubResource(accessTokenGithub);
 					
 					String[] repository = config.getGithubRepository().split("/");
@@ -68,7 +72,11 @@ public class GetTreeController extends HttpServlet {
 					out.print(jsonResponse);
 					out.flush();
 					
-				} else if (repositoryHost.equals("gitlab")) {
+				} else if (repositoryHost.equals("GitLab")) {
+					if ((String) req.getSession().getAttribute("GitLab-token") == null) {
+						resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+						return;
+					}
 					GitLabResource gitlabResource = new GitLabResource(accessTokenGitlab);
 					
 					String[] repository = config.getGitlabRepository().split("/");

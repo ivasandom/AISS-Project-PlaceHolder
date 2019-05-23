@@ -88,15 +88,15 @@
                     	<input type="hidden" name="projectId" value="${project.id}">
 	                    <div class="form-group">
 	                    	<label for="recipient-name" class="col-form-label">Repositorios enlazados a <a href="/projects?id=${project.id}" target="_blank">${project.name}</a>:</label>
-	                    	<select class="form-control" name="repositoryHost">
+	                    	<select class="form-control" name="repositoryHost" id="repository-host">
                                 <c:if test="${not empty projectConfig.githubRepository}">
-                                    <option value="github">Github: ${projectConfig.githubRepository}</option>
+                                    <option value="GitHub">Github: ${projectConfig.githubRepository}</option>
                                 </c:if>
                                 <c:if test="${not empty projectConfig.gitlabRepository}">
-                                    <option value="gitlab">Gitlab: ${projectConfig.gitlabRepository}</option>
+                                    <option value="GitLab">Gitlab: ${projectConfig.gitlabRepository}</option>
                                 </c:if>
                                 <c:if test="${not empty projectConfig.bitbucketRepository}">
-                                    <option value="bitbucket">Bitbucket: ${projectConfig.bitbucketRepository}</option>
+                                    <option value="Bitbucket">Bitbucket: ${projectConfig.bitbucketRepository}</option>
                                 </c:if>
 	                        </select>	                           
 	                        </div>
@@ -143,8 +143,16 @@
 						$('#selectRepositoryModal').modal("hide");
 						$("#boton-seleccionar-repo").html("Seleccionar");
 					},
-					error: function(response){
-						alert("error cargando arbol");
+					error: function (xhr, ajaxOptions, thrownError){
+					    switch (xhr.status) {
+					        case 401:
+					             alert("Inicia sesión e intenta de nuevo");
+					             var win = window.open('http://localhost:8090/login?provider=' + $('#repository-host').val(), '_blank');
+								 if (win) {
+								    //Browser has allowed it to be opened
+								    win.focus();
+								 }
+					    }
 					}
 				})
 			})

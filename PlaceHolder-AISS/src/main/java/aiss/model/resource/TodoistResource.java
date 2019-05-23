@@ -205,10 +205,12 @@ public class TodoistResource {
 		ClientResource cr = null;
 		boolean updated = true;
 		String resourceURL = BASE_URL + "/tasks/" + idTask;
+		
 		System.out.println(resourceURL);
+		System.out.println(accessToken);
 		
 		cr = new ClientResource(resourceURL);
-		System.out.println(accessToken);
+		
 		// Token OAuth2
 		ChallengeResponse chr = new ChallengeResponse(ChallengeScheme.HTTP_OAUTH_BEARER);
 		chr.setRawValue(accessToken);
@@ -219,7 +221,7 @@ public class TodoistResource {
 			Form form = new Form();
 			form.add("content", newContent);
 			System.out.println("content: " + newContent);
-			System.out.println("id :" + idTask);
+			System.out.println("id: " + idTask);
 			cr.post(form, MediaType.APPLICATION_JSON);
 			
 		} catch (ResourceException re) {

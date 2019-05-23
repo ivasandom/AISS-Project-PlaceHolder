@@ -18,8 +18,7 @@ public class ProjectConfig {
 	private String bitbucketRepository;
 
 	private static final Logger log = Logger.getLogger(GetProjectController.class.getName());
-	
-	
+
 	// Constructor
 	
 	public ProjectConfig(HarvestResource resource, Project project) {
