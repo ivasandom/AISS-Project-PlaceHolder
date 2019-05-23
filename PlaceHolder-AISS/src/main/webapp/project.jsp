@@ -72,10 +72,12 @@
 
 							<c:forEach items="${todoistTasks}" var="todoistTask">
 								<tr class="table-info collapse subTask-other" id="task-${todoistTask.id}">
-									<td>${todoistTask.content}</td>
+									<td><input type="text" value="${todoistTask.content}" id="taskInput-${todoistTask.id}" class="form-control" style="border:0;background:transparent;"></td>
 									<td>-</td>
-									<td><button class="btn btn-danger btn-sm delete-task" data-id="${todoistTask.id}">Eliminar</button></td>
-									<td><button class="btn btn-success btn-sm update-task" data-url="/tasks/update?id=${todoistTask.id}">Actualizar</button></td>
+									<td>
+										<div class="btn-group">
+											<button class="btn btn-danger btn-sm delete-task" data-id="${todoistTask.id}">Eliminar</button><button class="btn btn-primary btn-sm update-task-form" data-id="${todoistTask.id}">Actualizar</button></td>
+										</div>
 								</tr>
 							</c:forEach>
 				
