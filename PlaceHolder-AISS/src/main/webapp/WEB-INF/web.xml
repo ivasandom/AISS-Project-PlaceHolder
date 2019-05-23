@@ -276,6 +276,15 @@
 		<url-pattern>/tasks/create</url-pattern>
 	</servlet-mapping>
 	
+	<!-- Actualizar tarea -->
+	<servlet>
+		<servlet-name>TodoistUpdateTask</servlet-name>
+		<servlet-class>aiss.controller.UpdateTaskController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TodoistUpdateTask</servlet-name>
+		<url-pattern>/tasks/update</url-pattern>
+	</servlet-mapping>
 	
 	<!-- Eliminar una tarea -->
 	<servlet>

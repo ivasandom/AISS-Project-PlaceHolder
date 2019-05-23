@@ -2,6 +2,8 @@ package aiss.model.resource;
 
 import java.util.Map;
 
+import org.restlet.data.ChallengeResponse;
+import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.representation.Representation;
@@ -202,15 +204,26 @@ public class TodoistResource {
 		
 		ClientResource cr = null;
 		boolean updated = true;
-		String resourceURL = BASE_URL + "/tasks/" + idTask + "?token=" + this.accessToken;
+		String resourceURL = BASE_URL + "/tasks/" + idTask;
+		System.out.println(resourceURL);
+		
+		cr = new ClientResource(resourceURL);
+		System.out.println(accessToken);
+		// Token OAuth2
+		ChallengeResponse chr = new ChallengeResponse(ChallengeScheme.HTTP_OAUTH_BEARER);
+		chr.setRawValue(accessToken);
+		cr.setChallengeResponse(chr);
 		
 		try {
-			cr = new ClientResource(resourceURL);
+			
 			Form form = new Form();
 			form.add("content", newContent);
-			cr.post(form);
+			System.out.println("content: " + newContent);
+			System.out.println("id :" + idTask);
+			cr.post(form, MediaType.APPLICATION_JSON);
+			
 		} catch (ResourceException re) {
-			System.err.println("Error when retrieving active tasks.");
+			System.err.println("Error when updating task." + cr.getResponse().getStatus());
 			updated = false;
 		}
 		

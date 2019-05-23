@@ -101,6 +101,22 @@
 				})
 		})
 		
-		$('.update-task-confirm').on('show.bs.modal', function (event) {
-  			var button = $(event.relatedTarget) // Button that triggered the modal
+		$('.update-task-form').on('click', function (event) {
+  			var taskId = $(this).data("id");
+  			var newContent = $("#taskInput-"+taskId).val();
+  			var data = {
+  				"taskId": taskId,
+  				"content": newContent
+  			};
+  			$.ajax({
+  				url: "/tasks/update",
+  				method: "POST",
+  				data: data,
+  				success: function(response){
+  					alert("Tarea actualizada");
+  				},
+  				error: function(response){
+  					alert("Error actualizando tarea");
+  				}
+  			})
 		})
