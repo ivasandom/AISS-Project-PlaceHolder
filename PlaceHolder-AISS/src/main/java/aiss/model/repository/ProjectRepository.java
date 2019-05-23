@@ -18,6 +18,7 @@ public interface ProjectRepository {
 		// Project
 		public void addProject(Project p);
 		public Collection<Project> getAllProjects();
+		public Collection<Project> getAllProjectsFilterByFirstLetter(String firstLetter);
 		public Project getProject(String projectId);
 		public void updateProject(Project p);
 		public void deleteProject(String projectId);

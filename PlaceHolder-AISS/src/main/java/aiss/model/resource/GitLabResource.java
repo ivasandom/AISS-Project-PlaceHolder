@@ -20,7 +20,7 @@ public class GitLabResource {
 
 		ClientResource cr = null;
 		GitLabRepository[] projects = null;
-		String resourceURL = BASE_URL + "/users/projects?access_token=" + this.accessToken;
+		String resourceURL = BASE_URL + "/projects?access_token=" + this.accessToken;
 		
 		try {
 			cr = new ClientResource(resourceURL);

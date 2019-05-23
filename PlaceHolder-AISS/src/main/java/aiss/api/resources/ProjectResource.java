@@ -1,16 +1,20 @@
 package aiss.api.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -51,7 +55,29 @@ public class ProjectResource {
 		return repository.getAllProjects();
 	}
 	
+	@GET
+	@Produces("application/json")
+	public Collection<Project> getAll(@QueryParam("offset") @DefaultValue("0") Integer offset, 
+			@QueryParam("limit") @DefaultValue("20") Integer limit ){
+		//TODO
+		return repository.getAllProjects();
+	}
 	
+	@GET
+	@Produces("application/json")
+	public Collection<Project> getAll(@QueryParam("name") String primeraLetra){
+		if (primeraLetra == null) {
+			return repository.getAllProjects();
+		} else {
+			List<Project> result = new ArrayList<Project>();
+			for(Project project:repository.getAllProjects()) {
+				if(project.getName().charAt(0)==primeraLetra.charAt(0)) {
+					result.add(project);
+				}
+			}
+			return result;
+		}
+	}
 	@GET
 	@Path("/{id}")
 	@Produces("application/json")

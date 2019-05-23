@@ -9,7 +9,7 @@ import aiss.model.gitlab.GitLabRepository;
 import aiss.model.resource.GitLabResource;
 public class GitLabResourceTests {
 
-	GitLabResource gh = new GitLabResource("59b3940eef1d08a3916d11afbb48c8a4f48781b1");
+	GitLabResource gh = new GitLabResource("98b9bde779f1a644341c612bcd8415605899d5faf7797f0753d1b1bb6119ae66");
 	
 	@Test
 	public void testGetGitLabRepository() throws UnsupportedEncodingException{
