@@ -111,6 +111,10 @@ public class MapProjectRepository implements ProjectRepository {
 		return projectMap.values();
 	}
 	@Override
+	public Collection<Task> getAllTasksFilterByFirstLetter(String firstLetter){
+		return taskMap.values();
+	}
+	@Override
 	public Project getProject(String projectid) {
 		// TODO Auto-generated method stub
 		System.out.println("proyecto obtenido: " + projectMap.get(projectid));

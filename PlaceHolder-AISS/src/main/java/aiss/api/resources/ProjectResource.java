@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -52,14 +51,6 @@ public class ProjectResource {
 	@Produces("application/json")
 	public Collection<Project> getAll()
 	{
-		return repository.getAllProjects();
-	}
-	
-	@GET
-	@Produces("application/json")
-	public Collection<Project> getAll(@QueryParam("offset") @DefaultValue("0") Integer offset, 
-			@QueryParam("limit") @DefaultValue("20") Integer limit ){
-		
 		return repository.getAllProjects();
 	}
 	

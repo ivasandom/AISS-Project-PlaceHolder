@@ -1,7 +1,9 @@
 package aiss.api.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -11,6 +13,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -20,7 +23,6 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 
-import aiss.model.Project;
 import aiss.model.Task;
 import aiss.model.repository.MapProjectRepository;
 import aiss.model.repository.ProjectRepository;
@@ -44,11 +46,25 @@ public class TaskResource {
 	
 	@GET
 	@Produces("application/json")
-	public Collection<Project> getAll()
+	public Collection<Task> getAll()
 	{
-		return repository.getAllProjects();
+		return repository.getAllTasks();
 	}
-	
+	@GET
+	@Produces("application/json")
+	public Collection<Task> getAll(@QueryParam("name") String primeraLetra){
+		if (primeraLetra == null) {
+			return repository.getAllTasks();
+		} else {
+			List<Task> result = new ArrayList<Task>();
+			for(Task task:repository.getAllTasks()) {
+				if(task.getName().charAt(0)==primeraLetra.charAt(0)) {
+					result.add(task);
+				}
+			}
+			return result;
+		}
+	}
 	
 	@GET
 	@Path("/{id}")
