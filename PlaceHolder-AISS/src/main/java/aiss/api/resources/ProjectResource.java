@@ -30,36 +30,28 @@ import aiss.model.repository.ProjectRepository;
 
 @Path("/projects")
 public class ProjectResource {
-	
+
 	/* Singleton */
 	private static ProjectResource _instance=null;
 	ProjectRepository repository;
-	
+
 	private ProjectResource() {
 		repository=MapProjectRepository.getInstance();
 
 	}
-	
+
 	public static ProjectResource getInstance()
 	{
 		if(_instance==null)
-				_instance=new ProjectResource();
+			_instance=new ProjectResource();
 		return _instance;
 	}
-	
+
+
 	@GET
 	@Produces("application/json")
-	public Collection<Project> getAll()
-	{
-		return repository.getAllProjects();
-	}
-	
-	@GET
-	@Produces("application/json")
-	public Collection<Project> getAll(@QueryParam("name") String primeraLetra){
-		if (primeraLetra == null) {
-			return repository.getAllProjects();
-		} else {
+	public Collection<Project> getAll(@QueryParam("name") String primeraLetra, @QueryParam("start") int start, @QueryParam("size") int size){
+		if(primeraLetra!=null){
 			List<Project> result = new ArrayList<Project>();
 			for(Project project:repository.getAllProjects()) {
 				if(project.getName().charAt(0)==primeraLetra.charAt(0)) {
@@ -67,6 +59,12 @@ public class ProjectResource {
 				}
 			}
 			return result;
+		}else if(size>0 && start>=0){
+			List<Project> result = new ArrayList<Project>();
+			result.addAll(repository.getAllProjects());
+			return result.subList(start, start + size);
+		}else {
+			return repository.getAllProjects();
 		}
 	}
 	@GET
@@ -75,21 +73,21 @@ public class ProjectResource {
 	public Project get(@PathParam("id") String id)
 	{
 		Project list = repository.getProject(id);
-		
+
 		if (list == null) {
 			throw new NotFoundException("The Project with id "+ id +" was not found");			
 		}
-		
+
 		return list;
 	}
-	
+
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response addProject(@Context UriInfo uriInfo, Project project) {
 		if (project.getName() == null || "".equals(project.getName()))
 			throw new BadRequestException("The name of the project must not be null");
-		
+
 		if (project.getTasks()!=null)
 			throw new BadRequestException("The tasks are not editable.");
 
@@ -103,7 +101,7 @@ public class ProjectResource {
 		return resp.build();
 	}
 
-	
+
 	@PUT
 	@Consumes("application/json")
 	public Response updateProject(Project project) {
@@ -111,17 +109,17 @@ public class ProjectResource {
 		if (oldproject == null) {
 			throw new NotFoundException("The project with id "+ project.getId() +" was not found");			
 		}
-		
+
 		if (project.getTasks()!=null)
 			throw new BadRequestException("The tasks are not editable.");
-		
+
 		// Update name
 		if (project.getName()!=null)
 			oldproject.setName(project.getName());
-		
+
 		return Response.noContent().build();
 	}
-	
+
 	@DELETE
 	@Path("/{id}")
 	public Response removeProject(@PathParam("id") String id) {
@@ -130,30 +128,30 @@ public class ProjectResource {
 			throw new NotFoundException("The project with id " + id + " was not found");
 		else
 			repository.deleteProject(id);
-		
+
 		return Response.noContent().build();
 	}
-	
-	
+
+
 	@POST	
 	@Path("/{projectId}/{taskId}")
 	@Consumes("text/plain")
 	@Produces("application/json")
 	public Response addTask(@Context UriInfo uriInfo,@PathParam("projectId") String projectId, @PathParam("taskId") String taskId)
 	{				
-		
+
 		Project project = repository.getProject(projectId);
 		Task task = repository.getTask(taskId);
-		
+
 		if (project==null)
 			throw new NotFoundException("The project with id " + projectId + " was not found");
-		
+
 		if (task == null)
 			throw new NotFoundException("The task with id " + taskId + " was not found");
-		
+
 		if (project.getTask(taskId)!=null)
 			throw new BadRequestException("The task is already included in this project.");
-			
+
 		repository.addTask(projectId, taskId);		
 
 		// Builds the response
@@ -163,23 +161,23 @@ public class ProjectResource {
 		resp.entity(project);			
 		return resp.build();
 	}
-	
-	
+
+
 	@DELETE
 	@Path("/{projectId}/{taskId}")
 	public Response removeTask(@PathParam("projectId") String projectId, @PathParam("taskId") String taskId) {
 		Project project = repository.getProject(projectId);
 		Task task = repository.getTask(taskId);
-		
+
 		if (project==null)
 			throw new NotFoundException("The project with id " + projectId + " was not found");
-		
+
 		if (task == null)
 			throw new NotFoundException("The task with id " + taskId + " was not found");
-		
-		
+
+
 		repository.removeTask(projectId, taskId);		
-		
+
 		return Response.noContent().build();
 	}
 }

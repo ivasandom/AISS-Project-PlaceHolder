@@ -76,6 +76,10 @@ public class MapProjectRepository implements ProjectRepository {
 		return taskMap.values();
 	}
 	@Override
+	public Collection<Task> getAllTasksFilterByFirstLetter(String firstLetter){
+		return taskMap.values();
+	}
+	@Override
 	public Task getTask(String taskId) {
 		// TODO Auto-generated method stub
 		return taskMap.get(taskId);
@@ -111,8 +115,8 @@ public class MapProjectRepository implements ProjectRepository {
 		return projectMap.values();
 	}
 	@Override
-	public Collection<Task> getAllTasksFilterByFirstLetter(String firstLetter){
-		return taskMap.values();
+	public Collection<Project> getAllProjectsPagination(int start, int size){
+		return projectMap.values();
 	}
 	@Override
 	public Project getProject(String projectid) {
