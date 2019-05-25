@@ -26,7 +26,6 @@ public class BitbucketResource {
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving the repos: " + cr.getResponse().getStatus());
 		}
-		
 		return repositories;
 
 	}

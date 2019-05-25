@@ -30,54 +30,14 @@ public class HomeController extends HttpServlet {
 		
 		log.log(Level.INFO, "Processing HomeController.");
 
-		String accessTokenGitHub = (String) req.getSession().getAttribute("GitHub-token");
-		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
-		String accessTokenGitLab = (String) req.getSession().getAttribute("GitLab-token");
-		String accessTokenBitbucket = (String) req.getSession().getAttribute("Bitbucket-token");
 		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
-		
-		if (accessTokenGitHub != null) {
-			
-			GitHubResource githubResource = new GitHubResource(accessTokenGitHub);
-			User currentUser = githubResource.getGithubUser();
-			Repository[] repositories = githubResource.getMyRepositories();
-			
-			req.setAttribute("repositoriesGitHub", repositories);
-			req.setAttribute("user", currentUser);
-			
-		}
-		
-		if (accessTokenGitLab != null) {
-			
-			GitLabResource gitLabResource = new GitLabResource(accessTokenGitLab);
-			GitLabRepository[] repositories = gitLabResource.getMyRepos();
-			
-			req.setAttribute("repositoriesGitLab", repositories);
-		}
-		
-		if (accessTokenBitbucket != null) {
-			
-			BitbucketResource bitbucketResource = new BitbucketResource(accessTokenBitbucket);
-			BitbucketRepository[] repositories = bitbucketResource.getMyRepos();
-			
-			req.setAttribute("repositoriesBitbucket", repositories);
-		}
-		
-		if (accessTokenTodoist != null) {
-			
-			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
-//			Project[] myProjects = todoistResource.getMyProjects();
-//			req.setAttribute("myProjects", myProjects);
-			
-		}
 		
 		if (accessTokenHarvest != null) {
 			HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
 			
 			Profile profile = harvestResource.getProfile();
 			Projects myProjects = harvestResource.getMyProjects();
-			
-//			System.out.println(myProjects.getProjects());
+
 			req.setAttribute("myProjects", myProjects.getProjects());
 			req.setAttribute("profile", profile);
 		}
