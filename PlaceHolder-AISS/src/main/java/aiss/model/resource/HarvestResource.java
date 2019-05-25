@@ -111,6 +111,37 @@ public class HarvestResource {
 		
 	}
 	
+	public boolean updateProject(String projectId, Long clientId, String name,
+			boolean isBillable, String billBy, String budgetBy) {
+		
+		boolean updated = true;
+		JsonObject form = new JsonObject();
+		String resourceURL = BASE_URL + "/projects/" + projectId + "?account_id=" + accountId;
+		ClientResource cr = new ClientResource(resourceURL);
+		
+		// Token OAuth2
+		ChallengeResponse chr = new ChallengeResponse(ChallengeScheme.HTTP_OAUTH_BEARER);
+		chr.setRawValue(accessToken);
+		cr.setChallengeResponse(chr);
+		
+		// Post Data
+		form.addProperty("client_id", clientId);
+		form.addProperty("name", name);
+		form.addProperty("is_billable", isBillable);
+		form.addProperty("bill_by", billBy);
+		form.addProperty("budget_by", budgetBy);
+		
+		try {
+			cr.patch(new JsonRepresentation(form.toString()), MediaType.APPLICATION_JSON);
+		} catch (ResourceException re) {
+			System.err.println("Error when updating project with id: " + projectId);
+			updated = false;
+		}
+		
+		return updated;
+		
+	}
+	
 	
 	public List<TaskAssignment> getProjectTasks(String projectId){
 		

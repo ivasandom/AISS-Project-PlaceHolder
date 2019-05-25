@@ -14,6 +14,8 @@ import aiss.model.harvest.Client_;
 import aiss.model.harvest.Project;
 import aiss.model.resource.HarvestResource;
 import aiss.model.resource.TodoistResource;
+import aiss.utility.Checkers;
+import aiss.utility.ProjectConfig;
 
 public class UpdateProjectController extends HttpServlet {
 
@@ -25,17 +27,24 @@ public class UpdateProjectController extends HttpServlet {
 		log.log(Level.INFO, "Processing UpdateProjectController GET");
 		
 		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
+		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
 		String id = req.getParameter("id");
 		
 		
-		if (accessTokenHarvest != null) {
+		if (Checkers.notNull(accessTokenHarvest, accessTokenTodoist)) {
 			
 			if (id != null) {
 				HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
+				TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
+				
 				Project project = harvestResource.getProject(id);
+				ProjectConfig projectConfig = new ProjectConfig(harvestResource, project);
+				
 				List<Client_> clients = harvestResource.getClients();
 				
 				req.setAttribute("project", project);
+				req.setAttribute("projectConfig", projectConfig);
+				req.setAttribute("todoistProjects", todoistResource.getMyProjects());
 				req.setAttribute("clients", clients);
 				req.getRequestDispatcher("/project-edit.jsp").forward(req, resp);
 				
@@ -53,33 +62,63 @@ public class UpdateProjectController extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
-
+		
 		log.log(Level.INFO, "Processing UpdateProjectController.");
 
-		String id = req.getParameter("id");
-		String access_token = (String) req.getSession().getAttribute("Todoist-token");
+		String projectId = req.getParameter("projectId");
+		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
+		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
+		
+		
+		// Form data
+		
+		Long clientId = Long.valueOf(req.getParameter("client_id"));
 		String name = req.getParameter("name");
+		Boolean isBillable = Boolean.valueOf(req.getParameter("is_billable"));
+		String billBy = req.getParameter("bill_by");
+		String budgetBy = req.getParameter("budget_by");
 		
-		TodoistResource todoistResource = new TodoistResource(access_token);
+		String todoistProjectId = req.getParameter("todoistProject");
+		String githubRepository = req.getParameter("githubRepository");
+		String gitlabRepository = req.getParameter("gitlabRepository");
+		String bitbucketRepository = req.getParameter("bitbucketRepository");
 		
-		if (access_token != null) {
+		
+		if (Checkers.notNull(accessTokenHarvest, accessTokenTodoist, projectId)) {
 			
-			log.log(Level.INFO, "Updating project.");
-
-			boolean success = todoistResource.updateProject(id, name);
+			HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
 			
-			if (success) {
-				req.setAttribute("message", "Project updated successfully");
-				log.log(Level.FINE, "Project with id=" + id + " updated. Forwarding to index.");
+			Project project = harvestResource.getProject(projectId);
+			
+			if (project != null) {
+				// ProjectConfig update
+				ProjectConfig projectConfig = new ProjectConfig(harvestResource, project);
+				projectConfig.setTodoistProjectId(todoistProjectId);
+				projectConfig.setGithubRepository(githubRepository);
+				projectConfig.setGitlabRepository(gitlabRepository);
+				projectConfig.setBitbucketRepository(bitbucketRepository);
+				projectConfig.updateConfig(harvestResource, project);
+				
+				// Project fields update
+				boolean updated = harvestResource.updateProject(projectId, clientId, name, isBillable, billBy, budgetBy);
+				
+				if (updated) {
+					resp.sendRedirect("/projects?id=" + projectId);
+				} else {
+					resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+				}
+				return;
+				
+			} else {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			}
-			else {
-				req.setAttribute("message", "The project could not be updated");
-				log.log(Level.FINE, "The project with id=" + id + " could not be updated. Perhaps it is duplicated. Forwarding to index .");
-			}
-		req.getRequestDispatcher("index.jsp").forward(req, resp);
+	
+		} else {
+			
+			req.getRequestDispatcher("index.jsp").forward(req, resp);
+			
 		}
 		
 	}
 
 }
-
