@@ -55,6 +55,11 @@ public class GetProjectController extends HttpServlet {
 				req.setAttribute("projectConfig", projectConfig);
 				req.setAttribute("harvestTasks", harvestTasks);
 				req.setAttribute("todoistTasks", todoistTasks);
+				
+				// for header.jsp
+				req.setAttribute("myProjects", harvestResource.getMyProjects().getProjects());
+				req.setAttribute("profile", harvestResource.getProfile());
+				
 				req.getRequestDispatcher("project.jsp").forward(req, resp);
 			}
 					

@@ -14,7 +14,9 @@ import org.json.JSONObject;
 
 import aiss.model.resource.TodoistResource;
 import aiss.model.todoist.Task;
+import aiss.model.todoist.TaskSimple;
 import aiss.utility.Checkers;
+import aiss.utility.TaskConfig;
 
 public class AddTaskController extends HttpServlet {
 
@@ -42,9 +44,10 @@ public class AddTaskController extends HttpServlet {
 
 			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
 			
-			Task tarea = new Task();
+			TaskSimple tarea = new TaskSimple();
+			TaskConfig taskConfig = new TaskConfig(newTaskContent, newTaskAssignment);
 			tarea.setProjectId(Long.parseLong(newTaskProjectId));
-			tarea.setContent(newTaskContent);
+			tarea.setContent(new JSONObject(taskConfig).toString());
 			
 			Task nuevaTarea = todoistResource.createTask(tarea);
 			

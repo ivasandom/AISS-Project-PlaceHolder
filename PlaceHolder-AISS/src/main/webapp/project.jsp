@@ -24,8 +24,9 @@
 
 	<main role="main mt-5 pt-5">
 
-	
-		<div class="jumbotron mb-0" style='background:linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.8)), url("https://previews.123rf.com/images/karenr/karenr1506/karenr150600007/40831894-blue-and-white-striped-gingham-tile-pattern-repeat-background-that-is-seamless-and-repeats.jpg")'>
+
+		<div class="jumbotron mb-0"
+			style='background:linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.8)), url("https://previews.123rf.com/images/karenr/karenr1506/karenr150600007/40831894-blue-and-white-striped-gingham-tile-pattern-repeat-background-that-is-seamless-and-repeats.jpg")'>
 			<div class="container">
 				<h1 class="display-4">${project.name}</h1>
 				<a class="btn btn-dark btn-sm" href="/editor?project=${project.id}">Abrir en editor</a>
@@ -36,12 +37,12 @@
 
 			<ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-						aria-selected="true">Resumen proyecto</a>
+					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+						aria-controls="home" aria-selected="true">Resumen proyecto</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="configuration-tab" data-toggle="tab" href="#configuration" role="tab" aria-controls="configuration"
-						aria-selected="false">Configuración</a>
+					<a class="nav-link" id="configuration-tab" data-toggle="tab" href="#configuration" role="tab"
+						aria-controls="configuration" aria-selected="false">Configuración</a>
 				</li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
@@ -57,90 +58,98 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${harvestTasks}" var="taskAssignment">
-								<tr data-toggle="collapse" id="taskAssignment-${taskAssignment.id}" data-target=".subTask-${taskAssignment.id}">
+								<tr data-toggle="collapse" id="taskAssignment-${taskAssignment.task.id}"
+									data-target=".subTask-${taskAssignment.task.id}">
 									<td>${taskAssignment.task.name}</td>
-									<td>0</td>
+									<td>-</td>
 									<td>-</td>
 								</tr>
 							</c:forEach>
-							
+
 							<tr data-toggle="collapse" id="taskAssignment-other" data-target=".subTask-other">
 								<td>Other</td>
-								<td>${fn:length(todoistTasks)}</td>
+								<td>-</td>
 								<td></td>
 							</tr>
 
 							<c:forEach items="${todoistTasks}" var="todoistTask">
-								<tr class="table-info collapse subTask-other" id="task-${todoistTask.id}">
-									<td><input type="text" value="${todoistTask.content}" id="taskInput-${todoistTask.id}" class="form-control" style="border:0;background:transparent;"></td>
+								<tr class='table-info collapse <c:if test="${not empty todoistTask.config.taskParent}">subTask-${todoistTask.config.taskParent}</c:if><c:if test="${empty todoistTask.config.taskParent}">subTask-other</c:if>'
+									id="task-${todoistTask.config.taskParent}">
+									<td><input type="text" value="${todoistTask.config.taskName}"
+											id="taskInput-${todoistTask.id}" class="form-control"
+											style="border:0;background:transparent;"></td>
 									<td>-</td>
 									<td>
 										<div class="btn-group">
-											<button class="btn btn-danger btn-sm delete-task" data-id="${todoistTask.id}">Eliminar</button><button class="btn btn-primary btn-sm update-task-form" data-id="${todoistTask.id}">Actualizar</button></td>
-										</div>
-								</tr>
-							</c:forEach>
-				
-						</tbody>
-					</table>
-					
-					
-					<form id="ajax-add-task" method="POST" action="/tasks/create">
-						<div class="input-group mb-3">
-							<input type="hidden" name="projectId" value="${projectConfig.todoistProjectId}">
-							<input type="text" name="content" class="form-control" placeholder="Estudiar aiss...">
-							<div class="input-group-append">
-								<select class="form-control" name="assignment">
-									<option value="">Other</option>
-									<c:forEach items="${harvestTasks}" var="taskAssignment">
-										<option value="${taskAssignment.task.id}">${taskAssignment.task.name}</option>
-									</c:forEach>
-								</select>
-							</div>
-							<div class="input-group-append">
-								<button class="btn btn-primary" type="submit">Añadir</button>
-							</div>
-						</div>
-					</form>
+											<button class="btn btn-danger btn-sm delete-task"
+												data-id="${todoistTask.id}">Eliminar</button><button
+												class="btn btn-primary btn-sm update-task-form"
+												data-id="${todoistTask.id}">Actualizar</button>
+									</td>
 				</div>
-				<div class="tab-pane fade" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
-					<h2 class="my-4">Configuración</h2>
-					
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>Service</th>
-								<th>Id/Name</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Todoist</td>
-								<td>${projectConfig.todoistProjectId}</td>
-							</tr>
-							<tr>
-								<td>GitHub</td>
-								<td>${projectConfig.githubRepository}</td>
-							</tr>
-							<tr>
-								<td>GitLab</td>
-								<td>${projectConfig.gitlabRepository}</td>
-							</tr>
-							<tr>
-								<td>BitBucket</td>
-								<td>${projectConfig.bitbucketRepository}</td>
-							</tr>
-						</tbody>
-					</table>
-					
-					<button class="btn btn-danger btn-sm" id="delete-confirm"
-						data-url="/projects/delete?id=${project.id}">Eliminar</button>
-					<a class="btn btn-info btn-sm" href="/projects/update?id=${project.id}">Editar</a>
-					
-				</div>
-			</div>
+				</tr>
+				</c:forEach>
 
-			
+				</tbody>
+				</table>
+
+
+				<form id="ajax-add-task" method="POST" action="/tasks/create">
+					<div class="input-group mb-3">
+						<input type="hidden" name="projectId" value="${projectConfig.todoistProjectId}">
+						<input type="text" name="content" class="form-control" placeholder="Estudiar aiss...">
+						<div class="input-group-append">
+							<select class="form-control" name="assignment">
+								<option value="">Other</option>
+								<c:forEach items="${harvestTasks}" var="taskAssignment">
+									<option value="${taskAssignment.task.id}">${taskAssignment.task.name}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="input-group-append">
+							<button class="btn btn-primary" type="submit">Añadir</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="tab-pane fade" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
+				<h2 class="my-4">Configuración</h2>
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Service</th>
+							<th>Id/Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Todoist</td>
+							<td>${projectConfig.todoistProjectId}</td>
+						</tr>
+						<tr>
+							<td>GitHub</td>
+							<td>${projectConfig.githubRepository}</td>
+						</tr>
+						<tr>
+							<td>GitLab</td>
+							<td>${projectConfig.gitlabRepository}</td>
+						</tr>
+						<tr>
+							<td>BitBucket</td>
+							<td>${projectConfig.bitbucketRepository}</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<button class="btn btn-danger btn-sm" id="delete-confirm"
+					data-url="/projects/delete?id=${project.id}">Eliminar</button>
+				<a class="btn btn-info btn-sm" href="/projects/update?id=${project.id}">Editar</a>
+
+			</div>
+		</div>
+
+
 		</div>
 
 	</main>

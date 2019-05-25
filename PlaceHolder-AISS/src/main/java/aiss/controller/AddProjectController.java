@@ -33,6 +33,11 @@ public class AddProjectController extends HttpServlet{
 			
 			req.setAttribute("clients", harvestResource.getClients());
 			req.setAttribute("todoistProjects", todoistResource.getMyProjects());
+			
+			// for header.jsp
+			req.setAttribute("myProjects", harvestResource.getMyProjects().getProjects());
+			req.setAttribute("profile", harvestResource.getProfile());
+			
 			req.getRequestDispatcher("/projects-create.jsp").forward(req, resp);
 			
 		} else {
@@ -40,6 +45,7 @@ public class AddProjectController extends HttpServlet{
 		}
 		
 	}
+	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		
 		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");

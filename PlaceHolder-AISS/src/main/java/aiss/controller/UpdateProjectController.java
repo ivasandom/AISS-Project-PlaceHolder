@@ -42,10 +42,17 @@ public class UpdateProjectController extends HttpServlet {
 				
 				List<Client_> clients = harvestResource.getClients();
 				
+				// for form values
 				req.setAttribute("project", project);
 				req.setAttribute("projectConfig", projectConfig);
 				req.setAttribute("todoistProjects", todoistResource.getMyProjects());
 				req.setAttribute("clients", clients);
+				
+				// for header.jsp
+				req.setAttribute("myProjects", harvestResource.getMyProjects().getProjects());
+				req.setAttribute("profile", harvestResource.getProfile());
+				
+				// load JSP file
 				req.getRequestDispatcher("/project-edit.jsp").forward(req, resp);
 				
 			} else {

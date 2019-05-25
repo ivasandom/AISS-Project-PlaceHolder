@@ -169,7 +169,7 @@ public class TodoistResource {
 		
 	}
 	
-	public Task createTask(Task tarea) {
+	public Task createTask(TaskSimple tarea) {
 		/**
 
 			$.ajax({
@@ -198,6 +198,10 @@ public class TodoistResource {
 		
 		return newTask;
 	
+	}
+	
+	public Task createTask(String projectId, String config) {
+		return null;
 	}
 	
 	public boolean updateTask(String idTask, String newContent) {
