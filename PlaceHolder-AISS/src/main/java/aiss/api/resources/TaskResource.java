@@ -65,7 +65,7 @@ public class TaskResource {
 			return result;
 		}
 	}
-	
+	//Paginación
 	@GET
 	@Path("/{id}")
 	@Produces("application/json")
