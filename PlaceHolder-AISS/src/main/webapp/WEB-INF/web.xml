@@ -316,4 +316,14 @@
 		<url-pattern>/editor/repository/tree</url-pattern>
 	</servlet-mapping>
 	
+	<!-- Hacer commit -->
+	<servlet>
+		<servlet-name>AddGitRepositoryTree</servlet-name>
+		<servlet-class>aiss.controller.AddRepositoryTree</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddGitRepositoryTree</servlet-name>
+		<url-pattern>/editor/commit</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

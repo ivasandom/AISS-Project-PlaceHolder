@@ -45,20 +45,12 @@ public class EditorController extends HttpServlet {
 			
 			req.setAttribute("project", harvestProject);
 			req.setAttribute("projectConfig", config);
+			
+			
+			req.setAttribute("todoistTasks", todoistResource.getActiveTasks(todoistProject.getId().toString()));
 			req.getRequestDispatcher("/editor.jsp").forward(req, resp);
 						
 		}
-		
-//		if (owner != null && repo != null && accessTokenGitHub != null) {
-//			
-//			GitHubResource githubResource = new GitHubResource(accessTokenGitHub);
-//			RepositoryTree repositoryTree = githubResource.getRepositoryTree(owner, repo);
-//			req.setAttribute("repositoryTrees", repositoryTree.getTree());
-//			req.getRequestDispatcher("editor.jsp").forward(req, resp);
-//			log.log(Level.FINE," Forwarding to editor.");
-//
-//		
-//		}
 		
 		
 	}

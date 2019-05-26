@@ -67,7 +67,9 @@ public class GetTreeController extends HttpServlet {
 					String repositoryName = repository[2];
 					
 					JSONObject jsonResponse = new JSONObject();
-					jsonResponse.put("tree", githubResource.getRepositoryTree(owner, repositoryName).getTree());
+					aiss.model.github.RepositoryTree repositoryTree = githubResource.getRepositoryTree(owner, repositoryName);
+					jsonResponse.put("sha", repositoryTree.getSha());
+					jsonResponse.put("tree", repositoryTree.getTree());
 					
 					out.print(jsonResponse);
 					out.flush();
