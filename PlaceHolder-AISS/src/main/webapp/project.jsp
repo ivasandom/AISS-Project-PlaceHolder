@@ -75,9 +75,8 @@
 							<c:forEach items="${todoistTasks}" var="todoistTask">
 								<tr class='table-info collapse <c:if test="${not empty todoistTask.config.taskParent}">subTask-${todoistTask.config.taskParent}</c:if><c:if test="${empty todoistTask.config.taskParent}">subTask-other</c:if>'
 									id="task-${todoistTask.config.taskParent}">
-									<td><input type="text" value="${todoistTask.config.taskName}"
-											id="taskInput-${todoistTask.id}" class="form-control"
-											style="border:0;background:transparent;"></td>
+									<td><input type="text" value="<c:if test="${empty todoistTask.config.taskName}">${todoistTask.content}</c:if><c:if test="${not empty todoistTask.config.taskName}">${todoistTask.config.taskName}</c:if>" 
+									id="taskInput-${todoistTask.id}" class="form-control" style="border:0;background:transparent;"></td>
 									<td>-</td>
 									<td>
 										<div class="btn-group">
