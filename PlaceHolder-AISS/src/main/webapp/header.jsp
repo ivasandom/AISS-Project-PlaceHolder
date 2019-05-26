@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
+<c:set var="isAuthenticated" value="${not empty sessionScope['Harvest-token'] and not empty sessionScope['Todoist-token']}"></c:set>
+
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 	<a class="navbar-brand" href="/" style="letter-spacing:5px;">PLACEHOLDER</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -75,7 +78,7 @@
 					</div>
 				</li>
 			</c:if>
-			<c:if test="${not empty sessionScope['Harvest-token']}">
+			<c:if test="${isAuthenticated}">
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -94,7 +97,7 @@
 			</c:if>
 		</ul>
 		<ul class="navbar-nav">
-			<c:if test="${not empty profile}">
+			<c:if test="${isAuthenticated}">
 				<li class="nav-item dropdown">
 					<a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 						class="nav-link dropdown-toggle" id="navbarDropdown">
@@ -108,7 +111,7 @@
 					</div>
 				</li>
 			</c:if>
-			<c:if test="${empty profile}">
+			<c:if test="${not isAuthenticated}">
 				<li class="nav-item">
 					<a href="/login" class="btn btn-primary" style="font-weight:500;font-size:0.9em;">ENTRAR CON HARVEST & TODOIST</a>
 				</li>
