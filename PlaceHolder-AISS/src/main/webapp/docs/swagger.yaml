@@ -31,6 +31,14 @@ paths:
         name: firstLetter
         type: string
         description: Filter projects by the first letter
+      - in: query
+        name: start
+        type: integer
+        description: Start a page by a position
+      - in: query
+        name: size
+        type: integer
+        description: Size of the page
       responses:
         200:
           description: sucessful operation
@@ -181,6 +189,14 @@ paths:
         name: firstLetter
         type: string
         description: Filter tasks by the first letter
+      - in: query
+        name: start
+        type: integer
+        description: Start a page by a position
+      - in: query
+        name: size
+        type: integer
+        description: Size of the page
       responses:
         200:
           description: sucessful operation
