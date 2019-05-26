@@ -52,7 +52,7 @@
 						<thead>
 							<tr>
 								<th>Task</th>
-								<th>Assignments</th>
+								<th>Subtasks</th>
 								<th>Options</th>
 							</tr>
 						</thead>
@@ -61,92 +61,75 @@
 								<tr data-toggle="collapse" id="taskAssignment-${taskAssignment.task.id}"
 									data-target=".subTask-${taskAssignment.task.id}">
 									<td>${taskAssignment.task.name}</td>
-									<td>-</td>
+									<td id="task-count-${taskAssignment.task.id}">0</td>
 									<td>-</td>
 								</tr>
 							</c:forEach>
 
 							<tr data-toggle="collapse" id="taskAssignment-other" data-target=".subTask-other">
 								<td>Other</td>
-								<td>-</td>
+								<td id="task-count-other">0</td>
 								<td></td>
 							</tr>
 
-							<c:forEach items="${todoistTasks}" var="todoistTask">
-								<tr class='table-info collapse <c:if test="${not empty todoistTask.config.taskParent}">subTask-${todoistTask.config.taskParent}</c:if><c:if test="${empty todoistTask.config.taskParent}">subTask-other</c:if>'
-									id="task-${todoistTask.config.taskParent}">
-									<td><input type="text" value="<c:if test="${empty todoistTask.config.taskName}">${todoistTask.content}</c:if><c:if test="${not empty todoistTask.config.taskName}">${todoistTask.config.taskName}</c:if>" 
-									id="taskInput-${todoistTask.id}" class="form-control" style="border:0;background:transparent;"></td>
-									<td>-</td>
-									<td>
-										<div class="btn-group">
-											<button class="btn btn-danger btn-sm delete-task"
-												data-id="${todoistTask.id}">Eliminar</button><button
-												class="btn btn-primary btn-sm update-task-form"
-												data-id="${todoistTask.id}">Actualizar</button>
-									</td>
+						</tbody>
+					</table>
+
+
+					<form id="ajax-add-task" method="POST" action="/tasks/create">
+						<div class="input-group mb-3">
+							<input type="hidden" name="projectId" value="${projectConfig.todoistProjectId}">
+							<input type="text" name="content" class="form-control" placeholder="Estudiar aiss...">
+							<div class="input-group-append">
+								<select class="form-control" name="assignment">
+									<option value="">Other</option>
+									<c:forEach items="${harvestTasks}" var="taskAssignment">
+										<option value="${taskAssignment.task.id}">${taskAssignment.task.name}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div class="input-group-append">
+								<button class="btn btn-primary" type="submit">Añadir</button>
+							</div>
+						</div>
+					</form>
 				</div>
-				</tr>
-				</c:forEach>
+				<div class="tab-pane fade" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
+					<h2 class="my-4">Configuración</h2>
 
-				</tbody>
-				</table>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Service</th>
+								<th>Id/Name</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Todoist</td>
+								<td>${projectConfig.todoistProjectId}</td>
+							</tr>
+							<tr>
+								<td>GitHub</td>
+								<td>${projectConfig.githubRepository}</td>
+							</tr>
+							<tr>
+								<td>GitLab</td>
+								<td>${projectConfig.gitlabRepository}</td>
+							</tr>
+							<tr>
+								<td>BitBucket</td>
+								<td>${projectConfig.bitbucketRepository}</td>
+							</tr>
+						</tbody>
+					</table>
 
+					<button class="btn btn-danger btn-sm" id="delete-confirm"
+						data-url="/projects/delete?id=${project.id}">Eliminar</button>
+					<a class="btn btn-info btn-sm" href="/projects/update?id=${project.id}">Editar</a>
 
-				<form id="ajax-add-task" method="POST" action="/tasks/create">
-					<div class="input-group mb-3">
-						<input type="hidden" name="projectId" value="${projectConfig.todoistProjectId}">
-						<input type="text" name="content" class="form-control" placeholder="Estudiar aiss...">
-						<div class="input-group-append">
-							<select class="form-control" name="assignment">
-								<option value="">Other</option>
-								<c:forEach items="${harvestTasks}" var="taskAssignment">
-									<option value="${taskAssignment.task.id}">${taskAssignment.task.name}</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="input-group-append">
-							<button class="btn btn-primary" type="submit">Añadir</button>
-						</div>
-					</div>
-				</form>
+				</div>
 			</div>
-			<div class="tab-pane fade" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
-				<h2 class="my-4">Configuración</h2>
-
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Service</th>
-							<th>Id/Name</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Todoist</td>
-							<td>${projectConfig.todoistProjectId}</td>
-						</tr>
-						<tr>
-							<td>GitHub</td>
-							<td>${projectConfig.githubRepository}</td>
-						</tr>
-						<tr>
-							<td>GitLab</td>
-							<td>${projectConfig.gitlabRepository}</td>
-						</tr>
-						<tr>
-							<td>BitBucket</td>
-							<td>${projectConfig.bitbucketRepository}</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<button class="btn btn-danger btn-sm" id="delete-confirm"
-					data-url="/projects/delete?id=${project.id}">Eliminar</button>
-				<a class="btn btn-info btn-sm" href="/projects/update?id=${project.id}">Editar</a>
-
-			</div>
-		</div>
 
 
 		</div>
@@ -171,6 +154,29 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.js"></script>
 
 	<script src="/js/projects.js"></script>
+
+	<script>
+		var parentTasks = [
+			<c:forEach items="${harvestTasks}" var="taskAssignment">
+			${taskAssignment.task.id},
+			</c:forEach>,
+			null
+		]
+
+		var subtasks = [
+			<c:forEach items="${todoistTasks}" var="todoistTask">
+			{
+				id: ${todoistTask.id},
+				name: "<c:if test="${empty todoistTask.config.taskName}">${todoistTask.content}</c:if><c:if test="${not empty todoistTask.config.taskName}">${todoistTask.config.taskName}</c:if>",
+				parentId: "${todoistTask.config.taskParent}",
+			},
+			</c:forEach>
+		]
+
+		subtasks.map(addSubTask);
+		parentTasks.map(updateSubTaskCount);
+		
+	</script>
 
 </body>
 
