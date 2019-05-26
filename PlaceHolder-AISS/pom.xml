@@ -115,6 +115,13 @@
 		    <artifactId>org.restlet.ext.json</artifactId>
 		    <version>${restlet.version}</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.restlet.jee</groupId>
+		    <artifactId>org.restlet.ext.httpclient</artifactId>
+		    <version>${restlet.version}</version>
+		</dependency>
+		
 
 		<!-- RESTEasy -->
 		<dependency>
