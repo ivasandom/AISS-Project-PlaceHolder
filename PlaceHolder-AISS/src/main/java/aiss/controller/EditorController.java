@@ -19,7 +19,9 @@ public class EditorController extends HttpServlet {
 	private static final Logger log = Logger.getLogger(HomeController.class.getName());
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		if (Checkers.checkAuthenticatedOrRedirect(req.getSession(), resp)) return;
+
+		// Redirects to login if accessTokenHarvest or accessTokenTodoist do not exist.
+		if(Checkers.checkAuthenticatedOrRedirect(req.getSession(), resp)) return;
 		
 		log.log(Level.INFO, "Processing EditorController.");
 
@@ -32,6 +34,7 @@ public class EditorController extends HttpServlet {
 		String projectId = req.getParameter("project");
 		
 		if (projectId != null) {
+			
 			aiss.model.harvest.Project harvestProject = harvestResource.getProject(projectId);
 			
 			if (harvestProject == null) {
@@ -40,7 +43,6 @@ public class EditorController extends HttpServlet {
 				req.getRequestDispatcher("/error.jsp").forward(req, resp);
 				return;
 			}
-			
 			
 			ProjectConfig config = new ProjectConfig(harvestResource, harvestProject);
 			aiss.model.todoist.Project todoistProject = todoistResource.getProject(config.getTodoistProjectId());
@@ -53,8 +55,18 @@ public class EditorController extends HttpServlet {
 			req.setAttribute("todoistTasks", todoistResource.getActiveTasks(todoistProject.getId().toString()));
 			req.getRequestDispatcher("/editor.jsp").forward(req, resp);
 						
+		} else {
+			
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			log.log(Level.SEVERE, "Parameter id is required and was not provided.");
+			req.getRequestDispatcher("/error.jsp").forward(req, resp);
+			
 		}
 		
-		
 	}
+	
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+
 }

@@ -286,7 +286,7 @@
 	<!-- Hacer commit -->
 	<servlet>
 		<servlet-name>AddGitRepositoryTree</servlet-name>
-		<servlet-class>aiss.controller.AddRepositoryTree</servlet-class>
+		<servlet-class>aiss.controller.AddRepositoryTreeController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AddGitRepositoryTree</servlet-name>

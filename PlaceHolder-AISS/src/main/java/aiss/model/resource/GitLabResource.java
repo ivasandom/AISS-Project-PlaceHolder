@@ -22,12 +22,12 @@ public class GitLabResource {
 	
 	public GitLabRepository[] getMyRepos() {
 
-		ClientResource cr = null;
 		GitLabRepository[] projects = null;
 		String resourceURL = BASE_URL + "/projects?access_token=" + this.accessToken;
 		
+		ClientResource cr = new ClientResource(resourceURL);
+		
 		try {
-			cr = new ClientResource(resourceURL);
 			projects = cr.get(GitLabRepository[].class);
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving the repos: " + cr.getResponse().getStatus());
@@ -58,17 +58,12 @@ public class GitLabResource {
 	}
 	
 	public RepositoryTree[] getRepositoryTree(String owner, String repo) {
-		/*
-		 * gitlab.com docs...
-		 * If using namespaced API calls, make sure that the NAMESPACE/PROJECT_NAME is URL-encoded.
-		 * For example, / is represented by %2F:
-		 */
-		
+
 		RepositoryTree[] tree = null;
 		String path = owner + "%2F" + repo;
 		String resourceURL = BASE_URL + "/projects/" + path + "/repository/tree" + "?recursive=1&per_page=1000000&access_token=" + this.accessToken;
+		
 		ClientResource cr = new ClientResource(resourceURL);
-		System.out.println(resourceURL);
 		
 		try {
 			tree = cr.get(RepositoryTree[].class);

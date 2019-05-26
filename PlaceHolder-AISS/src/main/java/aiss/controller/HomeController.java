@@ -9,18 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import aiss.model.github.Repository;
-import aiss.model.github.User;
-import aiss.model.gitlab.GitLabRepository;
 import aiss.model.harvest.Profile;
 import aiss.model.harvest.Projects;
-import aiss.model.resource.GitHubResource;
-import aiss.model.resource.GitLabResource;
 import aiss.model.resource.HarvestResource;
-import aiss.model.resource.TodoistResource;
-
 
 public class HomeController extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(HomeController.class.getName());
 	
@@ -45,4 +39,9 @@ public class HomeController extends HttpServlet {
  		req.getRequestDispatcher("index.jsp").forward(req, resp);
  		
 	}
+	
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		doGet(req,resp);
+	}
+	
 }

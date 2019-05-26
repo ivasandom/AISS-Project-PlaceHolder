@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import aiss.model.resource.HarvestResource;
-import aiss.model.resource.TodoistResource;
 import aiss.utility.Checkers;
 
 public class DeleteProjectController extends HttpServlet {
@@ -20,43 +19,39 @@ public class DeleteProjectController extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		// Redirects to login if accessTokenHarvest or accessTokenTodoist do not exist.
+		if(Checkers.checkAuthenticatedOrRedirect(req.getSession(), resp)) return;
+				
 		log.log(Level.INFO, "Processing DeleteProjectController.");
 
 		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
 		String projectId = req.getParameter("id");
 		
-		if (Checkers.notNull(accessTokenHarvest, projectId)) {
-			
-			log.log(Level.INFO, "Deleting project.");
-			
-			HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
-			boolean deleted = harvestResource.deleteProject(projectId);
-			if (deleted) {
-				// Si se ha eliminado devolvemos a pagina inicio
-				resp.sendRedirect("/");
-				log.log(Level.FINE, "Project deleted. Forwarding to index.");
 
-			} else {
-				// Si no se ha eliminado devolvemos 404
-				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-				log.log(Level.SEVERE, "The project with could not be deleted. Perhaps it doesn´t exists. Forwarding to index .");
-				resp.sendRedirect("/error.jsp");
+		log.log(Level.INFO, "Deleting project.");
+			
+		HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
+		boolean deleted = harvestResource.deleteProject(projectId);
+			
+		if (deleted) {
+				
+			// Si se ha eliminado devolvemos a pagina inicio
+			resp.sendRedirect("/");
+			log.log(Level.FINE, "Project deleted. Forwarding to index.");
 
-			}
 		} else {
+				
 			// Si no se ha eliminado devolvemos 404
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-			log.log(Level.WARNING, "Error when deleting the project.");
+			log.log(Level.SEVERE, "The project with could not be deleted. Perhaps it doesn´t exists. Forwarding to index .");
 			resp.sendRedirect("/error.jsp");
 
 		}
-		
-		
-		
-		
+	
 	}
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		doGet(req,resp);
 	}
+	
 }

@@ -25,6 +25,7 @@ public class GetProjectController extends HttpServlet {
 	private static final Logger log = Logger.getLogger(GetProjectController.class.getName());
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		// Redirects to login if accessTokenHarvest or accessTokenTodoist do not exist.
 		if(Checkers.checkAuthenticatedOrRedirect(req.getSession(), resp)) return;
 		
@@ -42,14 +43,16 @@ public class GetProjectController extends HttpServlet {
 			Profile profile = harvestResource.getProfile();
 			Project project = harvestResource.getProject(projectId);
 					
-					
+
 			req.setAttribute("profile", profile);
+			
 			if (project==null) {
 				
 				log.log(Level.WARNING, "Error. The project of that id is null.");
 				
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 				resp.sendRedirect("/error.jsp");
+				
 			} else {
 				ProjectConfig projectConfig = new ProjectConfig(harvestResource, project);
 				List<TaskAssignment> harvestTasks = harvestResource.getProjectTasks(projectId);

@@ -22,6 +22,7 @@ public class LogoutController extends HttpServlet {
 		HttpSession session = req.getSession(false);
 		if (session != null) {
 		    session.invalidate();
+		    log.log(Level.INFO, "Session invalidated");
 		}
 		
 		resp.sendRedirect("/");
@@ -31,4 +32,5 @@ public class LogoutController extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		doGet(req,resp);
 	}
+	
 }

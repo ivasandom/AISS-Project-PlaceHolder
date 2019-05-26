@@ -27,8 +27,6 @@ public class GetTreeController extends HttpServlet {
 	private static final Logger log = Logger.getLogger(GetProjectController.class.getName());
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-//		return;
 		doPost(req, resp);
 	}
 		
@@ -61,12 +59,13 @@ public class GetTreeController extends HttpServlet {
 				
 				if (repositoryHost.equals("GitHub")) {
 					log.log(Level.INFO, "Getting GitHub repository.");
+					
 					if ((String) req.getSession().getAttribute("GitHub-token") == null) {
 						log.log(Level.WARNING, "Error. GitHub access token is null.");
 						resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-						resp.sendRedirect("/error.jsp");
 						return;
 					}
+					
 					GitHubResource githubResource = new GitHubResource(accessTokenGithub);
 					
 					String[] repository = config.getGithubRepository().split("/");
@@ -84,12 +83,13 @@ public class GetTreeController extends HttpServlet {
 				} else if (repositoryHost.equals("GitLab")) {
 					
 					log.log(Level.INFO, "Getting GitHub repository.");
+					
 					if ((String) req.getSession().getAttribute("GitLab-token") == null) {
 						log.log(Level.WARNING, "Error. GitLab access token is null.");
 						resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-						resp.sendRedirect("/error.jsp");
 						return;
 					}
+					
 					GitLabResource gitlabResource = new GitLabResource(accessTokenGitlab);
 					
 					String[] repository = config.getGitlabRepository().split("/");

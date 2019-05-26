@@ -14,8 +14,6 @@
 	<!-- Bootstrap cdn -->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
 </head>
 
 <body>
@@ -23,8 +21,6 @@
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<main role="main mt-5 pt-5">
-
-
 		<div class="jumbotron mb-0"
 			style='background:linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.8)), url("https://previews.123rf.com/images/karenr/karenr1506/karenr150600007/40831894-blue-and-white-striped-gingham-tile-pattern-repeat-background-that-is-seamless-and-repeats.jpg")'>
 			<div class="container">

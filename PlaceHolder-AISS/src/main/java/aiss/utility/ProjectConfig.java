@@ -15,11 +15,27 @@ public class ProjectConfig {
 	private String todoistProjectId;
 	private String githubRepository;
 	private String gitlabRepository;
-	private String bitbucketRepository;
 
 	private static final Logger log = Logger.getLogger(GetProjectController.class.getName());
 
 	// Constructor
+	
+	public ProjectConfig(Project project) {
+		try {
+			JSONObject config = new JSONObject(project.getNotes());
+			
+			// Initialize properties
+			if (config.has("todoist_project_id")) this.todoistProjectId = config.get("todoist_project_id").toString();
+			if (config.has("github_repository")) this.githubRepository = config.get("github_repository").toString();
+			if (config.has("gitlab_repository")) this.gitlabRepository = config.get("gitlab_repository").toString();
+
+		} catch (Exception e) {
+
+			log.log(Level.WARNING, "Project configuration not initializated or corrupt, creating new config.");
+			
+			
+		}
+	}
 	
 	public ProjectConfig(HarvestResource resource, Project project) {
 		
@@ -30,7 +46,6 @@ public class ProjectConfig {
 			if (config.has("todoist_project_id")) this.todoistProjectId = config.get("todoist_project_id").toString();
 			if (config.has("github_repository")) this.githubRepository = config.get("github_repository").toString();
 			if (config.has("gitlab_repository")) this.gitlabRepository = config.get("gitlab_repository").toString();
-			if (config.has("bitbucket_repository")) this.bitbucketRepository = config.get("bitbucket_repository").toString();
 
 		} catch (Exception e) {
 
@@ -66,11 +81,6 @@ public class ProjectConfig {
 		return gitlabRepository;
 	}
 	
-	@JSONPropertyName("bitbucket_repository")
-	public String getBitbucketRepository() {
-		return bitbucketRepository;
-	}
-	
 	// Setters
 	
 	public void setTodoistProjectId(String todoistProjectId) {
@@ -85,9 +95,6 @@ public class ProjectConfig {
 		this.gitlabRepository = gitlabRepository;
 	}
 
-	public void setBitbucketRepository(String bitbucketRepository) {
-		this.bitbucketRepository = bitbucketRepository;
-	}
 	
 	
 }

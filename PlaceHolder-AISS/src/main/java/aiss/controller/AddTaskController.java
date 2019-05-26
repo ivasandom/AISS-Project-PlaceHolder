@@ -25,61 +25,84 @@ public class AddTaskController extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		log.log(Level.SEVERE, "AddTaskController Method not allowed");
+		resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+		req.getRequestDispatcher("/error.jsp").forward(req, resp);
 		
 	}
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		
+					
 		log.log(Level.INFO, "Proccessing AddTaskController.");
-
+		
+		// Response ContentType = application/json
+		resp.setContentType("application/json");
+		PrintWriter out = resp.getWriter();
+		JSONObject response = new JSONObject();
+		
+		// OAuth2 Tokens
 		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
+		
+		// Form Data
 		String newTaskContent = req.getParameter("content");
 		String newTaskProjectId = req.getParameter("projectId");
 		String newTaskAssignment = req.getParameter("assignment");
 		
 		boolean parametrosRecibidos = Checkers.notNull(accessTokenTodoist, newTaskContent, newTaskProjectId, newTaskAssignment);
-		if (parametrosRecibidos) {		
+		
+		if (accessTokenTodoist != null) {
 			
-			log.log(Level.INFO, "Adding task.");
-
-			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
-			
-			TaskSimple tarea = new TaskSimple();
-			TaskConfig taskConfig = new TaskConfig(newTaskContent, newTaskAssignment);
-			tarea.setProjectId(Long.parseLong(newTaskProjectId));
-			tarea.setContent(new JSONObject(taskConfig).toString());
-			
-			Task nuevaTarea = todoistResource.createTask(tarea);
-			
-			if (nuevaTarea != null) {
-				// AJAX
-				// https://stackoverflow.com/questions/2010990/how-do-you-return-a-json-object-from-a-java-servlet
-
-				resp.setContentType("application/json");
-				PrintWriter out = resp.getWriter();
-				out.print(new JSONObject(nuevaTarea));
-				out.flush();
+			if (parametrosRecibidos) {
 				
-				log.log(Level.FINE, "Task added. Forwarding to index.");
+				log.log(Level.INFO, "Adding task.");
 
+				TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
+				
+				TaskSimple tarea = new TaskSimple();
+				TaskConfig taskConfig = new TaskConfig(newTaskContent, newTaskAssignment);
+				tarea.setProjectId(Long.parseLong(newTaskProjectId));
+				tarea.setContent(new JSONObject(taskConfig).toString());
+				
+				Task nuevaTarea = todoistResource.createTask(tarea);
+				
+				if (nuevaTarea != null) {
+					
+					log.log(Level.FINE, "Task added.");
+					
+					// https://stackoverflow.com/questions/2010990/how-do-you-return-a-json-object-from-a-java-servlet
+					resp.setContentType("application/json");
+					out.print(new JSONObject(nuevaTarea));
+					out.flush();
+			
+					return;
+					
+				} else {
+					
+					resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+					log.log(Level.SEVERE, "The task with could not be added. Perhaps it is duplicated. Forwarding to index .");
+					response.put("error", "The task with could not be added. Perhaps it is duplicated. Forwarding to index .");
+
+				}
 				
 			} else {
+				
+				log.log(Level.WARNING, "Invalid form data");
 				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-				log.log(Level.SEVERE, "The task with could not be added. Perhaps it is duplicated. Forwarding to index .");
-				resp.sendRedirect("/error.jsp");
-
+				response.put("error", "Invalid form data");
+				
 			}
 			
 		} else {
-			// Si no está logueado entonces devolvemos error
+			
+			log.log(Level.WARNING, "You must be authenticated in Todoist");
 			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-			log.log(Level.WARNING, "Error when adding the task.");
-			resp.sendRedirect("/error.jsp");
-
+			response.put("error", "You must be authenticated in Todoist");
+			
 		}
 		
+		out.print(response);
+		out.flush();
+		
 	}
-
-
 
 }

@@ -24,7 +24,6 @@ public class Checkers {
 		String accessTokenTodoist = (String) session.getAttribute("Todoist-token");
 		
 		if (!Checkers.notNull(accessTokenHarvest, accessTokenTodoist)) {
-			System.out.println("hola!");
 			resp.sendRedirect("/login");
 			return true;
 		}
