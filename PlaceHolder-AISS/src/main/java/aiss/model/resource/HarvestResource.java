@@ -32,7 +32,7 @@ public class HarvestResource {
 	
 	public HarvestResource(String accessToken) {
 		this.accessToken = accessToken;
-		this.accountId = this.getUser().getAccounts().get(0).getId();
+		this.accountId = getUser(accessToken).getAccounts().get(0).getId();
 	}
 	
 	public Profile getProfile() {
@@ -254,7 +254,7 @@ public class HarvestResource {
 		return updated;
 	}
 	
-	public User getUser() {
+	public User getUser(String accessToken) {
 		
 		User user = null;
 		String resourceURL = "https://id.getharvest.com/api/v2/accounts";

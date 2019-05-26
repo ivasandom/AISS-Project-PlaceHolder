@@ -44,11 +44,7 @@
 		
 		<!-- Añadido para solucionar error ClientResource.patch (Invalid HTTP method patch) -->
 		<!-- https://mvnrepository.com/artifact/org.restlet.jse/org.restlet.ext.httpclient -->
-<dependency>
-    <groupId>org.restlet.jse</groupId>
-    <artifactId>org.restlet.ext.httpclient</artifactId>
-    <version>2.4.0</version>
-</dependency>
+
 
 <!-- https://mvnrepository.com/artifact/org.restlet.jse/org.restlet.ext.json -->
 <dependency>
