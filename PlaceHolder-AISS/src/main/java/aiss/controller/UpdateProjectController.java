@@ -57,10 +57,14 @@ public class UpdateProjectController extends HttpServlet {
 				
 			} else {
 				// TODO raise HTTP404
+				log.log(Level.WARNING, "Error. id is null");
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				req.getRequestDispatcher("/error.jsp").forward(req, resp);
 			}
 			
 		} else {
 			// TODO redirect to login
+			req.getRequestDispatcher("index.jsp").forward(req, resp);
 		}
 				
 		
@@ -88,7 +92,10 @@ public class UpdateProjectController extends HttpServlet {
 		String todoistProjectId = req.getParameter("todoistProject");
 		String githubRepository = req.getParameter("githubRepository");
 		String gitlabRepository = req.getParameter("gitlabRepository");
-		String bitbucketRepository = req.getParameter("bitbucketRepository");
+		
+		log.log(Level.FINE, "Todoist project id: " + todoistProjectId);
+		log.log(Level.FINE, "GitHub repository: " + githubRepository);
+		log.log(Level.FINE, "GitLab repository: " + gitlabRepository);
 		
 		
 		if (Checkers.notNull(accessTokenHarvest, accessTokenTodoist, projectId)) {
@@ -103,25 +110,26 @@ public class UpdateProjectController extends HttpServlet {
 				projectConfig.setTodoistProjectId(todoistProjectId);
 				projectConfig.setGithubRepository(githubRepository);
 				projectConfig.setGitlabRepository(gitlabRepository);
-				projectConfig.setBitbucketRepository(bitbucketRepository);
 				projectConfig.updateConfig(harvestResource, project);
 				
 				// Project fields update
 				boolean updated = harvestResource.updateProject(projectId, clientId, name, isBillable, billBy, budgetBy);
 				
 				if (updated) {
+					log.log(Level.FINE, "UpdateProjectController proccessed successfully");
 					resp.sendRedirect("/projects?id=" + projectId);
 				} else {
+					log.log(Level.WARNING, "Error when updating project");
 					resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 				}
 				return;
 				
 			} else {
+				log.log(Level.WARNING, "Error. Project is null");
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			}
 	
 		} else {
-			
 			req.getRequestDispatcher("index.jsp").forward(req, resp);
 			
 		}

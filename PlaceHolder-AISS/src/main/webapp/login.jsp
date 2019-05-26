@@ -85,8 +85,7 @@
 				<div class="col-md-6">
 					<img class="service-logo" src="https://businessoptimizer.org/wp-content/uploads/Todoist-Logo-1.png">
 					<h2>Todoist</h2>
-					<p>Todoist is a simple yet powerful to-do list app that can help anyone get organized and achieve
-						peace-of-mind</p>
+					<p>Todoist es una aplicación simple, pero poderosa, de listas de tareas que ayuda a las personas a organizarse.</p>
 					<c:if test="${not empty sessionScope['Todoist-token']}">
 						<p><a class="btn btn-danger btn-lg container-fluid disabled" href="#" role="button">✓ You are
 								authenticated</a></p>

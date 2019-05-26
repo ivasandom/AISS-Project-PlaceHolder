@@ -45,7 +45,11 @@ public class GetProjectController extends HttpServlet {
 					
 			req.setAttribute("profile", profile);
 			if (project==null) {
+				
+				log.log(Level.WARNING, "Error. The project of that id is null.");
+				
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				resp.sendRedirect("/error.jsp");
 			} else {
 				ProjectConfig projectConfig = new ProjectConfig(harvestResource, project);
 				List<TaskAssignment> harvestTasks = harvestResource.getProjectTasks(projectId);
@@ -60,11 +64,15 @@ public class GetProjectController extends HttpServlet {
 				req.setAttribute("myProjects", harvestResource.getMyProjects().getProjects());
 				req.setAttribute("profile", harvestResource.getProfile());
 				
+				log.log(Level.FINE, "GetProjectController processed successfully.");
+				
 				req.getRequestDispatcher("project.jsp").forward(req, resp);
 			}
 					
 		} else {
+			log.log(Level.WARNING, "Error. Id is null.");
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			resp.sendRedirect("/error.jsp");
 		}
 	}
 		

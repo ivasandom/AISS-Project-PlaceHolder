@@ -35,7 +35,9 @@ public class EditorController extends HttpServlet {
 			aiss.model.harvest.Project harvestProject = harvestResource.getProject(projectId);
 			
 			if (harvestProject == null) {
+				log.log(Level.WARNING, "Error. Harvest project is null.");
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				req.getRequestDispatcher("/error.jsp").forward(req, resp);
 				return;
 			}
 			
@@ -46,6 +48,7 @@ public class EditorController extends HttpServlet {
 			req.setAttribute("project", harvestProject);
 			req.setAttribute("projectConfig", config);
 			
+			log.log(Level.FINE, "EditorController processed successfully.");
 			
 			req.setAttribute("todoistTasks", todoistResource.getActiveTasks(todoistProject.getId().toString()));
 			req.getRequestDispatcher("/editor.jsp").forward(req, resp);

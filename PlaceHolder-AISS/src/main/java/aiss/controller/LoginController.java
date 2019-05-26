@@ -20,13 +20,14 @@ public class LoginController extends HttpServlet {
 	private static final List<String> availableProviders = new ArrayList<String>(Arrays.asList("GitHub", "GitLab", "Bitbucket", "Todoist", "Harvest"));
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		
+		log.log(Level.INFO, "Processing LoginController.");
 		String provider = req.getParameter("provider");
 		String accessTokenHarvest = (String) req.getSession().getAttribute("Harvest-token");
 		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
 		
 		if (!availableProviders.contains(provider) || provider == null) {
 			if (Checkers.notNull(accessTokenTodoist, accessTokenHarvest)) {
+				log.log(Level.INFO, "There is no providers.");
 				resp.sendRedirect("/");
 			} else {
 				req.getRequestDispatcher("/login.jsp").forward(req, resp);

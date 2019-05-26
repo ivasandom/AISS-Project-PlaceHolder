@@ -29,6 +29,10 @@ public class UpdateTaskController extends HttpServlet {
 		String idTask = req.getParameter("taskId");
 		String newContent = req.getParameter("content");
 		
+		log.log(Level.FINE, "Access Token Todoist: " + accessTokenTodoist);
+		log.log(Level.FINE, "Id of the task : "+idTask);
+		log.log(Level.FINE, "New content : "+newContent);
+		
 		if (Checkers.notNull(accessTokenTodoist, idTask, newContent)) {
 			TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
 			boolean updated = todoistResource.updateTask(idTask, newContent);
@@ -36,11 +40,15 @@ public class UpdateTaskController extends HttpServlet {
 			if (updated) {
 				
 			} else {
+				log.log(Level.WARNING, "Error when updating task");
 				resp.sendError(HttpServletResponse.SC_NOT_MODIFIED);
+				resp.sendRedirect("/error.jsp");
 			}
 			
 		} else {
+			log.log(Level.WARNING, "Error. A parameter is null.");
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			resp.sendRedirect("/error.jsp");
 		}
 		
 	}

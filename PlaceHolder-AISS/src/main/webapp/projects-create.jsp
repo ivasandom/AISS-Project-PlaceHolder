@@ -115,13 +115,6 @@
 								class="form-control">
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="">BitBucket Repository</label>
-							<input type="text" name="bitbucketRepository" placeholder="e.g. /username/repository-name"
-								class="form-control">
-						</div>
-					</div>
 				</div>
 
 				<button type="submit" class="btn btn-primary">Create project <strong
