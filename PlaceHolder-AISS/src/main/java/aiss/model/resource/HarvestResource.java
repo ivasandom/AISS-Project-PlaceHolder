@@ -268,7 +268,7 @@ public class HarvestResource {
 		try {
 			user = cr.get(User.class);
 		} catch (ResourceException re) {
-			System.err.println("Error when retrieving user");
+			System.err.println("Error when retrieving user " + re.getResponse().getStatus());
 		}
 		
 		return user;
