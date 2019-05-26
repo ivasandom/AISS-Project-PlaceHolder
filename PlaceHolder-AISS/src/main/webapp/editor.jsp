@@ -197,9 +197,6 @@
                                 <c:if test="${not empty projectConfig.gitlabRepository}">
                                     <option value="GitLab">Gitlab: ${projectConfig.gitlabRepository}</option>
                                 </c:if>
-                                <c:if test="${not empty projectConfig.bitbucketRepository}">
-                                    <option value="Bitbucket">Bitbucket: ${projectConfig.bitbucketRepository}</option>
-                                </c:if>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary container-fluid"

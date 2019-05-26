@@ -9,13 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import aiss.model.bitbucket.BitbucketRepository;
 import aiss.model.github.Repository;
 import aiss.model.github.User;
 import aiss.model.gitlab.GitLabRepository;
 import aiss.model.harvest.Profile;
 import aiss.model.harvest.Projects;
-import aiss.model.resource.BitbucketResource;
 import aiss.model.resource.GitHubResource;
 import aiss.model.resource.GitLabResource;
 import aiss.model.resource.HarvestResource;

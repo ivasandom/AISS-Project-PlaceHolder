@@ -61,32 +61,6 @@
   			</div>
 		</div>
 
-		<div class="container" style="display:none;">
-			<div class="row">
-				<div class="col-md-3">
-					<h2>Todoist</h2>
-					<p>Gestiona tus proyectos y tareas gracias a la plataforma <a href="https://todoist.com/?lang=es">Todoist</a></p>
-					<p><a class="btn btn-danger" href="/login?provider=Todoist" role="button">Sign in with Todoist</a></p>
-				</div>
-				<div class="col-md-3">
-					<h2>Github</h2>
-					<p>Edita tus repositorios de GitHub y mucho más.</p>
-					<p><a class="btn btn-dark" href="/login?provider=GitHub" role="button">Sign in with GitHub</a></p>
-				</div>
-				<div class="col-md-3">
-					<h2>Gitlab</h2>
-					<p>Edita tus repositorios de GitLab de gitlab.com o tu propio servidor.</p>
-					<p><a class="btn btn-warning" href="/login?provider=GitLab" role="button">Sign in with GitLab</a></p>
-				</div>
-				<div class="col-md-3">
-					<h2>Bitbucket</h2>
-					<p>Edita tus repositorios de Bitbucket, la solución git de Atlassian.</p>
-					<p><a class="btn btn-primary" href="/login?provider=Bitbucket" role="button">Sign in with Bitbucket</a></p>
-				</div>
-			</div>
-			<hr>
-		</div>
-
 	</main>
 
 	<footer class="container">

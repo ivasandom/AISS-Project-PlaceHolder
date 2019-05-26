@@ -117,10 +117,6 @@
 								<td>GitLab</td>
 								<td>${projectConfig.gitlabRepository}</td>
 							</tr>
-							<tr>
-								<td>BitBucket</td>
-								<td>${projectConfig.bitbucketRepository}</td>
-							</tr>
 						</tbody>
 					</table>
 

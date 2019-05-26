@@ -24,60 +24,8 @@
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="/login?provider=GitLab">Conectar con GitLab - ${sessionScope["GitLab-token"]}</a>
 					<a class="dropdown-item" href="/login?provider=GitHub">Conectar con GitHub - ${sessionScope["GitHub-token"]}</a>
-					<a class="dropdown-item" href="/login?provider=Bitbucket">Conectar con Bitbucket -
-						${sessionScope["Bitbucket-token"]}</a>
 				</div>
 			</li>
-
-			<c:if test="${not empty sessionScope['GitHub-token']}">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Mis repositorios GitHub
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<c:forEach items="${repositoriesGitHub}" var="repository">
-							<a class="dropdown-item"
-								href="/editor?owner=${repository.owner.login}&repo=${repository.name}">
-								${repository.fullName}
-							</a>
-						</c:forEach>
-					</div>
-				</li>
-			</c:if>
-			
-			<c:if test="${not empty sessionScope['GitLab-token']}">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Mis repositorios GitLab
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<c:forEach items="${projectsGitLab}" var="gitlabrepository">
-							<a class="dropdown-item"
-								href="/editor?owner=${gitlabrepository.author}&repo=${gitlabrepository.name}">
-								${gitlabrepository.name}
-							</a>
-						</c:forEach>
-					</div>
-				</li>
-			</c:if>
-			<c:if test="${not empty sessionScope['Bitbucket-token']}">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Mis repositorios Bitbucket
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<c:forEach items="${repositoriesBitbucket}" var="repository">
-							<a class="dropdown-item"
-								href="/editor?owner=${repository.owner.login}&repo=${repository.name}">
-								${BitbucketRepository.fullName}
-							</a>
-						</c:forEach>
-					</div>
-				</li>
-			</c:if>
 			<c:if test="${isAuthenticated}">
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -106,7 +54,6 @@
 					</a>
 
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a href="#" class="dropdown-item">Settings</a>
 						<a href="/logout" class="dropdown-item">Logout</a>
 					</div>
 				</li>
