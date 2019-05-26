@@ -121,39 +121,6 @@
 		<servlet-name>GitHubOAuth2Callback</servlet-name>
 		<url-pattern>/oauth2callback/GitHub</url-pattern>
 	</servlet-mapping>
-	<!--BitbucketOauthController -->
-	<servlet>
-		<description />
-		<servlet-name>BitbucketAuthController</servlet-name>
-		<servlet-class>aiss.controller.oauth.GenericAuthController</servlet-class>
-		<init-param>
-			<param-name>provider</param-name>
-			<param-value>Bitbucket</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>BitbucketAuthController</servlet-name>
-		<url-pattern>/AuthController/Bitbucket</url-pattern>
-	</servlet-mapping>
-
-	<!--BitbucketOAuth2Callback -->
-	<servlet>
-		<description />
-		<servlet-name>BitbucketOAuth2Callback</servlet-name>
-		<servlet-class>aiss.controller.oauth.OAuth2Callback</servlet-class>
-		<init-param>
-			<param-name>provider</param-name>
-			<param-value>Bitbucket</param-value>
-		</init-param>
-		<init-param>
-			<param-name>onSuccess</param-name>
-			<param-value>redirect:/</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>BitbucketOAuth2Callback</servlet-name>
-		<url-pattern>/oauth2callback/Bitbucket</url-pattern>
-	</servlet-mapping>
 	<!--TodoistOauthController -->
 	<servlet>
 		<description />

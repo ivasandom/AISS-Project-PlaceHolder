@@ -13,13 +13,6 @@
         "authorizationFormUrl": "https://gitlab.com/oauth/authorize",
         "scopes": ["api"]
     },
-    "Bitbucket": {
-        "tokenUrl": "https://bitbucket.org/site/oauth2/access_token",
-        "clientId": "2KT28d8vWAJctuC6Jw",
-        "clientSecret": "CVPMUAAPvbJ6DnzcmTAUcQkzvz3X4cQt",
-        "authorizationFormUrl": "https://bitbucket.org/site/oauth2/authorize",
-        "scopes": ["repository:admin"]
-    },
     "Todoist": {
         "tokenUrl": "https://todoist.com/oauth/access_token",
         "clientId": "b81837d8a9e54ffda3b51f7667f1754e",

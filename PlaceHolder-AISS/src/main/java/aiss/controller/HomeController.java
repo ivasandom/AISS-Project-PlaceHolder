@@ -38,8 +38,6 @@ public class HomeController extends HttpServlet {
 
 			req.setAttribute("myProjects", myProjects.getProjects());
 			req.setAttribute("profile", profile);
-		}else {
-			req.getRequestDispatcher("/error.jsp").forward(req, resp);
 		}
 		
 		log.log(Level.INFO, "HomeController obtained successfully. Forwarding to index");
