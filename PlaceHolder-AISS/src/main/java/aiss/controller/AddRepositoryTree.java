@@ -79,7 +79,7 @@ public class AddRepositoryTree extends HttpServlet{
 		
 		if (Checkers.notNull(accessTokenHarvest, accessTokenTodoist) && availableGithosts.contains(gitHost)) {
 			
-			boolean createdTimeEntry = harvestResource.createTimeEntry(projectId, task.getId().toString(), task.getConfig().getTaskParent(),
+			harvestResource.createTimeEntry(projectId, task.getId().toString(), task.getConfig().getTaskParent(),
 					LocalDate.now().toString(), startedTime, endedTime);
 			
 			if (gitHost.equals("GitHub")) {
@@ -98,15 +98,12 @@ public class AddRepositoryTree extends HttpServlet{
 				log.log(Level.INFO, "Adding GitLab repository.");
 				
 				GitLabResource gitlabResource = new GitLabResource(accessTokenGitLab);
-				aiss.model.gitlab.RepositoryTree newRepositoryTree = new aiss.model.gitlab.RepositoryTree();
-				List<aiss.model.github.Tree> trees = new ArrayList<>();
-				
-				// newRepositoryTree.(baseTree);
-				// newRepositoryTree.setTree(trees);
-				
-				// gitlabResource.createRepositoryTree(repositoryOwner, repositoryName, newRepositoryTree);
+				aiss.model.gitlab.Commit commit = gitlabResource.createCommit(repositoryOwner, repositoryName, tree);
+
+				response.put("commitUrl", "https://gitlab.com/josgamdia1/repositorio-gitlab/commit/" + commit.getId());
 				
 			} 
+			
 			log.log(Level.FINE, "AddRepositoryTreeController processed successfully.");
 			
 			out.print(response);

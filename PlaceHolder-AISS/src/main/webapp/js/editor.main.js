@@ -39,7 +39,7 @@ function getJSONCommitChanges(){
 				branch: "master",
 				force: true,
 				commit_message: $("#commit-message").val(),
-				tree: tree
+				actions: tree
 		}		
 		
 	}
@@ -47,6 +47,8 @@ function getJSONCommitChanges(){
 	return requestTreeContent;
 	
 }
+
+
 
 class CodeEditor {
 	constructor(){
@@ -107,8 +109,8 @@ class CodeEditor {
 
 	getChangedFiles(){
 		var result = {};
-		for(var url in this.usedBlobs){
-			let blob = this.usedBlobs[url];
+		for(var url in window.codeEditor.usedBlobs){
+			let blob = window.codeEditor.usedBlobs[url];
 			if (blob.isUpdated()){
 				result[url] = blob;
 			}

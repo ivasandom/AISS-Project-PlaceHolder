@@ -82,6 +82,7 @@ public class GetTreeController extends HttpServlet {
 					out.flush();
 					
 				} else if (repositoryHost.equals("GitLab")) {
+					
 					log.log(Level.INFO, "Getting GitHub repository.");
 					if ((String) req.getSession().getAttribute("GitLab-token") == null) {
 						log.log(Level.WARNING, "Error. GitLab access token is null.");

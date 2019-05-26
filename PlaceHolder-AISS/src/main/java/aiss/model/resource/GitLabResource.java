@@ -2,12 +2,14 @@ package aiss.model.resource;
 
 import org.restlet.data.MediaType;
 import org.restlet.ext.json.JsonRepresentation;
+import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 
-import aiss.model.gitlab.RepositoryTree;
+import aiss.model.gitlab.Commit;
 //import aiss.model.gitlab.User;
 import aiss.model.gitlab.GitLabRepository;
+import aiss.model.gitlab.RepositoryTree;
 
 public class GitLabResource {
 	
@@ -36,23 +38,22 @@ public class GitLabResource {
 	}
 	
 	
-	public boolean createCommit(String owner, String repo, String actionCommit) {
+	public Commit createCommit(String owner, String repo, String actionCommit) {
 		
-		boolean commited = true;
+		Commit commit = null;
 		String path = owner + "%2F" + repo;
 		String resourceURL = BASE_URL + "/projects/" + path + "/repository/commits?access_token=" + accessToken;;
-		
-
+	
 		ClientResource cr = new ClientResource(resourceURL);
 				
 		try {
-			cr.post(new JsonRepresentation(actionCommit), MediaType.APPLICATION_JSON);		
+			Representation rep = cr.post(new JsonRepresentation(actionCommit), MediaType.APPLICATION_JSON);
+			commit = cr.toObject(rep, Commit.class);
 		} catch (ResourceException re){
-			commited = false;
 			System.err.println("Error when creating commit" + cr.getResponse().getStatus());
 		}
 		
-		return commited;
+		return commit;
 
 	}
 	
