@@ -46,16 +46,8 @@ public class TaskResource {
 	
 	@GET
 	@Produces("application/json")
-	public Collection<Task> getAll()
-	{
-		return repository.getAllTasks();
-	}
-	@GET
-	@Produces("application/json")
-	public Collection<Task> getAll(@QueryParam("name") String primeraLetra){
-		if (primeraLetra == null) {
-			return repository.getAllTasks();
-		} else {
+	public Collection<Task> getAll(@QueryParam("name") String primeraLetra, @QueryParam("start") int start, @QueryParam("size") int size){
+		if(primeraLetra!=null){
 			List<Task> result = new ArrayList<Task>();
 			for(Task task:repository.getAllTasks()) {
 				if(task.getName().charAt(0)==primeraLetra.charAt(0)) {
@@ -63,9 +55,14 @@ public class TaskResource {
 				}
 			}
 			return result;
+		}else if(size>0 && start>=0){
+			List<Task> result = new ArrayList<Task>();
+			result.addAll(repository.getAllTasks());
+			return result.subList(start, start + size);
+		}else {
+			return repository.getAllTasks();
 		}
 	}
-	//Paginación
 	@GET
 	@Path("/{id}")
 	@Produces("application/json")

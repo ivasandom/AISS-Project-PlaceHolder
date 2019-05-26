@@ -8,22 +8,38 @@ import aiss.model.Task;
 
 
 public interface ProjectRepository {
-		// Task
-		public void addTask(Task t);
-		public Collection<Task> getAllTasks();
-		public Task getTask(String taskId);
-		public void updateTask(Task t);
-		public void deleteTask(String taskId);
-		
-		// Project
-		public void addProject(Project p);
-		public Collection<Project> getAllProjects();
-		public Collection<Project> getAllProjectsFilterByFirstLetter(String firstLetter);
-		public Project getProject(String projectId);
-		public void updateProject(Project p);
-		public void deleteProject(String projectId);
-		public Collection<Task> getAllTasks(String projectId);
-		public void addTask(String projectId, String taskId);
-		public void removeTask(String projectId, String taskId);
-		public Collection<Task> getAllTasksFilterByFirstLetter(String firstLetter); 
+
+	void addTask(Task t);
+
+	Collection<Task> getAllTasks();
+
+	Collection<Task> getAllTasksFilterByFirstLetter(String firstLetter);
+
+	Task getTask(String taskId);
+
+	void updateTask(Task t);
+
+	void deleteTask(String taskId);
+
+	void addProject(Project p);
+
+	Collection<Project> getAllProjects();
+
+	Collection<Project> getAllProjectsFilterByFirstLetter(String firstLetter);
+
+	Project getProject(String projectid);
+
+	void updateProject(Project p);
+
+	void deleteProject(String projectId);
+
+	Collection<Task> getAllTasks(String projectId);
+
+	void addTask(String projectId, String taskId);
+
+	void removeTask(String projectId, String taskId);
+
+	Collection<Project> getAllProjectsPagination(int start, int size);
+
+
 }
