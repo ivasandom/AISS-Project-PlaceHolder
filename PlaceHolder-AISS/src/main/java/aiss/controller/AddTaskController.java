@@ -30,7 +30,7 @@ public class AddTaskController extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		
-		log.log(Level.WARNING, "Error al añadir la tarea.");
+		log.log(Level.INFO, "Proccessing AddTaskController.");
 
 		String accessTokenTodoist = (String) req.getSession().getAttribute("Todoist-token");
 		String newTaskContent = req.getParameter("content");
@@ -66,6 +66,7 @@ public class AddTaskController extends HttpServlet {
 			} else {
 				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 				log.log(Level.SEVERE, "The task with could not be added. Perhaps it is duplicated. Forwarding to index .");
+				resp.sendRedirect("/error.jsp");
 
 			}
 			
@@ -73,6 +74,7 @@ public class AddTaskController extends HttpServlet {
 			// Si no está logueado entonces devolvemos error
 			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 			log.log(Level.WARNING, "Error when adding the task.");
+			resp.sendRedirect("/error.jsp");
 
 		}
 		

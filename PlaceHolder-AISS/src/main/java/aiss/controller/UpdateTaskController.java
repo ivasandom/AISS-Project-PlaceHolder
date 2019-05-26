@@ -42,11 +42,13 @@ public class UpdateTaskController extends HttpServlet {
 			} else {
 				log.log(Level.WARNING, "Error when updating task");
 				resp.sendError(HttpServletResponse.SC_NOT_MODIFIED);
+				resp.sendRedirect("/error.jsp");
 			}
 			
 		} else {
 			log.log(Level.WARNING, "Error. A parameter is null.");
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			resp.sendRedirect("/error.jsp");
 		}
 		
 	}

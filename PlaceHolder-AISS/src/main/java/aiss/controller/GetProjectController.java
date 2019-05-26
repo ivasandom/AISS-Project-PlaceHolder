@@ -49,6 +49,7 @@ public class GetProjectController extends HttpServlet {
 				log.log(Level.WARNING, "Error. The project of that id is null.");
 				
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				resp.sendRedirect("/error.jsp");
 			} else {
 				ProjectConfig projectConfig = new ProjectConfig(harvestResource, project);
 				List<TaskAssignment> harvestTasks = harvestResource.getProjectTasks(projectId);
@@ -71,6 +72,7 @@ public class GetProjectController extends HttpServlet {
 		} else {
 			log.log(Level.WARNING, "Error. Id is null.");
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			resp.sendRedirect("/error.jsp");
 		}
 	}
 		

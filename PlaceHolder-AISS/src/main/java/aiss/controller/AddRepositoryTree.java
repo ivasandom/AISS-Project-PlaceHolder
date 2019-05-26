@@ -116,6 +116,7 @@ public class AddRepositoryTree extends HttpServlet{
 		} else {
 			log.log(Level.WARNING, "Error when adding a repository tree.");
 			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			resp.sendRedirect("/error.jsp");
 			
 		}
 		

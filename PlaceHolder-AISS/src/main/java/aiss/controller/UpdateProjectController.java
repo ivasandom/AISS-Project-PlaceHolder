@@ -59,6 +59,7 @@ public class UpdateProjectController extends HttpServlet {
 				// TODO raise HTTP404
 				log.log(Level.WARNING, "Error. id is null");
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				req.getRequestDispatcher("/error.jsp").forward(req, resp);
 			}
 			
 		} else {

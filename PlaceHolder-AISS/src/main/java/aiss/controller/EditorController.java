@@ -37,6 +37,7 @@ public class EditorController extends HttpServlet {
 			if (harvestProject == null) {
 				log.log(Level.WARNING, "Error. Harvest project is null.");
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				req.getRequestDispatcher("/error.jsp").forward(req, resp);
 				return;
 			}
 			

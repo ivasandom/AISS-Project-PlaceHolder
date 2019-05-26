@@ -64,6 +64,7 @@ public class GetTreeController extends HttpServlet {
 					if ((String) req.getSession().getAttribute("GitHub-token") == null) {
 						log.log(Level.WARNING, "Error. GitHub access token is null.");
 						resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+						resp.sendRedirect("/error.jsp");
 						return;
 					}
 					GitHubResource githubResource = new GitHubResource(accessTokenGithub);
@@ -85,6 +86,7 @@ public class GetTreeController extends HttpServlet {
 					if ((String) req.getSession().getAttribute("GitLab-token") == null) {
 						log.log(Level.WARNING, "Error. GitLab access token is null.");
 						resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+						resp.sendRedirect("/error.jsp");
 						return;
 					}
 					GitLabResource gitlabResource = new GitLabResource(accessTokenGitlab);
