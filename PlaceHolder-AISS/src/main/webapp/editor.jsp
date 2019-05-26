@@ -118,11 +118,16 @@
 
 
     <div id="task-git-manager">
-        <h1>Seleccionar tarea</h1>
-        <p>Selecciona la tarea en la que quieres trabajar</p>
+        <h1>Guardar cambios</h1>
+        <p>Guarda cambios en el repositorio y añade una entrada de tiempo del trabajo realizado.</p>
         <hr>
+        
+       
 
         <form id="commit-form" method="POST">
+        
+        	 <h3>Task & Time Entry</h3>
+        	 
             <div class="form-group">
                 <label for="task-select">Tarea</label>
                 <select class="form-control" id="task-select">
@@ -138,20 +143,31 @@
                     </c:forEach>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="task-select">Más detalles..</label>
-                <select class="form-control" id="task-select">
-                    <option value="hola">Ver videos de vegetta</option>
-                </select>
+            
+            <div class="row">
+            	<div class="col-md-6">
+            		<label for="started-time">Started time</label>
+            		<input type="time" class="form-control" placeholder="8:00am" id="started-time">
+            	</div>
+            	<div class="col-md-6">
+            		<label for="ended-time">Ended time</label>
+            		<input type="time" class="form-control" placeholder="10:00am" id="ended-time">
+            	</div>
             </div>
             <hr>
-            <div class="row mt-4">
-                <div class="col-md-4">
-                    <button class="btn btn-secondary container-fluid">TIMER</button>
-                </div>
-                <div class="col-md-8">
-                    <button type="submit" class="btn btn-primary container-fluid">COMMIT AND PUSH</button>
-                </div>
+            
+            <h3>Commit details</h3>
+            
+            <div class="form-group">
+            	<label for="commit-message">Message</label>
+            	<textarea class="form-control" id="commit-message" name="commitMessage" placeholder="Write description message..."></textarea>
+            </div>
+            
+            <hr>
+            
+
+            <button type="submit" class="btn btn-primary container-fluid">TIME & COMMIT CHANGES</button>
+
             </div>
 
         </form>
@@ -238,6 +254,20 @@
                             "<div id='fileTree' style='margin-top:20px;'></div>");
 
                         window.codeEditor = new CodeEditor();
+                        
+        				window.githost = $("#repository-host").val();
+        				
+        				var repo;
+        				if (window.githost == "GitHub") {
+        					repo = "${projectConfig.githubRepository}";
+        				} else if (window.host == "GitLab") {
+        					repo = "${projectConfig.gitlabRepository}";
+        				} else if (window.host == "Bitbucket") {
+        					repo = "${projectConfig.bitbucketRepository}";
+        				}
+        				
+        				window.repositoryOwner = repo.split("/")[1];
+        				window.repositoryName = repo.split("/")[2];
 
                         window.baseTree = response.sha;
                         window.trees = Tree.getTrees(response.tree);
@@ -302,15 +332,31 @@
     		
     		$.ajax({
     			method: "POST",
-    			data: JSON.stringify(generateJsonTreeRequest()),
+    			data: JSON.stringify({
+    				githost: window.githost,
+    				owner: window.repositoryOwner,
+    				repo: window.repositoryName,
+    				startedTime: $("#started-time").val(),
+    				endedTime: $("#ended-time").val(),
+    				commitMessage: $("#commit-message").val(),
+    				taskId: $("#task-select").val(),
+    				projectId: "${project.id}",
+    				tree: generateJsonTreeRequest(),
+    			}),
     			dataType: 'json',
     			contentType: "application/json",
     			url: "/editor/commit",
     			success: function(data){
-    				alert("success");
+    				
+    				var win = window.open(data.commitUrl, '_blank');
+                        if (win) {
+                            //Browser has allowed it to be opened
+                            win.focus();
+                        }
+    				alert("Time entry & commit added successfully.");
     			},
     			error: function(data){
-    				alert("error");
+    				alert("Error. Please try later.");
     			}
     		})
     	})

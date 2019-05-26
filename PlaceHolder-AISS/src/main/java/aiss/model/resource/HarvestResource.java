@@ -1,5 +1,6 @@
 package aiss.model.resource;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -55,7 +56,6 @@ public class HarvestResource {
 		return profile;
 
 	}
-	
 	
 	public Projects getMyProjects() {
 		
@@ -274,6 +274,39 @@ public class HarvestResource {
 		
 		return user;
         
+	}
+	
+	public boolean createTimeEntry(String projectId, String todoistTaskId, String harvestTaskId,
+			String spentDate, String startedTime, String endedTime) {
+		
+		boolean created = true;
+		String resourceURL = BASE_URL + "/time_entries?account_id=" + accountId;
+		ClientResource cr = new ClientResource(resourceURL);
+		
+		// Token OAuth2
+		ChallengeResponse chr = new ChallengeResponse(ChallengeScheme.HTTP_OAUTH_BEARER);
+		chr.setRawValue(accessToken);
+		cr.setChallengeResponse(chr);
+		
+		JsonObject form = new JsonObject();
+		
+		form.addProperty("project_id", Long.valueOf(projectId));
+		form.addProperty("task_id", Long.valueOf(harvestTaskId));
+		form.addProperty("started_time", startedTime);
+		form.addProperty("ended_time", endedTime);
+		form.addProperty("task_id", Long.valueOf(harvestTaskId));
+		form.addProperty("spent_date", spentDate);
+	
+		try {
+			cr.post(new JsonRepresentation(form.toString()), MediaType.APPLICATION_JSON);
+			
+		} catch (ResourceException re) {
+			created = false;
+			System.err.println("Error when creating time entry" + cr.getResponse().getStatus());
+		}
+		
+		return created;
+		
 	}
 	
 }

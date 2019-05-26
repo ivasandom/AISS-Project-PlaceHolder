@@ -1,6 +1,8 @@
 package aiss.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,10 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
 
 import aiss.model.resource.BitbucketResource;
 import aiss.model.resource.GitHubResource;
 import aiss.model.resource.GitLabResource;
+import aiss.model.resource.HarvestResource;
+import aiss.model.resource.TodoistResource;
 import aiss.utility.Checkers;
 
 public class AddRepositoryTree extends HttpServlet{
@@ -39,26 +44,47 @@ public class AddRepositoryTree extends HttpServlet{
 		String accessTokenGitLab = (String) req.getSession().getAttribute("GitLab-token");
 		String accessTokenBitbucket = (String) req.getSession().getAttribute("Bitbucket-token");
 		
-		String gitHost = req.getParameter("githost");
-		String baseTree = req.getParameter("baseTree");
-		String repositoryOwner = req.getParameter("owner");
-		String repositoryName = req.getParameter("repo");
+		JSONObject requestBody = new JSONObject(IOUtils.toString(req.getReader()));
 		
-		gitHost = "GitHub";
-		baseTree = "adasda";
-		repositoryOwner = "diazdevs";
-		repositoryName = "prueba";
+		String gitHost = requestBody.getString("githost");
+		String repositoryOwner = requestBody.getString("owner");
+		String repositoryName = requestBody.getString("repo");
 		
+		String startedTime = requestBody.getString("startedTime");
+		String endedTime = requestBody.getString("endedTime");
+		String commitMessage = requestBody.getString("commitMessage");
+		String taskId = requestBody.getString("taskId");
+		String projectId = requestBody.getString("projectId");
+		
+		String tree = requestBody.get("tree").toString();
+		
+		
+		TodoistResource todoistResource = new TodoistResource(accessTokenTodoist);
+		HarvestResource harvestResource = new HarvestResource(accessTokenHarvest);
+		
+		resp.setContentType("application/json");
+		PrintWriter out = resp.getWriter();
+		JSONObject response = new JSONObject();
+		
+		aiss.model.todoist.Task task = todoistResource.getTask(taskId);
 		
 		List<String> availableGithosts = new ArrayList<>(Arrays.asList("GitHub", "GitLab", "Bitbucket"));
 		
-		if (Checkers.notNull(accessTokenHarvest, accessTokenTodoist, baseTree) && availableGithosts.contains(gitHost)) {
+		if (Checkers.notNull(accessTokenHarvest, accessTokenTodoist) && availableGithosts.contains(gitHost)) {
+			
+			boolean createdTimeEntry = harvestResource.createTimeEntry(projectId, task.getId().toString(), task.getConfig().getTaskParent(),
+					LocalDate.now().toString(), startedTime, endedTime);
 			
 			if (gitHost.equals("GitHub")) {
 				
 				GitHubResource githubResource = new GitHubResource(accessTokenGitHub);
+				String treeSha = githubResource.createRepositoryTree(repositoryOwner, repositoryName, tree);
+				String lastCommitSha = githubResource.getMasterBranch(repositoryOwner, repositoryName).getCommit().getSha();
+				String commitSha = githubResource.createCommit(repositoryOwner, repositoryName, treeSha, commitMessage, lastCommitSha);
 				
-				githubResource.createRepositoryTree(repositoryOwner, repositoryName, IOUtils.toString(req.getReader()));				
+				githubResource.updateMasterReference(repositoryOwner, repositoryName, commitSha);
+				
+				response.put("commitUrl", "https://github.com/" + repositoryOwner + "/" + repositoryName + "/commit/" + commitSha);
 				
 			} else if (gitHost.equals("GitLab")) {
 
@@ -79,6 +105,8 @@ public class AddRepositoryTree extends HttpServlet{
 			
 			}
 			
+			out.print(response);
+			out.flush();
 			
 	
 			

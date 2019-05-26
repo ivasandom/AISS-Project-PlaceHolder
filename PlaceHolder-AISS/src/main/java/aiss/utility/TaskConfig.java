@@ -3,6 +3,7 @@ package aiss.utility;
 import org.json.JSONObject;
 import org.json.JSONPropertyName;
 
+import aiss.model.todoist.Task;
 import aiss.model.todoist.TaskSimple;
 
 public class TaskConfig {
@@ -17,6 +18,21 @@ public class TaskConfig {
 	}
 	
 	public TaskConfig(TaskSimple task) {
+		
+		try {
+			JSONObject config = new JSONObject(task.getContent());
+			
+			if (config.has("task_name")) this.taskName = config.get("task_name").toString();
+			if (config.has("task_parent")) this.taskParent = config.get("task_parent").toString();
+			
+			
+		} catch (Exception e) {
+
+			new TaskConfig(null, null);
+		}		
+	}
+	
+	public TaskConfig(Task task) {
 		
 		try {
 			JSONObject config = new JSONObject(task.getContent());

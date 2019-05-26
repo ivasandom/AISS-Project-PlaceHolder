@@ -68,7 +68,7 @@ public class GitHubResource {
 			cr = new ClientResource(resourceURL);
 			master = cr.get(Branch.class);
 		} catch (ResourceException re) {
-			System.err.println("Error when retrieving master branch.");
+			System.err.println("Error when retrieving master branch." + cr.getResponse().getStatus());
 		}
 		
 		return master;
@@ -91,25 +91,21 @@ public class GitHubResource {
 		
 		return tree;
 	}
-
 	
 	
 	public boolean updateMasterReference(String owner, String repo, String commitSha) {
 	
 		boolean updated = true;
 		String resourceURL = BASE_URL + "/repos/" + owner + "/" + repo + "/git/refs/heads/master?access_token=" + this.accessToken;
-		System.out.println(resourceURL);
 		ClientResource cr = new ClientResource(resourceURL);
 		JSONObject form = new JSONObject();
 		
 		//https://mdswanson.com/blog/2011/07/23/digging-around-the-github-api-take-2.html
 		form.put("force", true);
 		form.put("sha", commitSha);
-		System.out.println(commitSha);
 		
 		try {
 			cr.post(new JsonRepresentation(form.toString()), MediaType.APPLICATION_JSON);
-			System.out.println(form.toString());
 	
 		} catch (ResourceException re){
 			updated = false;
@@ -120,52 +116,51 @@ public class GitHubResource {
 	
 	}
 
-	public boolean createCommit(String owner, String repo, String treeSha) {
+	public String createCommit(String owner, String repo, String treeSha, String commitMessage, String parentSha) {
+		// Returns Commit SHA
 		
-		boolean created = true;
+		String commitSha = null;
 		String resourceURL = BASE_URL + "/repos/" + owner + "/" + repo + "/git/commits?access_token=" + this.accessToken;
-		System.out.println(resourceURL);
+
 		ClientResource cr = new ClientResource(resourceURL);
 		JSONObject form = new JSONObject();
 		
-		form.put("message", "prueba commit desde editor");
+		form.put("message", commitMessage);
 		form.put("tree", treeSha);
-		form.append("parents", "68b7847502da2cb22a9800838eb74c3acc58ca05");
+		form.append("parents", parentSha);
 		
 		try {
 			cr.post(new JsonRepresentation(form.toString()), MediaType.APPLICATION_JSON);
-			System.out.println(form.toString());
-			System.out.println("se ha creado correctamente 3");
 			String[] ref = cr.getLocationRef().toString().split("/");
 			
-			updateMasterReference(owner, repo, ref[ref.length-1]);
+			commitSha = ref[ref.length-1];
 		} catch (ResourceException re){
-			created = false;
 			System.err.println("Error when creating repository tree" + cr.getResponse().getStatus());
 		}
 		
-		return created;
+		return commitSha;
 		
 	}
 
-	public RepositoryTree createRepositoryTree(String owner, String repo, String repositoryTree) {
-		
-		RepositoryTree res = null;
+	public String createRepositoryTree(String owner, String repo, String repositoryTree) {
+		// Returns Tree SHA
+		String treeSha = null;
 		String resourceURL = BASE_URL + "/repos/" + owner + "/" + repo + "/git/trees?access_token=" + this.accessToken;
 		ClientResource cr = new ClientResource(resourceURL);
 		
 		try {
 
-			Representation rep = cr.post(new JsonRepresentation(repositoryTree), MediaType.APPLICATION_JSON);
-			System.out.println("se ha creado correctamente");
+			cr.post(new JsonRepresentation(repositoryTree), MediaType.APPLICATION_JSON);
 			String[] ref = cr.getLocationRef().toString().split("/");
+			treeSha = ref[ref.length-1];
 			
-			createCommit(owner, repo, ref[ref.length-1]);
 		} catch (ResourceException re){
+			
 			System.err.println("Error when creating repository tree" + cr.getResponse().getStatus());
+			
 		}
 		
-		return res;
+		return treeSha;
 		
 	}
 	
