@@ -79,7 +79,7 @@
 					<form id="ajax-add-task" method="POST" action="/tasks/create">
 						<div class="input-group mb-3">
 							<input type="hidden" name="projectId" value="${projectConfig.todoistProjectId}">
-							<input type="text" name="content" class="form-control" placeholder="Estudiar aiss...">
+							<input type="text" name="content" class="form-control" placeholder="Estudiar aiss..." required>
 							<div class="input-group-append">
 								<select class="form-control" name="assignment">
 									<option value="">Other</option>
@@ -175,7 +175,7 @@
 
 		subtasks.map(addSubTask);
 		parentTasks.map(updateSubTaskCount);
-		
+
 	</script>
 
 </body>

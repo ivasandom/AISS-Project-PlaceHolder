@@ -1,5 +1,7 @@
 package aiss.model.resource;
 
+import org.restlet.data.MediaType;
+import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 
@@ -33,21 +35,26 @@ public class GitLabResource {
 
 	}
 	
-//	public User getGitLabUser() {
-//		
-//		ClientResource cr = null;
-//		User user = null;
-//		String resourceURL = BASE_URL + "/user?access_token=" + this.accessToken;
-//		
-//		try {
-//			cr = new ClientResource(resourceURL);
-//			user = cr.get(User.class);
-//		} catch (ResourceException e) {
-//			System.err.println("Error when retrieving authenticated user.");
-//		}
-//		
-//		return user;
-//	}
+	
+	public boolean createCommit(String owner, String repo, String actionCommit) {
+		
+		boolean commited = true;
+		String path = owner + "%2F" + repo;
+		String resourceURL = BASE_URL + "/projects/" + path + "/repository/commits?access_token=" + accessToken;;
+		
+
+		ClientResource cr = new ClientResource(resourceURL);
+				
+		try {
+			cr.post(new JsonRepresentation(actionCommit), MediaType.APPLICATION_JSON);		
+		} catch (ResourceException re){
+			commited = false;
+			System.err.println("Error when creating commit" + cr.getResponse().getStatus());
+		}
+		
+		return commited;
+
+	}
 	
 	public RepositoryTree[] getRepositoryTree(String owner, String repo) {
 		/*
@@ -56,12 +63,13 @@ public class GitLabResource {
 		 * For example, / is represented by %2F:
 		 */
 		
-		ClientResource cr = null;
 		RepositoryTree[] tree = null;
-		String resourceURL = BASE_URL + "/projects/" + owner + "%2F" + repo + "/repository/tree" + "?recursive=1&access_token=" + this.accessToken;
+		String path = owner + "%2F" + repo;
+		String resourceURL = BASE_URL + "/projects/" + path + "/repository/tree" + "?recursive=1&per_page=1000000&access_token=" + this.accessToken;
+		ClientResource cr = new ClientResource(resourceURL);
 		System.out.println(resourceURL);
+		
 		try {
-			cr = new ClientResource(resourceURL);
 			tree = cr.get(RepositoryTree[].class);
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving tree.");

@@ -1,7 +1,5 @@
 package aiss.model.resource;
 
-import java.util.Map;
-
 import org.restlet.data.ChallengeResponse;
 import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Form;
@@ -25,17 +23,6 @@ public class TodoistResource {
 	public TodoistResource(String accessToken) {
         this.accessToken = accessToken;
     }
-	
-	public void setCustomHttpHeader(ClientResource client, String header, String value) { 
-        final String RESTLET_HTTP_HEADERS = "org.restlet.http.headers"; 
-        Map<String, Object> reqAttribs = client.getRequestAttributes(); 
-        Form headers = (Form)reqAttribs.get(RESTLET_HTTP_HEADERS); 
-        if (headers == null) { 
-            headers = new Form(); 
-            reqAttribs.put(RESTLET_HTTP_HEADERS, headers); 
-        } 
-        headers.add(header, value); 
-    } 
 	
 	// Project CRUD
 	

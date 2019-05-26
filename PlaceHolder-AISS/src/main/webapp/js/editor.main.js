@@ -4,25 +4,48 @@
  */
 
 
-function generateJsonTreeRequest(){
+function getJSONCommitChanges(){
 	var changedFiles = codeEditor.getChangedFiles();
 	var tree = [];
+	var requestTreeContent;
 	
-	for (var url in changedFiles){
-		let file = changedFiles[url];
-		tree.push({
-			path: file.tree.path,
-			mode: file.tree.mode,
-			type: file.type,
-			content: file.newContent,
-		})
-	}
-	var request = {
-			base_tree: window.baseTree,
-			tree: tree
+	if (window.githost == "GitHub") {
+		for (var url in changedFiles){
+			let file = changedFiles[url];
+			tree.push({
+				path: file.tree.path,
+				mode: file.tree.mode,
+				type: file.type,
+				content: file.newContent,
+			})
+		}
+		requestTreeContent = {
+				base_tree: window.baseTree,
+				tree: tree
+		}
+		
+	} else {
+		
+		for (var url in changedFiles){
+			let file = changedFiles[url];
+			tree.push({
+				action: "update",
+				file_path: file.tree.path,
+				content: file.newContent,
+			})
+		}
+		
+		requestTreeContent = {
+				branch: "master",
+				force: true,
+				commit_message: $("#commit-message").val(),
+				tree: tree
+		}		
+		
 	}
 	
-	return request;
+	return requestTreeContent;
+	
 }
 
 class CodeEditor {
@@ -135,7 +158,6 @@ class EditorBlob {
 				// Response encoded in base64
             	var content = atob(data.content);
             	var tree = trees[url];
-
 				var blob = new EditorBlob({
 	                text: tree.text,
 	                tree: tree,
@@ -188,6 +210,15 @@ class Tree {
 	        let x = tree[key];
 	        var url = tree[key]["url"];
 	        var type = tree[key]["type"];
+	        
+	        if (!url) {
+	        	url = "https://gitlab.com/api/v4/projects/" + window.repositoryOwner + "%2F" + window.repositoryName +"/repository/blobs/" + x.id;
+	        }
+	        
+	        if (!url.includes("access_token")) {
+	        	url = url + "?access_token=" + window.githostAccessToken;
+	        }
+	        
 	        if (type=="blob"){
                 tree[key]['li_attr'] = {
                     "onclick": "EditorBlob.load('" + url + "');",
@@ -197,9 +228,10 @@ class Tree {
 	        x.children = transformChildren(x.children, result);
 	        fileExplorer.push(x);
 
+	        
             result[x.url] = new Tree({
                 size: x.size,
-                url: x.url,
+                url: url,
                 type: x.type,
                 text: x.text,
                 path: x.path,
@@ -230,12 +262,23 @@ function addnode(obj) {
         node = {
             text: splitpath[i],
         };
+        var url = obj.url;
+        
+        if (!url) {
+        	url = "https://gitlab.com/api/v4/projects/" + window.repositoryOwner + "%2F" + window.repositoryName +"/repository/blobs/" + obj.id;
+        }
+        
+        if (!url.includes("access_token")) {
+        	url = url + "?access_token=" + window.githostAccessToken;
+        }
+        
         if (i == splitpath.length - 1) {
             node.size = obj.size;
             node.type = obj.type;
-            node.url = obj.url;
+            node.url = url;
             node.path = obj.path;
             node.mode = obj.mode;
+            node.id = obj.id;
         }
         ptr[splitpath[i]] = ptr[splitpath[i]] || node;
         ptr[splitpath[i]].children = ptr[splitpath[i]].children || {};
@@ -250,18 +293,24 @@ function transformChildren(obj, result) {
         let x = obj[key];
         var url = obj[key]["url"];
         var type = obj[key]["type"];
+        
+        if (!url) {
+        	url = "https://gitlab.com/api/v4/projects/" + window.repositoryOwner + "%2F" + window.repositoryName +"/repository/blobs/" + x.id;
+        }
+        
+        if (!url.includes("access_token")) {
+        	url = url + "?access_token=" + window.githostAccessToken;
+        }
+        
         if (type=="blob"){
             obj[key]['li_attr'] = {
                 "onclick": "EditorBlob.load('" + url + "');",
-            };
-            
-            
-            
-        }
+            };    
+        }       
         
         result[url] = new Tree({
             size: x.size,
-            url: x.url,
+            url: url,
             type: x.type,
             text: x.text,
             path: x.path,

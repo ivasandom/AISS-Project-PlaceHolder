@@ -260,12 +260,12 @@
         				var repo;
         				if (window.githost == "GitHub") {
         					repo = "${projectConfig.githubRepository}";
-        				} else if (window.host == "GitLab") {
+        					window.githostAccessToken = "${sessionScope['GitHub-token']}";
+        				} else if (window.githost == "GitLab") {
         					repo = "${projectConfig.gitlabRepository}";
-        				} else if (window.host == "Bitbucket") {
-        					repo = "${projectConfig.bitbucketRepository}";
+        					window.githostAccessToken = "${sessionScope['GitLab-token']}";
         				}
-        				
+  
         				window.repositoryOwner = repo.split("/")[1];
         				window.repositoryName = repo.split("/")[2];
 
@@ -341,7 +341,7 @@
     				commitMessage: $("#commit-message").val(),
     				taskId: $("#task-select").val(),
     				projectId: "${project.id}",
-    				tree: generateJsonTreeRequest(),
+    				tree: getJSONCommitChanges(),
     			}),
     			dataType: 'json',
     			contentType: "application/json",

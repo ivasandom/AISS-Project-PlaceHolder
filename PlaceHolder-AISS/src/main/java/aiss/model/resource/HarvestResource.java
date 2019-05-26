@@ -1,6 +1,5 @@
 package aiss.model.resource;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.json.JSONObject;

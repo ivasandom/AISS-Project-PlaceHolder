@@ -29,4 +29,14 @@ public class BitbucketResource {
 		return repositories;
 
 	}
+	
+	
+	public boolean createCommit() {
+		return false;
+	}
+	
+	public boolean getRepositoryTree() {
+		return false;
+	}
+	
 }
